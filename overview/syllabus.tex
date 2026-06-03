@@ -1,0 +1,253 @@
+\documentclass[11pt]{article}
+
+\usepackage{color}
+\usepackage{url}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{enumitem}
+\usepackage[colorlinks=true, bookmarks=true,  plainpages=false, pdfpagelabels=true, pageanchor=false,hypertexnames=false,linkcolor=blue,citecolor=blue,pdfauthor={Marek Petrik},urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+%\usepackage{gfsdidot}
+\usepackage[T1]{fontenc}
+%\usepackage{newpxtext,mathpazo}
+
+\setlength{\parskip}{3mm plus1mm minus1mm}
+\setlength{\parindent}{0cm}
+
+\date{}
+
+\begin{document}
+\begin{center}
+	{\Large\bf CS 750/850: Machine Learning}\\
+	Spring 2026\\
+	\textbf{Website:} \url{https://gitlab.com/marekpetrik/ml-spring2026}
+\end{center}
+
+
+\section{Basic Course Information}
+
+\begin{itemize}
+\item \textbf{Department}: Computer science
+\item \textbf{Course title}: CS 550: Foundations of Machine Learning
+\item \textbf{Modality}: In person.
+\end{itemize}
+
+\section{Basic Instructor Information}
+
+\begin{itemize}
+\item \textbf{Name of the instruction}: \emph{Marek Petrik}
+\item \textbf{Office address and phone number}: Kingsbury N215b and  (603) 862-2682
+\item \textbf{Email address}: \url{mailto:mpetrik@cs.unh.edu}. Unless it is urgent, I will answer it during my office hours
+\item \textbf{Office hours}: Please see the class website
+\item \textbf{Preferred method of contact}: In person during office hours
+\item \textbf{Names and contact of TA}: TBD \emph{Gersi Doko}, Please see the website for office hours. 
+\end{itemize}
+
+The \emph{fastest} way to get your question about course material answered is to post it on the discussion forum listed on the website. Please do not email the instructor or the TAs with questions that may also be of interest to others. If you have personal questions, it is best to come to the office hours.
+
+\section{Description of the Course}
+
+\subsection{Introduction}
+This class will teach you how to use machine learning to understand data and make predictions. It focuses on understanding the fundamental concepts and algorithms that underlie modern machine learning and data science.
+
+\subsection{Student learning outcomes}
+
+Learn mathematical models and algorithms that underlie foundational machine learning techniques:
+\begin{itemize}
+\item \emph{Calculus}: functions, derivatives, Taylor series expansion, optimality
+\item \emph{Basic linear algebra}: vectors, matrices, rank, linear and quadratic functions, system of linear equations, linear combinations, orthogonal projection, eigenvectors and eigenvalues, symmetric positive definite, norms of vectors and matrices
+\item  \emph{Multivariate calculus}: gradient, Jacobian, Hessian, multivar Taylor series
+\item  \emph{Optimization}: Necessary and sufficient optimality conditions , convexity, gradient descent, stochastic gradient descent, linear programs, (duality?)
+\emph{Probability}: Random variable, mean, covariance matrix, multivariate Gaussian, Markov chains
+\end{itemize}
+
+Learn how to use, implement, and analyze foundational machine learning techniques:
+\begin{itemize}
+\item Linear regression, logistic regression
+\item PCA (multi-variate Gaussian)
+\item Small neural nets
+\item Maximum likelihood and MAP
+\item Bayesian ML and Bayesian linear regression
+\item Markov chains, n-grams, mini-transformer
+\item Reinforcement learning, gradient descent
+\end{itemize}
+
+
+\subsection{Format of the course}
+Lectures, assignments, in-class quizzes and worksheets. In-person code review sessions.
+
+Class attendance is important for your learning. You are responsible for all course
+assignments and meeting all deadlines unless exceptions are agreed upon with the
+instructor ahead of time. Attendance in this course is optional.
+
+\section{Prerequisites}
+
+Students need to be able to code in a scripting language, such as Python, R, or Julia. Ideally, the students will have completed a basic probability course.
+
+\section{Course Requirements}
+
+\subsection{Nature of assignments and exams}
+
+There will be homework assignments due approximately every week. The assignments can be turned in either in the class or online. The assignments will involve both coding and theoretical components.
+
+The exams (mid-term and final) will be in person. The midterms will take place halfway through the semester and the specific date will be announced at least two weeks in advance. The final exam will be scheduled according to UNH policies.
+
+The class also involves a class project which includes several deliverables and culminates in a presentation either in the form of a poster or an oral presentation. Most of the project work will happen in October. 
+
+\subsection{Federal credit hour requirement}
+
+The class is expected to take about 12 hours of work a week including lectures, reading the study materials, and completing assignments.
+
+\subsection{Deadlines and test dates}
+
+There will be an in-person midterm exam and an in-person final exam. These will be \textbf{closed-book} exams. Please see the class website and MyCourses for specific dates for the exams, assignments, and quizzes. No plagiarism is allowed when completing exams.
+
+\subsection{Description of grading procedures}
+
+\paragraph{Late policy}
+\begin{enumerate}[nosep]
+\item \textbf{Late penalty:} 5\% per \textbf{hour}.
+\item Start early. Do not put it off until the last moment.
+\end{enumerate}
+
+\paragraph{Assignments}
+\begin{enumerate}[nosep]
+    \item One worst grade in assignments 1-7 and another one in assignments 8-14 will be dropped.
+    \item If you have a legitimate reason for why you cannot finish an assignment on time, please talk to the instructor.
+    \item Assignments are due on the day and hour indicated on myCourses. Generally due on Wednesdays.
+    \item Assignments should be turned in as a \textbf{PDF} and a \textbf{separate source code file} (Quarto, unless that does not work) on myCourses. There may be no credit for submitting only source code that does not compile.
+    \item Please do not copy solutions from online sources or your friends; it defeats the purpose of the assignments and you will not learn the material.
+    \item We encourage you to collaborate with your classmates, but this must not involve copy-pasting. Copy-pasting from online sources is also not OK. Each homework solution should be prepared independently.
+\end{enumerate}
+
+The class will involve hands-on data analysis using machine learning methods. The recommended language for programming assignments is R which is an excellent tool for statistical analysis and machine learning. No prior knowledge of R is needed or expected; the book and lectures will include a gentle introduction to the language. Python is also an option for students who have some experience with it and are willing to figure things out on their own.
+
+\paragraph{Quizzes} The quizzes will be available on MyCourses. There will be 3 attempts for each quiz, with the highest grade counting. 
+
+
+\paragraph{Project} The class will involve a project with multiple groups of up to 5 people working as a team. The class project will have a longer report and presentation due at the end of the semester.
+
+\paragraph{Final grade}
+The final grades will be computed using the standard UNH scale.
+
+\subsection{Components of final grade}
+
+The weights of individual components in computing the grade are as follows. 
+\begin{itemize}
+\item \textbf{10\%} Homework assignments  
+\item \textbf{50\%} In-class quizzes 
+\item \textbf{10\%} In-class worksheets
+\item \textbf{20\%} In-person code review
+\item \textbf{10\%} Small class project
+\end{itemize}
+
+Students can take an optional final exam. The final exam grade will replace the grades from in-class quizzes and worksheets if it is better. 
+
+\section{Learning Resources}
+
+\subsection{Textbooks}
+
+\begin{enumerate}
+\item Strang, G. (2019). \emph{Linear Algebra and Learning from Data}, \url{https://math.mit.edu/~gs/learningfromdata/}
+\item Strang, G. (2016). \emph{Introduction to Linear Algebra}, \url{http://math.mit.edu/~gs/linearalgebra/}
+\item James, G., Witten, D., Hastie, T., \& Tibshirani, R. (2021). \emph{An Introduction to Statistical Learning}. \textbf{second edition}. The pdf is available online.
+\item Deisenroth, M. P., Faisal, A. A., \& Ong, C. S. (2021). \emph{Mathematics for machine learning}. The pdf is available online.
+\item Bertsekas, D.P. and Tsitsiklis, J.N. (2008). Introduction to Probability. 2nd edn.
+\end{enumerate}
+
+\subsection{Campus resources}
+
+\section{Course Policies}
+
+\subsection{University-based policies}
+
+\paragraph{Disability}
+
+If you are registered with the student disability office, please let me know right away so that I can provide proper accommodation.
+
+According to the Americans with Disabilities Act (as amended, 2008), each student with a disability has the right to request services from UNH to accommodate their disability. If you are a student with a documented disability or believe you may have a disability that requires accommodations, please contact Student Accessibility Services (SAS) at 227 Smith Hall, or at sas.office@unh.edu.
+
+Accommodation letters are created by SAS with the student. Please follow up with your instructor as soon as possible to ensure the timely implementation of the identified accommodations in the letter. Faculty need to respond once they receive official notice of accommodations from SAS, but are under no obligation to provide retroactive accommodations.
+
+For more information, contact SAS: 227 Smith Hall, \url{www.unh.edu/sas}, 603.862.2607, 711 (Relay NH) or sas.office@unh.ed
+
+\paragraph{Academic honesty}
+
+Please, be honest. No forms of cheating or plagiarism will be tolerated. You are encouraged to talk to your classmates about the problems as well as search the Internet. \textbf{However, please do not seek out solution guides, and if you come across one do not study it.} It is \textbf{not} OK to copy code from classmates, the internet, or anywhere. You cannot copy LLM/AI solutions without attribution.  
+
+\begin{itemize}[noitemsep]
+\item University Academic Honesty Policy:\\
+     \url{https://www.unh.edu/student-life/handbook/academic/academic-honesty}
+\item Tutorial on Plagiarism: \\
+    \url{http://cola.unh.edu/plagiarism-tutorial-0}
+\end{itemize}
+
+
+\subsection{Course specific policies}
+
+\paragraph{Use of Large Language Models (such as ChatGPT)} You can use LLMs to help with the completion of the assignments. The final work needs to be your own and you need to declare the sources used when preparing the assignments (including ChatGPT and any online resources). There are no online sources allowed during exams except those explicitly stated. Since the exams will be closely related to the assignments, I recommend working out the assignments on your own as much as possible, rather than submitting generated work.
+
+\paragraph{Exceptions} If you have a serious reason for not being able to complete an assignment or a quiz, or have other concerns about succeeding in the class, please do not hesitate to contact the instructor.
+
+\section{Schedule}
+
+\subsection{Course topics}
+
+One lecture on each on the following topics, by lecture:
+\begin{enumerate}
+%1 
+\item (\emph{??}) Introduction and review: Functions, linear function, quadratic function, first and second derivatives, Taylor series, plotting functions
+\item (\emph{??}) Optimizing functions: Maximization and minimization problems in 1D, convexity of functions, necessary and sufficient optimization, gradient descent, implement gradient descent, example??
+% 2
+\item (\emph{??}) Vectors: what they are, adding subtracting, multiplying by a scalar, inner product, linear combination, norm, vector representation of data, example??
+\item (\emph{LD 1.1,1.2}) Matrices: matrix vector product, multiplying matrices, matrix rank, linear algebra for processing data: example: normalize sums of something
+% 3
+\item (\emph{LD 1.3,1.5}) Fundamental matrix spaces and orthogonal matrices, rank of a matrix, basis, example with some dataset, Fourier series and predicting tides
+\item (\emph{LD 1.6,1.7}) Eigenvalues and eigenvectors, positive definite matrices, example?
+% 4
+\item (\emph{??}) Functions $\mathbb{R}\to \mathbb{R}$ and $\mathbb{R}^n\to \mathbb{R}^m$, linear and quadratic functions using linear algebra, plotting the functions, obseve what happens with eigenvectors and quadratic functions
+\item (\emph{??}) Multivariate calculus basics: partial derivative, gradient, Jacobian, Hessian, Taylor series
+% 5
+\item (\emph{??}) Optimization basics: convex function, convex quadratic function, necessary and sufficient optimality conditions. example: projection onto a single line
+\item (\emph{??}) Constrained optimization: langragian, optimality conditions, example: projection onto a line, mention KKT
+% 6
+\item (\emph{??}) Machine learning: basic setup, error metric (CS 750)
+\item (\emph{??}) Linear regression, derivation and implementation on a simple example (CS 750)
+  % 7
+\item (\emph{??}) Logistic regression and gradient descent: motivation, cross-entropy objective (CS 750)
+\item (\emph{??}) Gradient descent: solving logistic regression (CS 750)
+  % 8
+\item (\emph{??}) Neural networks: basics, neuron, layes, connections. Activation function and its gradient.
+\item (\emph{??}) Fitting a neural network, gradient descent and backpripagation, algorithms, ADAM and others
+  % 9
+\item (\emph{??}) Probability basics: random variables, expectations, probability (CS 750)
+\item (\emph{??}) Probability basics: joint probability, expectations, normal distribution, multivariate normal distribution (CS 750)
+  % 10
+\item (\emph{??}) Maximum likelihood: linear regression and logistic regression
+\item (\emph{??}) Maximum A Posteriori: ridge regression and lasso
+  % 11
+\item (\emph{??}) Bayesian inference: Bayesian linear regression 
+\item (\emph{??}) PCA: Optimization, multivariate gaussians (CS 750 example)
+  % 12
+\item (\emph{??}) Markov models, transitions, stationary distributions, example: page-rand algorithm, clustering
+\item (\emph{??}) Fitting a Markov model of a language, bi-gram, 
+  % 13
+\item (\emph{??}) Low-rank matrix decomposition and transformers for predicting sequences
+\item (\emph{??}) Training a transformer using reinforcement learning
+\end{enumerate}
+
+\subsection{Due dates}
+
+Please see the class website for the most current due dates.
+
+\subsection{Readings}
+
+Please see the class website for the recommended reading for each lecture.
+
+% -------------------------------------------
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
