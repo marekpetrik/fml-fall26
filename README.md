@@ -75,6 +75,8 @@ Assignments should be turned in as a **PDF**, which can be scanned and hand-writ
 | [12](assignments/assignment12.pdf) | [12](assignments/assignment12.tex) | Mon Nov 23 at 11:59PM |
 | [13](assignments/assignment13.pdf) | [13](assignments/assignment13.tex) | Mon Nov 30 at 11:59PM |
 
+**Note**: Assignments more than a week in advance are provisional and are subject to change. Please consult the instructor before completing assignments due in more than a week.
+
 
 ## In-class Graded Quizzes
 
