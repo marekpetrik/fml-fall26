@@ -196,7 +196,9 @@ cc["course_settings.xml"] = """
   <title>$(xmlesc(COURSE_TITLE))</title>
   <course_code>CS 550</course_code>
   <grading_standard_enabled>false</grading_standard_enabled>
-  <apply_assignment_group_weights>true</apply_assignment_group_weights>
+  <!-- Canvas's course_settings importer reads group_weighting_scheme (percent|equal),
+       NOT apply_assignment_group_weights. Only "percent" makes group_weight take effect. -->
+  <group_weighting_scheme>percent</group_weighting_scheme>
   <default_view>wiki</default_view>
   <workflow_state>available</workflow_state>
 </course>
