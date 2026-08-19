@@ -24,22 +24,16 @@
 \item \textbf{Questions}: See the class website for a link to office hours
 \end{itemize}
 
+% Covers: Logistic regression (ISL 4, CO 7.1, MML 7.1) and Gradient descent for logistic regression (ISL 4, CO 9.3).
 
-% The assignment covers:
-% \item (\emph{UDL 6, 7}) Fitting a neural network, gradient descent, and backpropagation, algorithms, ADAM and others
-% \item (\emph{MML 6.1,6.2,6.3}) Probability basics: random variables, expectations, probability
-% where the sources are:
-% \begin{enumerate}
-% \item \textbf{ILA} Strang, G. (2016). \emph{Introduction to Linear Algebra}, \url{http://math.mit.edu/~gs/linearalgebra/} (any recent edition is probably fine)
-% \item \textbf{CO} Boyd, S. and Vandenberghe, L. (2004). \emph{Convex Optimization}. \url{https://web.stanford.edu/~boyd/cvxbook/}
-% \item \textbf{IRA} Hunter, J.K. \emph{An Introduction to Real Analysis}. \url{https://www.math.ucdavis.edu/~hunter/intro_analysis_pdf/intro_analysis.html}
-% \item \textbf{ISL} James, G., Witten, D., Hastie, T., \& Tibshirani, R. (2021). \emph{An Introduction to Statistical Learning}. \textbf{second edition}. The pdf is available online.
-% \item \textbf{MML} Deisenroth, M. P., Faisal, A. A., \& Ong, C. S. (2021). \emph{Mathematics for machine learning}. The pdf is available online.
-% \item \textbf{UDL} Prince, S. J. D. (2023). \emph{Understanding Deep Learning}. MIT Press. \url{https://udlbook.github.io/udlbook/} (the pdf is available online)
-% \item Strang, G. (2019). \emph{Linear Algebra and Learning from Data}, \url{https://math.mit.edu/~gs/learningfromdata/}
-% \item Bertsekas, D.P. and Tsitsiklis, J.N. (2008). Introduction to Probability. 2nd edn.
-% \end{enumerate}
+\textbf{Relevant reading}: ISL 4; CO 7.1, 9.3; MML 7.1. Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia or Python recommended). The cited exercise numbers are from ISL, 2nd edition (James et al., 2021).
 
-
+\begin{enumerate}
+\item ISL, Chapter 4, Conceptual exercises: problems 1, 6.
+\item ISL, Chapter 4, Applied exercises: a logistic-regression exercise, e.g.\ on the \texttt{Weekly} data set \textbf{[code]}.
+\item Derive the gradient of the cross-entropy (logistic) loss with respect to the weight vector for a single training example, and show that the resulting gradient-descent update has a simple ``prediction minus label'' form.
+\item \textbf{[code]} Implement gradient descent to fit logistic regression on a small two-dimensional data set. Plot the loss versus iteration and the resulting decision boundary.
+\item \textbf{Time spent.} Report approximately how many hours you spent completing this problem set (including the reading).
+\end{enumerate}
 
 \end{document}

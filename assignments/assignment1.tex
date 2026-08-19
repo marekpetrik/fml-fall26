@@ -24,27 +24,9 @@
 \item \textbf{Questions}: See the class website for a link to office hours
 \end{itemize}
 
+\textbf{Relevant reading}: IRA 1, 2, 6, 8; MML 5.1; CO 1.1, 3.1.1.  
 
-% The assignment covers:
-% \item (\emph{IRA 1,2,6,8.1,8.2,8.3, MML 5.1}) Introduction and review: Functions, linear function, quadratic function, first and second derivatives, Taylor series, plotting functions
-% \item (\emph{IRA 8, CO 1.1,3.1.1}) Optimizing functions: Maximization and minimization problems in 1D, convexity of functions, necessary and sufficient optimization, gradient descent, implement gradient descent, example: plot a function, its gradient, and linear and quadratic Taylor series approximations
-% where the sources are:
-% \begin{enumerate}
-% \item \textbf{ILA} Strang, G. (2016). \emph{Introduction to Linear Algebra}, \url{http://math.mit.edu/~gs/linearalgebra/} (any recent edition is probably fine)
-% \item \textbf{CO} Boyd, S. and Vandenberghe, L. (2004). \emph{Convex Optimization}. \url{https://web.stanford.edu/~boyd/cvxbook/}
-% \item \textbf{IRA} Hunter, J.K. \emph{An Introduction to Real Analysis}. \url{https://www.math.ucdavis.edu/~hunter/intro_analysis_pdf/intro_analysis.html}
-% \item \textbf{ISL} James, G., Witten, D., Hastie, T., \& Tibshirani, R. (2021). \emph{An Introduction to Statistical Learning}. \textbf{second edition}. The pdf is available online.
-% \item \textbf{MML} Deisenroth, M. P., Faisal, A. A., \& Ong, C. S. (2021). \emph{Mathematics for machine learning}. The pdf is available online.
-% \item \textbf{UDL} Prince, S. J. D. (2023). \emph{Understanding Deep Learning}. MIT Press. \url{https://udlbook.github.io/udlbook/} (the pdf is available online)
-% \item Strang, G. (2019). \emph{Linear Algebra and Learning from Data}, \url{https://math.mit.edu/~gs/learningfromdata/}
-% \item Bertsekas, D.P. and Tsitsiklis, J.N. (2008). Introduction to Probability. 2nd edn.
-% \end{enumerate}
-
-\textbf{Relevant reading}: IRA 1, 2, 6, 8; MML 5.1; CO 1.1, 3.1.1. The total expected time to complete this assignment, including the reading, is about 15 hours. Problems marked \textbf{[code]} should be submitted as programs using a programming language of your choice; coding examples in the lectures will focus on Julia and Python, and MATLAB, R, and Octave are also good alternatives.
-
-\section*{Part 1: Functions, derivatives, and Taylor series}
-
-\paragraph{Problem 1: Recognizing functions (6 pts, $\approx$45 min)}
+\section{Recognizing functions}
 For each of the following functions $f\colon \Real \to \Real$, state whether it is \emph{linear}, \emph{affine}, \emph{quadratic}, or none of these. Justify each answer in one sentence.
 \begin{enumerate}
 \item $f(x) = 3x$
@@ -55,7 +37,7 @@ For each of the following functions $f\colon \Real \to \Real$, state whether it 
 \item $f(x) = 2^x$
 \end{enumerate}
 
-\paragraph{Problem 2: Derivatives warm-up (8 pts, $\approx$1 hour)}
+\section{Derivatives warm-up}
 Compute the first derivative $f'(x)$ and the second derivative $f''(x)$ of each function. Show your work; no credit for unsupported answers.
 \begin{enumerate}
 \item $f(x) = 4x^3 - 2x^2 + 7$
@@ -66,7 +48,7 @@ Compute the first derivative $f'(x)$ and the second derivative $f''(x)$ of each 
 \item $f(x) = (3x - 1)^4$
 \end{enumerate}
 
-\paragraph{Problem 3: Quadratic functions (6 pts, $\approx$45 min)}
+\section{Quadratic functions}
 Consider the general quadratic function $f(x) = a x^2 + b x + c$ with $a \neq 0$.
 \begin{enumerate}
 \item Derive the location $x\opt$ of the stationary point of $f$ (the point where $f'(x\opt) = 0$).
@@ -74,7 +56,7 @@ Consider the general quadratic function $f(x) = a x^2 + b x + c$ with $a \neq 0$
 \item Write $f(x) = 2x^2 - 8x + 3$ in the form $f(x) = a(x - x\opt)^2 + d$ and use this form to read off its minimizer and minimal value.
 \end{enumerate}
 
-\paragraph{Problem 4: Taylor series by hand (8 pts, $\approx$1 hour)}
+\section{Taylor series by hand}
 Recall that the first-order and second-order Taylor approximations of $f$ around a point $x_0$ are
 \[
 f_1(x) = f(x_0) + f'(x_0)(x - x_0), \qquad
@@ -87,14 +69,14 @@ f_2(x) = f(x_0) + f'(x_0)(x - x_0) + \tfrac{1}{2} f''(x_0)(x - x_0)^2 .
 \item For which functions $f$ does $f_2 = f$ exactly for every choice of $x_0$? Explain.
 \end{enumerate}
 
-\paragraph{Problem 5: Plotting functions \textbf{[code]} (10 pts, $\approx$1.5 hours)}
+\section{Plotting functions \textbf{[code]}}
 \begin{enumerate}
 \item Plot $f(x) = x^4 - 3x^2 + x$ on the interval $[-2.5, 2.5]$.
 \item On the same axes (or a second panel), plot its derivative $f'(x)$. Mark the points where $f'(x) = 0$ and describe, in a sentence or two, how the sign of $f'$ relates to whether $f$ is increasing or decreasing.
 \item Plot the sigmoid function $f(x) = 1/(1 + e^{-x})$ on $[-6, 6]$ together with its derivative. Where is the derivative largest?
 \end{enumerate}
 
-\paragraph{Problem 6: Visualizing Taylor approximations \textbf{[code]} (10 pts, $\approx$1.5 hours)}
+\section{Visualizing Taylor approximations \textbf{[code]}}
 Let $f(x) = \log(1 + e^{x})$.
 \begin{enumerate}
 \item Derive $f'(x)$ and $f''(x)$ by hand and include the derivation in your writeup.
@@ -103,9 +85,7 @@ Let $f(x) = \log(1 + e^{x})$.
 \item In 2--3 sentences: near $x_0$, which approximation is more accurate? What happens far from $x_0$?
 \end{enumerate}
 
-\section*{Part 2: Optimization in one dimension}
-
-\paragraph{Problem 7: Finding and classifying critical points (8 pts, $\approx$1 hour)}
+\section{Finding and classifying critical points}
 For each function, find all points where $f'(x) = 0$ and classify each as a local minimum, local maximum, or neither, using the second derivative (or another argument when the second derivative is inconclusive).
 \begin{enumerate}
 \item $f(x) = x^2 - 6x + 1$
@@ -115,16 +95,16 @@ For each function, find all points where $f'(x) = 0$ and classify each as a loca
 \item $f(x) = x + \frac{4}{x}$ on $x > 0$
 \end{enumerate}
 
-\paragraph{Problem 8: Necessary vs.\ sufficient conditions (6 pts, $\approx$45 min)}
-Answer each question and give a concrete one-dimensional example (a formula and, if helpful, a sketch).
-\begin{enumerate}
-\item Give a function $f$ and a point $x_0$ with $f'(x_0) = 0$ where $x_0$ is \emph{not} a local minimum or maximum.
-\item Give a function on the interval $[0, 1]$ whose minimizer $x\opt$ satisfies $f'(x\opt) \neq 0$. Why does this not contradict the first-order necessary condition?
-\item Give a function with a local minimum that is not a global minimum.
-\item True or false: if $f''(x) > 0$ for all $x \in \Real$, then $f$ has a global minimizer. Prove it or give a counterexample.
-\end{enumerate}
+% \section{Necessary vs.\ sufficient conditions}
+% Answer each question and give a concrete one-dimensional example (a formula and, if helpful, a sketch).
+% \begin{enumerate}
+% \item Give a function $f$ and a point $x_0$ with $f'(x_0) = 0$ where $x_0$ is \emph{not} a local minimum or maximum.
+% \item Give a function on the interval $[0, 1]$ whose minimizer $x\opt$ satisfies $f'(x\opt) \neq 0$. Why does this not contradict the first-order necessary condition?
+% \item Give a function with a local minimum that is not a global minimum.
+% \item True or false: if $f''(x) > 0$ for all $x \in \Real$, then $f$ has a global minimizer. Prove it or give a counterexample.
+% \end{enumerate}
 
-\paragraph{Problem 9: Convexity (10 pts, $\approx$1.5 hours)}
+\section{Convexity}
 Recall that a twice-differentiable function $f\colon \Real \to \Real$ is convex if and only if $f''(x) \geq 0$ for all $x$.
 \begin{enumerate}
 \item Determine which of the following functions are convex on the given domain: (i) $f(x) = e^{3x}$ on $\Real$; (ii) $f(x) = \log(x)$ on $x > 0$; (iii) $f(x) = x^4 - x^2$ on $\Real$; (iv) $f(x) = \max\{x, 0\}$ on $\Real$ (careful: not differentiable at $0$; argue from the definition or a picture).
@@ -133,36 +113,39 @@ Recall that a twice-differentiable function $f\colon \Real \to \Real$ is convex 
 \item Give an example of two convex functions whose \emph{product} is not convex.
 \end{enumerate}
 
-\paragraph{Problem 10: Gradient descent by hand (8 pts, $\approx$1 hour)}
-Consider $f(x) = x^2 - 4x + 5$ and the gradient descent iteration $x_{k+1} = x_k - \alpha f'(x_k)$ starting from $x_0 = 0$.
-\begin{enumerate}
-\item Compute $x_1, x_2, x_3$ by hand for step size $\alpha = 0.1$. Report $f(x_k)$ at each iterate.
-\item Repeat for $\alpha = 1$. What happens, and why?
-\item Repeat for $\alpha = 1.5$. What happens, and why?
-\item For this particular $f$, derive the range of step sizes $\alpha$ for which the iteration converges to the minimizer from any starting point. (Hint: write $x_{k+1} - x\opt$ as a multiple of $x_k - x\opt$.)
-\end{enumerate}
+% \section{Gradient descent by hand}
+% Consider $f(x) = x^2 - 4x + 5$ and the gradient descent iteration $x_{k+1} = x_k - \alpha f'(x_k)$ starting from $x_0 = 0$.
+% \begin{enumerate}
+% \item Compute $x_1, x_2, x_3$ by hand for step size $\alpha = 0.1$. Report $f(x_k)$ at each iterate.
+% \item Repeat for $\alpha = 1$. What happens, and why?
+% \item Repeat for $\alpha = 1.5$. What happens, and why?
+% \item For this particular $f$, derive the range of step sizes $\alpha$ for which the iteration converges to the minimizer from any starting point. (Hint: write $x_{k+1} - x\opt$ as a multiple of $x_k - x\opt$.)
+% \end{enumerate}
 
-\paragraph{Problem 11: Implementing gradient descent \textbf{[code]} (14 pts, $\approx$2.5 hours)}
-Implement gradient descent for functions of one variable:
-\begin{verbatim}
-gradient_descent(fprime, x0, alpha, iterations) -> vector of iterates
-\end{verbatim}
-where \texttt{fprime} is the derivative of the objective, \texttt{x0} is the starting point, \texttt{alpha} is the step size, and \texttt{iterations} is the number of steps. The function should return all iterates $x_0, x_1, \dots$.
-\begin{enumerate}
-\item Verify your implementation on $f(x) = x^2 - 4x + 5$ from Problem 10: with $\alpha = 0.1$ and $x_0 = 0$, your first three iterates must match your hand computation.
-\item Run your implementation on $f(x) = x^4 - 3x^2 + x$ (from Problem 5) with $\alpha = 0.01$, 200 iterations, from the two starting points $x_0 = -2$ and $x_0 = 2$. Report the final iterate and the final objective value for each. Do the two runs find the same point? Relate what you see to your plot from Problem 5.
-\item For $x_0 = 2$, plot $f(x_k)$ as a function of the iteration $k$ for step sizes $\alpha \in \{0.001, 0.01, 0.1\}$ on the same axes. Describe the trade-off you observe.
-\item Plot the function $f$ and overlay the iterates $(x_k, f(x_k))$ for $\alpha = 0.01$, $x_0 = 2$, so that the path of the algorithm is visible.
-\end{enumerate}
+% \section{Implementing gradient descent \textbf{[code]}}
+% Implement gradient descent for functions of one variable:
+% \begin{verbatim}
+% gradient_descent(fprime, x0, alpha, iterations) -> vector of iterates
+% \end{verbatim}
+% where \texttt{fprime} is the derivative of the objective, \texttt{x0} is the starting point, \texttt{alpha} is the step size, and \texttt{iterations} is the number of steps. The function should return all iterates $x_0, x_1, \dots$.
+% \begin{enumerate}
+% \item Verify your implementation on $f(x) = x^2 - 4x + 5$ from with $\alpha = 0.1$ and $x_0 = 0$, your first three iterates must match your hand computation.
+% \item Run your implementation on $f(x) = x^4 - 3x^2 + x$ (from Problem 5) with $\alpha = 0.01$, 200 iterations, from the two starting points $x_0 = -2$ and $x_0 = 2$. Report the final iterate and the final objective value for each. Do the two runs find the same point? Relate what you see to your plot from Problem 5.
+% \item For $x_0 = 2$, plot $f(x_k)$ as a function of the iteration $k$ for step sizes $\alpha \in \{0.001, 0.01, 0.1\}$ on the same axes. Describe the trade-off you observe.
+% \item Plot the function $f$ and overlay the iterates $(x_k, f(x_k))$ for $\alpha = 0.01$, $x_0 = 2$, so that the path of the algorithm is visible.
+% \end{enumerate}
 
-\paragraph{Problem 12: Gradient descent meets Taylor \textbf{[code]} (6 pts, $\approx$1 hour)}
-This problem connects the two halves of the assignment. Let $f(x) = \log(1 + e^{x}) + \tfrac{1}{2}(x-1)^2$.
-\begin{enumerate}
-\item Argue (by hand) that $f$ is convex.
-\item Run your gradient descent from Problem 11 with $\alpha = 0.5$ and $x_0 = -3$ until the iterates stop changing noticeably; report the (approximate) minimizer $x\opt$.
-\item Produce a single plot showing $f$, its first-order Taylor approximation around $x_0 = -3$, and its second-order Taylor approximation around $x_0 = -3$, with the gradient descent iterates marked on the graph of $f$.
-\item In 2--3 sentences: the gradient descent step moves in the direction in which the \emph{first-order} Taylor approximation decreases. Explain why the step size must then be kept small.
-\end{enumerate}
+% \section{Gradient descent meets Taylor \textbf{[code]}}
+% This problem connects the two halves of the assignment. Let $f(x) = \log(1 + e^{x}) + \tfrac{1}{2}(x-1)^2$.
+% \begin{enumerate}
+% \item Argue (by hand) that $f$ is convex.
+% \item Run your gradient descent from Problem 11 with $\alpha = 0.5$ and $x_0 = -3$ until the iterates stop changing noticeably; report the (approximate) minimizer $x\opt$.
+% \item Produce a single plot showing $f$, its first-order Taylor approximation around $x_0 = -3$, and its second-order Taylor approximation around $x_0 = -3$, with the gradient descent iterates marked on the graph of $f$.
+% \item In 2--3 sentences: the gradient descent step moves in the direction in which the \emph{first-order} Taylor approximation decreases. Explain why the step size must then be kept small.
+% \end{enumerate}
+
+\section{Time spent}
+Report approximately how many hours you spent completing this assignment (including the reading).
 
 \end{document}
 

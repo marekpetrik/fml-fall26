@@ -20,7 +20,7 @@
 \begin{center}
 	{\Large\bf CS 550: Foundations of Machine Learning}\\
 	Fall 2026\\
-	\textbf{Website:} \url{https://gitlab.com/marekpetrik/fml-fall2026}
+	\textbf{Website:} \url{https://gitlab.com/marekpetrik/fml-fall26}
 \end{center}
 
 
@@ -67,18 +67,22 @@ Learn how to use, implement, and analyze foundational machine learning technique
 \item PCA (multivariate Gaussian)
 \item Small neural nets
 \item Maximum likelihood and MAP
-\item Bayesian ML and Bayesian linear regression
-\item Markov chains, n-grams, mini-transformer
-\item Reinforcement learning, gradient descent
+\item Markov chains, n-grams
 \end{itemize}
 
+Other possible topic we will cover if time allows:
+\begin{itemize}
+\item Bayesian ML and Bayesian linear regression
+\item Reinforcement learning, gradient descent
+\item Transformers
+\end{itemize}
 
 \subsection{Format of the course}
-Lectures, assignments, in-class quizzes and worksheets. In-person code review sessions.
+Lectures, assignments, in-class quizzes, and final exam. In-person code and solution review sessions.
 
 Class attendance is important for your learning. You are responsible for all course
 assignments and meeting all deadlines unless exceptions are agreed upon with the
-instructor ahead of time. Attendance in this course is optional.
+instructor ahead of time. Lecture attendance in this course is optional.
 
 \section{Prerequisites}
 
@@ -90,9 +94,7 @@ Students need to be able to code in a scripting language, such as Python, R, or 
 
 There will be homework assignments due approximately every week. The assignments can be turned in either in the class or online. The assignments will involve both coding and theoretical components.
 
-The final exam will be in person and will be scheduled according to UNH policies.
-
-The class also involves a class project which includes several deliverables and culminates in a presentation either in the form of a poster or an oral presentation. Most of the project work will happen in October. 
+The final exam will be in person and will be scheduled according to UNH policies. There will be no cheat-sheet allowed.
 
 \subsection{Federal credit hour requirement}
 
@@ -100,7 +102,7 @@ The class is expected to take about 12 hours of work a week including lectures, 
 
 \subsection{Deadlines and test dates}
 
-There will be an in-person final exam. This will be a \textbf{closed-book} exam. Please see the class website and myCourses for specific dates for exams, assignments, and quizzes. No plagiarism is allowed when completing exams.
+There will be an in-person final exam. This will be a \textbf{closed-book} exam. Please see the class website and myCourses for specific dates for exams, assignments, and quizzes. No plagiarism is allowed when completing exams. 
 
 \subsection{Description of grading procedures}
 
@@ -112,19 +114,18 @@ There will be an in-person final exam. This will be a \textbf{closed-book} exam.
 
 \paragraph{Assignments}
 \begin{enumerate}[nosep]
-    \item One worst grade in assignments 1-7 and another one in assignments 8-14 will be dropped.
+\item Three worst assignment grades will be dropped.
     \item If you have a legitimate reason for why you cannot finish an assignment on time, please talk to the instructor.
-    \item Assignments are due on the day and hour indicated on myCourses. Generally due on Wednesdays.
-    \item Assignments should be turned in as a \textbf{PDF} and a \textbf{separate source code file} using a programming language of your choice
+    \item Assignments are due on the day and hour indicated on myCourses. 
+    \item Assignments should be turned in as a \textbf{PDF} and a \textbf{separate source code file} using a programming language of your choice when applicable.
+    \item Handwritten solutions are preferred over typeset solutions
     \item Please do not copy solutions from online sources or your friends; it defeats the purpose of the assignments and you will not learn the material.
     \item We encourage you to collaborate with your classmates, but this must not involve copy-pasting. Copy-pasting from online sources is also not OK. Each homework solution should be prepared independently.
 \end{enumerate}
 
 The class will involve hands-on implementation and analysis machine learning methods. There is no specific recommended programming language. However, coding examples and class lectures will focus on Julia and Python. Other good alternatives are MATLAB, R, and Octave. 
 
-\paragraph{Quizzes} The quizzes will be available on myCourses. There will be 3 attempts for each quiz, with the highest grade counting. 
-
-\paragraph{Project} The class will involve a project with multiple groups of up to 5 people working as a team. The class project will have a longer report and presentation due at the end of the semester.
+\paragraph{Quizzes} The class will involve in-lecture quizzes according to the schedule published on the website. 
 
 \paragraph{Final grade}
 The final grades will be computed using the standard UNH scale.
@@ -133,13 +134,11 @@ The final grades will be computed using the standard UNH scale.
 
 The weights of individual components in computing the grade are as follows. 
 \begin{itemize}
+\item \textbf{40\%} Final exam
 \item \textbf{10\%} Homework assignments  
-\item \textbf{50\%} In-class weekly quizzes 
-\item \textbf{30\%} In-person assignment solution and code review
-\item \textbf{10\%} Small class project
+\item \textbf{30\%} In-class weekly quizzes 
+\item \textbf{20\%} In-person review of assignment solutions and code
 \end{itemize}
-
-Students can take an optional final exam. The final exam grade will replace the grades from in-class quizzes if it is better. 
 
 \section{Learning Resources}
 
@@ -174,7 +173,7 @@ For more information, contact SAS: 227 Smith Hall, \url{www.unh.edu/sas}, 603.86
 
 \paragraph{Academic honesty}
 
-Please, be honest. No forms of cheating or plagiarism will be tolerated. You are encouraged to talk to your classmates about the problems as well as search the Internet. \textbf{However, please do not seek out solution guides, and if you come across one do not study it.} It is \textbf{not} OK to copy code from classmates, the internet, or anywhere. You cannot copy LLM/AI solutions without attribution.  
+Please, be honest. No forms of cheating or plagiarism will be tolerated. You are encouraged to talk to your classmates about the problems as well as search the Internet. \textbf{However, please do not seek out solution guides, and if you come across one do not study it.} It is \textbf{not} OK to copy code from classmates, the internet, or anywhere. You cannot copy LLM/AI solutions.  
 
 \begin{itemize}[noitemsep]
 \item University Academic Honesty Policy:\\
@@ -185,13 +184,15 @@ Please, be honest. No forms of cheating or plagiarism will be tolerated. You are
 
 \subsection{Course specific policies}
 
-\paragraph{Use of Large Language Models (also known as ``AI'')} Although I strongly recommend against it, you can use LLMs to help with the completion of the assignments. The final work needs to be your own and you need to declare the sources used when preparing the assignments (including LLMs). There are no online sources allowed during exams. Since the exams will be closely related to the assignments, I recommend working out the assignments on your own as much as possible, rather than submitting generated work.
+\paragraph{Use of Large Language Models (also known as ``AI'')} Do not use LLMs to help with the completion of the assignments. Your work needs to be your own and you need to declare the sources used when preparing the assignments (including LLMs). There are no online sources allowed during exams. Since the exams will be closely related to the assignments, I recommend working out the assignments on your own as much as possible, rather than submitting generated work.
 
 \paragraph{Exceptions} If you have a serious reason for not being able to complete an assignment or a quiz, or have other concerns about succeeding in the class, please do not hesitate to contact the instructor.
 
 \section{Schedule}
 
 \subsection{Course topics}
+
+The following schedule is preliminary and is subject to change. Please see the class website for the most up to date schedule.
 
 One lecture on each of the following topics:
 \begin{enumerate}
@@ -202,19 +203,19 @@ One lecture on each of the following topics:
 \item (\emph{ILA 1.1,1.2,1.3}) Vectors: what they are, adding subtracting, multiplying by a scalar, inner product, linear combination, norm, vector representation of data, dot products, example: read in a data table from a CSV and compute vector products
 \item (\emph{ILA 2.1,2.4}) Matrices: matrix vector product, multiplying matrices, inverse matrices, transpose matrices, linear algebra for processing data, example: read in a table of data, normalize rows to sum to one using linear algebra
 % 3
-\item (\emph{ILA 2.6,2.7}) Change of basis, vector translations, rotation, robotics
+\item (\emph{ILA 2.6,2.7}) Factorization, transposes, permutation
 \item (\emph{ILA 3.1,3.3}) Vector spaces and orthogonality: Vector spaces, independence, basis, rank, and orthogonal matrices, example: Fourier series, and polynomial series
 % 4
-\item (\emph{ILA 4.1,4.2}) Projections: Simple examples, projection onto a length 1 vector, and predicting tides using the Fourier series
-\item (\emph{ILA 1.6,1.7}) Eigenvalues and eigenvectors, positive definite matrices, example: Fibonacci series
+\item (\emph{ILA 4.1--4.4}) Projections: Simple examples, projection onto a length 1 vector, and predicting tides using the Fourier series, rotations
+\item (\emph{ILA 6.1-6.2}) Eigenvalues and eigenvectors, positive definite matrices, example: Fibonacci series
 % 5
-\item (\emph{CO A.3}) Functions that take vectors as inputs and outputs, linear and quadratic functions using linear algebra, example: plotting the functions, observe what happens with eigenvectors and quadratic functions
+\item (\emph{CO A.3--A.5}) Functions that take vectors as inputs and outputs, linear and quadratic functions using linear algebra, example: plotting the functions, observe what happens with eigenvectors and quadratic functions
 \item (\emph{CO A.4, MML 5.2}) Multivariate calculus basics: partial derivative, gradient, Hessian, gradients of common functions
 % 6
 \item (\emph{CO A.4, MML 5.2}) Multivariate calculus: chain rule, Jacobian, Taylor series 
 \item (\emph{CO 2.1,2.2,3.1,3.2}) Optimization basics: convex set, convex function, convex quadratic function, necessary and sufficient optimality conditions. example: projection onto a single line
   % 7
-\item (\emph{CO 4.1,4.2}) Constrained optimization: Lagrangian, optimality conditions, (mention KKT) example: projection onto a line
+\item (\emph{CO 4.1,4.2}) Convex optimization (mention KKT) example: projection onto a line
 \item (\emph{CO 4.3, ILA 10.4}) Linear programming: example: revenue maximization using JuMP
   % 8
 \item (\emph{ISL 2,3}) Machine learning: linear regression basic setup, error metric, derivation and implementation on a simple example 
@@ -224,7 +225,7 @@ One lecture on each of the following topics:
 \item (\emph{UDL 3, 4}) Neural networks: basics, neurons, layers, connections. Activation function and its gradient.
   % 10
 \item (\emph{UDL 6, 7}) Fitting a neural network, gradient descent, and backpropagation, algorithms, ADAM and others
-\item (\emph{MML 6.1,6.2,6.3}) Probability basics: random variables, expectations, probability 
+\item (\emph{MML 6.1,6.2,6.3}) Probability basics: random variables, probability 
   % 11
 \item (\emph{MML 6.4,6.5}) Probability basics: joint probability, expectations, normal distribution, multivariate normal distribution 
 \item (\emph{MML 8.1,8.3.1,8.3.2}) Maximum likelihood and MAP: estimating the mean and standard deviation of a normal distribution, and of a Bernoulli random variable,
