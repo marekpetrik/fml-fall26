@@ -21,8 +21,10 @@ const OUT  = joinpath(REPO, "fml-fall26.imscc")
 
 const COURSE_TITLE = "CS 550: Foundations of Machine Learning (Fall 2026)"
 
-# Assignment PDFs / sources are linked (not bundled) from the course website.
-const PDF_BASE_URL = "https://gitlab.com/marekpetrik/fml-fall26/-/raw/main/assignments"
+# Course repository (home page links here); assignment PDFs / sources are linked
+# (not bundled) from its raw file paths.
+const REPO_URL     = "https://gitlab.com/marekpetrik/fml-fall26"
+const PDF_BASE_URL = "$REPO_URL/-/raw/main/assignments"
 
 # ---- data -----------------------------------------------------------------
 # (number, due date) — assignments due at 11:59 PM local (America/New_York).
@@ -49,11 +51,15 @@ const FINAL_EXAM = (title = "Final Exam", date = nothing, points = 100.0)
 # In-person review of assignment solutions and code — a single graded item.
 const REVIEW     = (title = "In-person Review", date = nothing, points = 20.0)
 
+# Course late policy: automatic deduction on late online submissions.
+const LATE_DEDUCTION_PERCENT  = 5.0       # percent deducted per interval
+const LATE_DEDUCTION_INTERVAL = "hour"    # "hour" or "day"
+
 # Assignment groups and their weights (%), matching the syllabus grade breakdown.
-# (key, title, weight %, drop-lowest count). Problem Sets drop the 3 worst.
+# (key, title, weight %, drop-lowest count). Problem Sets and Quizzes drop the 3 worst.
 const GROUPS = [
     (:homework, "Problem Sets",     10.0, 3),
-    (:quizzes,  "Quizzes",          30.0, 0),
+    (:quizzes,  "Quizzes",          30.0, 3),
     (:review,   "In-person Review", 20.0, 0),
     (:final,    "Final Exam",       40.0, 0),
 ]
@@ -191,6 +197,7 @@ cc["course_settings.xml"] = """
   <course_code>CS 550</course_code>
   <grading_standard_enabled>false</grading_standard_enabled>
   <apply_assignment_group_weights>true</apply_assignment_group_weights>
+  <default_view>wiki</default_view>
   <workflow_state>available</workflow_state>
 </course>
 """
@@ -233,11 +240,47 @@ cc["media_tracks.xml"] = """
 <media_tracks xmlns="http://canvas.instructure.com/xsd/cccv1p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://canvas.instructure.com/xsd/cccv1p0">
 </media_tracks>
 """
+# Late policy: deduct LATE_DEDUCTION_PERCENT per LATE_DEDUCTION_INTERVAL on late
+# online submissions (Canvas reads snake_case children under <late_policy>).
+cc["late_policy.xml"] = """
+<?xml version="1.0" encoding="UTF-8"?>
+<late_policy identifier="$(make_id("late_policy"))" xmlns="http://canvas.instructure.com/xsd/cccv1p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://canvas.instructure.com/xsd/cccv1p0">
+  <missing_submission_deduction_enabled>false</missing_submission_deduction_enabled>
+  <missing_submission_deduction>0.0</missing_submission_deduction>
+  <late_submission_deduction_enabled>true</late_submission_deduction_enabled>
+  <late_submission_deduction>$(pts(LATE_DEDUCTION_PERCENT))</late_submission_deduction>
+  <late_submission_interval>$LATE_DEDUCTION_INTERVAL</late_submission_interval>
+  <late_submission_minimum_percent_enabled>false</late_submission_minimum_percent_enabled>
+  <late_submission_minimum_percent>0.0</late_submission_minimum_percent>
+</late_policy>
+"""
 for (name, content) in cc
     write(joinpath(build, "course_settings", name), content)
 end
 cc_files = ["course_settings/$name" for name in sort(collect(keys(cc)))]
 cc_res_id = make_id("course_settings_res")
+
+# ---- home page: a wiki front page linking to the course repository --------
+home_id   = make_id("home_page")
+home_href = "wiki_content/course-home.html"
+mkpath(joinpath(build, "wiki_content"))
+write(joinpath(build, home_href), """
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Course Home</title>
+<meta name="identifier" content="$home_id"/>
+<meta name="editing_roles" content="teachers"/>
+<meta name="workflow_state" content="active"/>
+<meta name="front_page" content="true"/>
+</head>
+<body>
+<h1>$(xmlesc(COURSE_TITLE))</h1>
+<p>All course content &#8212; syllabus, assignments, and schedule &#8212; is maintained in the course repository:</p>
+<p><a href="$REPO_URL">$REPO_URL</a></p>
+</body>
+</html>
+""")
 
 # ---- imsmanifest.xml ------------------------------------------------------
 res_xml = String[]
@@ -246,6 +289,8 @@ push!(res_xml, string(
     "    <resource identifier=\"$cc_res_id\" type=\"associatedcontent/imscc_xmlv1p1/learning-application-resource\" href=\"course_settings/canvas_export.txt\">\n",
     join(["      <file href=\"$f\"/>" for f in cc_files], "\n"),
     "\n    </resource>"))
+# home page (wiki front page)
+push!(res_xml, "    <resource identifier=\"$home_id\" type=\"webcontent\" href=\"$home_href\">\n      <file href=\"$home_href\"/>\n    </resource>")
 # then every assignment
 for (id, href, files) in resources
     fx = join(["      <file href=\"$f\"/>" for f in files], "\n")
@@ -290,4 +335,4 @@ end
 println("Wrote ", OUT)
 println("Assignments: ", length(ASSIGNMENTS), "  Quizzes: ", length(QUIZZES),
         "  Review: 1  Final exam: 1  Groups: ", length(GROUPS),
-        "  Modules: 0")
+        "  Home page: 1  Modules: 0")
