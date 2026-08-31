@@ -89,10 +89,10 @@ Let $f(x) = \log(1 + e^{x})$.
 For each function, find all points where $f'(x) = 0$ and classify each as a local minimum, local maximum, or neither, using the second derivative (or another argument when the second derivative is inconclusive).
 \begin{enumerate}
 \item $f(x) = x^2 - 6x + 1$
-\item $f(x) = x^3 - 3x$
+% \item $f(x) = x^3 - 3x$
 \item $f(x) = x^3$
 \item $f(x) = x^4$
-\item $f(x) = x + \frac{4}{x}$ on $x > 0$
+% \item $f(x) = x + \frac{4}{x}$ on $x > 0$
 \end{enumerate}
 
 % \section{Necessary vs.\ sufficient conditions}
@@ -107,10 +107,16 @@ For each function, find all points where $f'(x) = 0$ and classify each as a loca
 \section{Convexity}
 Recall that a twice-differentiable function $f\colon \Real \to \Real$ is convex if and only if $f''(x) \geq 0$ for all $x$.
 \begin{enumerate}
-\item Determine which of the following functions are convex on the given domain: (i) $f(x) = e^{3x}$ on $\Real$; (ii) $f(x) = \log(x)$ on $x > 0$; (iii) $f(x) = x^4 - x^2$ on $\Real$; (iv) $f(x) = \max\{x, 0\}$ on $\Real$ (careful: not differentiable at $0$; argue from the definition or a picture).
-\item Show that if $f$ and $g$ are convex, then $f + g$ is convex, and that $\alpha f$ is convex for any $\alpha \geq 0$.
-\item Show that $f(x) = (x - 3)^2 + e^{x}$ is convex and explain why any point with $f'(x) = 0$ must be its global minimizer.
-\item Give an example of two convex functions whose \emph{product} is not convex.
+\item Determine which of the following functions are convex on the given domain:
+  \begin{enumerate}
+  \item $f(x) = e^{3x}$ on $\Real$;
+  \item $f(x) = \log(x)$ on $x > 0$;
+  % \item $f(x) = x^4 - x^2$ on $\Real$; 
+  \item $f(x) = \max\{x, 0\}$ on $\Real$ (careful: not differentiable at $0$; argue from the definition or a picture).
+  \end{enumerate}
+\item Show that if $f$ and $g$ are convex and \emph{differentiable}, then $f + g$ is convex, and that $\alpha f$ is convex and \emph{differentiable} for any $\alpha \geq 0$.
+% \item Show that $f(x) = (x - 3)^2 + e^{x}$ is convex and explain why any point with $f'(x) = 0$ must be its global minimizer.
+\item Give an example of two convex functions whose \emph{elementwise product} is not convex.
 \end{enumerate}
 
 % \section{Gradient descent by hand}
