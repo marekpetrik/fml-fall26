@@ -11,7 +11,12 @@ See [class syllabus](overview/syllabus.pdf) for the information regarding gradin
 
 ## Office Hours
 
-TBD
+*Where*: Kingsbury N215b
+
+*When*:
+
+- Tue: 3:40 - 5pm
+- Thu: 12 - 1pm 
 
 ## Course Schedule and Topics
 
@@ -50,6 +55,16 @@ One lecture on each of the following topics. Please see the class website and my
 | Dec 8  | Tue | Reinforcement learning: objectives, optimization, and training text models | UDL 19                     |
 | Dec 10 | Thu | Review and final exam preparation                                          |                            |
 
+## Textbooks
+
+- **ILA**: Strang, G. (2016). [Introduction to Linear Algebra](http://math.mit.edu/~gs/linearalgebra/)
+- **CO**: Boyd, S. and Vandenberghe, L. (2004). [Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/)
+- **IRA**: Hunter, J.K. [An Introduction to Real Analysis](https://www.math.ucdavis.edu/~hunter/intro_analysis_pdf/intro_analysis.html)
+- **ISL**: James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). [An Introduction to Statistical Learning](https://www.statlearning.com/) (2nd edition)
+- **MML**: Deisenroth, M. P., Faisal, A. A., & Ong, C. S. (2021). [Mathematics for Machine Learning](https://mml-book.github.io/)
+- **UDL**: Prince, S. J. D. (2023). [Understanding Deep Learning](https://udlbook.github.io/udlbook/). MIT Press.
+- Strang, G. (2019). [Linear Algebra and Learning from Data](https://math.mit.edu/~gs/learningfromdata/)
+- Bertsekas, D.P. and Tsitsiklis, J.N. (2008). Introduction to Probability. 2nd edition.
 
 ## Assignments
 
@@ -94,18 +109,6 @@ Assignments should be turned in as a **PDF**, which can be scanned and hand-writ
 | 10   | Thu Nov 12 |
 | 11   | Thu Nov 19 |
 | 12   | Thu Dec 03 |
-
-## Textbooks
-
-- **ILA**: Strang, G. (2016). [Introduction to Linear Algebra](http://math.mit.edu/~gs/linearalgebra/)
-- **CO**: Boyd, S. and Vandenberghe, L. (2004). [Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/)
-- **IRA**: Hunter, J.K. [An Introduction to Real Analysis](https://www.math.ucdavis.edu/~hunter/intro_analysis_pdf/intro_analysis.html)
-- **ISL**: James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). [An Introduction to Statistical Learning](https://www.statlearning.com/) (2nd edition)
-- **MML**: Deisenroth, M. P., Faisal, A. A., & Ong, C. S. (2021). [Mathematics for Machine Learning](https://mml-book.github.io/)
-- **UDL**: Prince, S. J. D. (2023). [Understanding Deep Learning](https://udlbook.github.io/udlbook/). MIT Press.
-- Strang, G. (2019). [Linear Algebra and Learning from Data](https://math.mit.edu/~gs/learningfromdata/)
-- Bertsekas, D.P. and Tsitsiklis, J.N. (2008). Introduction to Probability. 2nd edition.
-
 
 ## Programming Language
 
