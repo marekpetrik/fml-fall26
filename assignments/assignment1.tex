@@ -21,7 +21,7 @@
 
 \begin{itemize}
 \item \textbf{Submission}: Turn in as a \texttt{PDF} and a \textbf{separate source code file} on \url{http://mycourses.unh.edu}. Scanned hand-written notes are encouraged.
-\item \textbf{Questions}: See the class website for a link to office hours
+\item \textbf{Questions}: See the class website for a link to office hours.
 \end{itemize}
 
 \textbf{Relevant reading}: IRA 1, 2, 6, 8; MML 5.1; CO 1.1, 3.1.1.  
@@ -42,7 +42,7 @@ Compute the first derivative $f'(x)$ and the second derivative $f''(x)$ of each 
 \begin{enumerate}
 \item $f(x) = 4x^3 - 2x^2 + 7$
 \item $f(x) = e^{-2x}$
-\item $f(x) = \log(1 + x^2)$
+\item $f(x) = \log(1 + x^2)$, where $\log$ is the natural logarithm (base $e$)
 \item $f(x) = x e^{x}$
 \item $f(x) = \frac{1}{1 + e^{-x}}$ \quad (the sigmoid function; express $f'$ in terms of $f$ if you can)
 \item $f(x) = (3x - 1)^4$
@@ -64,7 +64,7 @@ f_2(x) = f(x_0) + f'(x_0)(x - x_0) + \tfrac{1}{2} f''(x_0)(x - x_0)^2 .
 \]
 \begin{enumerate}
 \item Compute $f_1$ and $f_2$ for $f(x) = e^x$ around $x_0 = 0$.
-\item Compute $f_1$ and $f_2$ for $f(x) = \log(x)$ around $x_0 = 1$.
+\item Compute $f_1$ and $f_2$ for $f(x) = \log(x)$ around $x_0 = 1$. Here, $\log$ is the natural logarithm (base $e$).
 % \item For each function above, evaluate $f$, $f_1$, and $f_2$ at $x = 0.5$ and at $x = 2$, and report the approximation errors $|f(x) - f_1(x)|$ and $|f(x) - f_2(x)|$. Which approximation is better, and where does the approximation degrade?
 \item For which functions $f$ does $f_2 = f$ exactly for every choice of $x_0$? Explain.
 \end{enumerate}
@@ -77,7 +77,7 @@ f_2(x) = f(x_0) + f'(x_0)(x - x_0) + \tfrac{1}{2} f''(x_0)(x - x_0)^2 .
 \end{enumerate}
 
 \section{Visualizing Taylor approximations \textbf{[code]}}
-Let $f(x) = \log(1 + e^{x})$.
+Let $f(x) = \log(1 + e^{x})$, where $\log$ is the natural logarithm (base $e$).
 \begin{enumerate}
 \item Derive $f'(x)$ and $f''(x)$ by hand and include the derivation in your writeup.
 \item Write a function that, given $x_0$, returns the first-order Taylor approximation $f_1$ and the second-order Taylor approximation $f_2$ of $f$ around $x_0$.
@@ -110,13 +110,13 @@ Recall that a twice-differentiable function $f\colon \Real \to \Real$ is convex 
 \item Determine which of the following functions are convex on the given domain:
   \begin{enumerate}
   \item $f(x) = e^{3x}$ on $\Real$;
-  \item $f(x) = \log(x)$ on $x > 0$;
+  \item $f(x) = \log(x)$ on $x > 0$ where $\log$ is the natural logarithm (base $e$);
   % \item $f(x) = x^4 - x^2$ on $\Real$; 
   \item $f(x) = \max\{x, 0\}$ on $\Real$ (careful: not differentiable at $0$; argue from the definition or a picture).
   \end{enumerate}
-\item Show that if $f$ and $g$ are convex and \emph{twice-differentiable}, then $f + g$ is convex, and $\alpha f$ is convex and for any $\alpha \geq 0$.
+\item Show that if $f$ and $g$ are convex and \emph{twice-differentiable}, then $f + g$ is convex, and $\alpha f$ is convex for any $\alpha \geq 0$.
 % \item Show that $f(x) = (x - 3)^2 + e^{x}$ is convex and explain why any point with $f'(x) = 0$ must be its global minimizer.
-\item Give an example of two convex functions whose \emph{elementwise product} is not convex.
+\item Give an example of two convex functions whose \emph{pointwise product} is not convex.
 \end{enumerate}
 
 % \section{Gradient descent by hand}
