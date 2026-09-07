@@ -26,9 +26,9 @@ One lecture on each of the following topics. Please see the class website and my
 |--------|-----|----------------------------------------------------------------------------|----------------------------|
 | Sep 1  | Tue | Introduction and review: Functions, derivatives, Taylor series             | IRA 1,2,6,8.1-8.3; MML 5.1 |
 | Sep 3  | Thu | Optimizing functions: Convexity, gradient descent                          | IRA 8; CO 1.1, 3.1.1       |
-| Sep 8  | Tue | Vectors: operations, inner product, norms                                  | ILA 1.1-1.3                |
-| Sep 10 | Thu | Matrices: matrix operations, inverses                                      | ILA 2.1, 2.4               |
-| Sep 15 | Tue | Factorization, transposes, permutation                                     | ILA 2.6-2.7                |
+| Sep 8  | Tue | Vectors: operations, inner product, norms                                  | ILA 1.1, 1.2               |
+| Sep 10 | Thu | Matrices: matrix operations, inverses                                      | ILA 1.3, 2.1               |
+| Sep 15 | Tue | Factorization, transposes, permutation                                     | ILA 2.4, 2.6-2.7           |
 | Sep 17 | Thu | Vector spaces and orthogonality                                            | ILA 3.1, 3.3               |
 | Sep 22 | Tue | Projections, rotations, least squares                                      | ILA 4.1-4.4                |
 | Sep 24 | Thu | Eigenvalues and eigenvectors                                               | ILA 6.1-6.2                |
