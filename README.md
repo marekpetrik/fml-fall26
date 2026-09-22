@@ -22,38 +22,38 @@ See [class syllabus](overview/syllabus.pdf) for the information regarding gradin
 
 One lecture on each of the following topics. Please see the class website and myCourses for the most current due dates, readings for each lecture, and any schedule adjustments.
 
-| Date   | Day | Topic                                                                      | Reading                    |
-|--------|-----|----------------------------------------------------------------------------|----------------------------|
-| Sep 1  | Tue | Introduction and review: Functions, derivatives, Taylor series             | IRA 1,2,6,8.1-8.3; MML 5.1 |
-| Sep 3  | Thu | Optimizing functions: Convexity, gradient descent                          | IRA 8; CO 1.1, 3.1.1       |
-| Sep 8  | Tue | Vectors: operations, inner product, norms                                  | ILA 1.1, 1.2               |
-| Sep 10 | Thu | Matrices: matrix operations, inverses                                      | ILA 1.3, 2.1               |
-| Sep 15 | Tue | Matrix product, inverse, transposes, permutation                           | ILA 2.4, 2.5, 2.7          |
-| Sep 17 | Thu | Vector spaces and orthogonality                                            | ILA 3.1, 3.3               |
-| Sep 22 | Tue | Projections, rotations, least squares                                      | ILA 4.1-4.4                |
-| Sep 24 | Thu | Eigenvalues and eigenvectors                                               | ILA 6.1-6.2                |
-| Sep 29 | Tue | Vector functions and quadratic forms                                       | CO A.3-A.5                 |
-| Oct 1  | Thu | Multivariate calculus: gradient and Hessian                                | CO A.4; MML 5.2            |
-| Oct 6  | Tue | Multivariate calculus: chain rule and Jacobian                             | CO A.4; MML 5.2            |
-| Oct 8  | Thu | Optimization basics: convexity and optimality conditions                   | CO 2.1-2.2, 3.1-3.2        |
-| Oct 13 | Tue | *No class, Wed schedule*                                                   |                            |
-| Oct 15 | Thu | Convex optimization                                                        | CO 4.1-4.2                 |
-| Oct 20 | Tue | Linear programming                                                         | CO 4.3; ILA 10.4           |
-| Oct 22 | Thu | Machine learning: linear regression                                        | ISL 2-3                    |
-| Oct 27 | Tue | Logistic regression and gradient descent                                   | ISL 4; CO 7.1; MML 7.1     |
-| Oct 29 | Thu | Gradient descent: solving logistic regression                              | ISL 4; CO 9.3              |
-| Nov 3  | Tue | Neural networks: basics                                                    | UDL 3-4                    |
-| Nov 5  | Thu | Fitting neural networks and backpropagation                                | UDL 6-7                    |
-| Nov 10 | Tue | Probability basics: random variables                                       | MML 6.1-6.3                |
-| Nov 12 | Thu | Probability basics: distributions                                          | MML 6.4-6.5                |
-| Nov 17 | Tue | Maximum likelihood and MAP                                                 | MML 8.1, 8.3.1-8.3.2       |
-| Nov 19 | Thu | Principal component analysis                                               | MML 10.1-10.3              |
-| Nov 24 | Tue | Overfitting and cross-validation                                           | MML 8.2                    |
-| Nov 26 | Thu | *No class, thanksgiving holiday*                                           |                            |
-| Dec 1  | Tue | Markov models and stationary distributions                                 |                            |
-| Dec 3  | Thu | Markov models: PageRank, clustering, (transformers?)                       |                            |
-| Dec 8  | Tue | Reinforcement learning: objectives, optimization, and training text models | UDL 19                     |
-| Dec 10 | Thu | Review and final exam preparation                                          |                            |
+| Date   | Day | Topic                                                          | Reading                    |
+|--------|-----|----------------------------------------------------------------|----------------------------|
+| Sep 1  | Tue | Introduction and review: Functions, derivatives, Taylor series | IRA 1,2,6,8.1-8.3; MML 5.1 |
+| Sep 3  | Thu | Optimizing functions: Convexity, gradient descent              | IRA 8; CO 1.1, 3.1.1       |
+| Sep 8  | Tue | Vectors: operations, inner product, norms                      | ILA 1.1, 1.2               |
+| Sep 10 | Thu | Matrices: matrix operations, inverses                          | ILA 1.3, 2.1               |
+| Sep 15 | Tue | Matrix product, inverse, transposes, permutation               | ILA 2.4, 2.5, 2.7          |
+| Sep 17 | Thu | Vector spaces and orthogonality                                | ILA 3.1, 3.3               |
+| Sep 22 | Tue | Projections                                                    | ILA 4.2                    |
+| Sep 24 | Thu | Eigenvalues and eigenvectors                                   | ILA 6.1                    |
+| Sep 29 | Tue | Diagonalization, Vector functions and quadratic forms          | ILA 6.2, CO A.3-A.5        |
+| Oct 1  | Thu | Multivariate calculus: gradient and Hessian                    | CO A.4; MML 5.2            |
+| Oct 6  | Tue | Multivariate calculus: chain rule and Jacobian                 | CO A.4; MML 5.2            |
+| Oct 8  | Thu | Optimization basics: convexity and optimality conditions       | CO 2.1-2.2, 3.1-3.2        |
+| Oct 13 | Tue | *No class, Wed schedule*                                       |                            |
+| Oct 15 | Thu | Convex optimization                                            | CO 4.1-4.2                 |
+| Oct 20 | Tue | Linear programming                                             | CO 4.3; ILA 10.4           |
+| Oct 22 | Thu | Machine learning: linear regression                            | ISL 2-3                    |
+| Oct 27 | Tue | Logistic regression and gradient descent                       | ISL 4; CO 7.1; MML 7.1     |
+| Oct 29 | Thu | Gradient descent: solving logistic regression                  | ISL 4; CO 9.3              |
+| Nov 3  | Tue | Neural networks: basics                                        | UDL 3-4                    |
+| Nov 5  | Thu | Fitting neural networks and backpropagation                    | UDL 6-7                    |
+| Nov 10 | Tue | Probability basics: random variables                           | MML 6.1-6.3                |
+| Nov 12 | Thu | Probability basics: distributions                              | MML 6.4-6.5                |
+| Nov 17 | Tue | Maximum likelihood and MAP                                     | MML 8.1, 8.3.1-8.3.2       |
+| Nov 19 | Thu | Principal component analysis                                   | MML 10.1-10.3              |
+| Nov 24 | Tue | Transformers and LLMs                                          | UDL                        |
+| Nov 26 | Thu | *No class, thanksgiving holiday*                               |                            |
+| Dec 1  | Tue | Markov chain and decision process                              |                            |
+| Dec 3  | Thu | Reinforcement learning                                         |                            |
+| Dec 8  | Tue | Reinforcement learning: transformers and LLMs                  | UDL 19                     |
+| Dec 10 | Thu | Review and final exam preparation                              |                            |
 
 ## Textbooks
 
@@ -65,6 +65,7 @@ One lecture on each of the following topics. Please see the class website and my
 - **UDL**: Prince, S. J. D. (2023). [Understanding Deep Learning](https://udlbook.github.io/udlbook/). MIT Press.
 - Strang, G. (2019). [Linear Algebra and Learning from Data](https://math.mit.edu/~gs/learningfromdata/)
 - Bertsekas, D.P. and Tsitsiklis, J.N. (2008). Introduction to Probability. 2nd edition.
+- Axler, S. (2026), [Linear Algebra Done Right](https://linear.axler.net/LADR4e.pdf)
 
 ## Assignments
 
