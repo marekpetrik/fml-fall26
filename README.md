@@ -32,8 +32,8 @@ One lecture on each of the following topics. Please see the class website and my
 | Sep 17 | Thu | Vector spaces and orthogonality                                | ILA 3.1, 3.3               |
 | Sep 22 | Tue | Projections                                                    | ILA 4.2                    |
 | Sep 24 | Thu | Eigenvalues and eigenvectors                                   | ILA 6.1                    |
-| Sep 29 | Tue | Diagonalization, Vector functions and quadratic forms          | ILA 6.2, CO A.3-A.5        |
-| Oct 1  | Thu | Multivariate calculus: gradient and Hessian                    | CO A.4; MML 5.2            |
+| Sep 29 | Tue | Diagonalization, Vector functions and quadratic forms          | ILA 6.2,6.4, CO A.3-A.5    |
+| Oct 1  | Thu | Diagonalization, Positive definiteness and convexity           | ILA 6.2,6.4, CO A.3-A.5    |
 | Oct 6  | Tue | Multivariate calculus: chain rule and Jacobian                 | CO A.4; MML 5.2            |
 | Oct 8  | Thu | Optimization basics: convexity and optimality conditions       | CO 2.1-2.2, 3.1-3.2        |
 | Oct 13 | Tue | *No class, Wed schedule*                                       |                            |
