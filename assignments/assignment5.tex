@@ -24,16 +24,34 @@
 \item \textbf{Questions}: See the class website for a link to office hours
 \end{itemize}
 
-% Covers: Vector/quadratic functions using linear algebra (CO A.3--A.5) and
-% Multivariate calculus basics: gradient and Hessian (CO A.4, MML 5.2).
-% Boyd's appendix has no exercises, so the calculus problems are drawn from MML ch.~5.
 
-\textbf{Relevant reading}: CO A.3--A.5; MML 5.1--5.2. Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia or Python recommended). The cited exercise numbers are from MML (Deisenroth et al., 2021).
+\textbf{Relevant reading}: ILA 6.2, 6.4, 6.5. Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia or Python recommended). The cited problem numbers are from ILA, 5th edition (Strang, 2016).
 
 \begin{enumerate}
-\item MML, Chapter 5 exercises: any three on partial derivatives, gradients, and the Hessian (e.g.\ Exercises 5.1--5.4).
-\item For the quadratic form $f(x) = x\tr A x$ with $A$ symmetric, derive the gradient $\nabla f$ and the Hessian $\nabla^2 f$ by hand, and explain how the definiteness of $A$ (via its eigenvalues) determines whether $f$ has a minimum, a maximum, or a saddle at the origin.
-\item \textbf{[code]} For $f(x,y) = x^2 + 2xy + 3y^2$, compute the gradient and Hessian by hand, then verify both numerically by finite differences at the point $(1,1)$. Plot the contours of $f$.
+\item ILA Problem Set 6.2 exercises: 1,3,4,6,15, and extra credit: 36,39
+\item ILA Problem Set 6.4 exercises: 1,4,6,8,12,24,25,26,34,35
+\item ILA Problem Set 6.5 exercises: 2,4,7,14,15,22,23,33
+\item Write the following functions in the form $f(x) = x\tr A x + b\tr x + c$ where $x \in \Real^2$ and $A\tr = A$ 
+  \begin{enumerate}
+  \item $f(x) = x_1^2 + 2 x_2^2$
+  \item $f(x) = 3x_1^2 + 2 x_2^2 - 2x_1x_2$
+  \item $f(x) = 3x_1^2 + 2 x_2^2 - 2x_2x_1 - 2x_1x_1 + 2x_1 - 3$
+  \end{enumerate}
+\item Suppose that $f(x) = x\tr A x + b\tr x + c$ where $A \in \Real^{n\times n}$ may not be symmetric. Show that you can construct a quadratic function $g(x) = x\tr \hat{A} x + \hat{b}\tr x + \hat{c}$ such that $\hat{A}$ is symmetric and $g(x) = f(x) , \forall x \in \Real^n$. 
+
+  
+\item \textbf{[code]} Consider a quadratic function $f \colon \Real^2 \to  \Real$ defined as
+  \[
+    f(x) := \frac{1}{2} \, x\tr\begin{bmatrix} 3 & 1 \\1 & 3 \end{bmatrix} x.
+  \]
+  Create a contour plot of $f$ and plot the eigenvectors of $A$ onto the plot. Discuss how the eigenvalues relate to the quadratic function.
+
+  Next, consider a quadratic function $g \colon \Real^2 \to  \Real$ defined as
+  \[
+    g(x) := \frac{1}{2} \, x\tr\begin{bmatrix} 3 & -1 \\4 & 3 \end{bmatrix} x,
+  \]
+  and repeat the steps above. What do you observe?
+ 
 \item \textbf{Time spent.} Report approximately how many hours you spent completing this problem set (including the reading).
 \end{enumerate}
 
