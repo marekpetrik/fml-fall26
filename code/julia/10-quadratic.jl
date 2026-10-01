@@ -44,3 +44,7 @@ contour(x₁,x₂,z, xlabel="x₁", ylabel="x₂", aspect_ratio=:equal, size=(50
 plot!([0,λ₁*e₁[1]],[0,λ₁*e₁[2]],arrow=true,color=:red, linewidth=2,label="λ₁ ⋅ e₁")
 plot!([0,λ₂*e₂[1]],[0,λ₂*e₂[2]],arrow=true,color=:blue,linewidth=2,label="λ₂ ⋅ e₂")
 
+### And a surface plot
+
+surface(x₁,x₂,z, xlabel="x₁", ylabel="x₂", aspect_ratio=:equal, size=(500,500))
+

@@ -48,3 +48,9 @@ arrows(0, 0, l1 * e1[1], l1 * e1[2], col = "red", lwd = 2, length = 0.1)
 arrows(0, 0, l2 * e2[1], l2 * e2[2], col = "blue", lwd = 2, length = 0.1)
 legend("topright", legend = expression(lambda[1] %.% e[1], lambda[2] %.% e[2]),
        col = c("red", "blue"), lwd = 2)
+
+### And a surface plot
+
+# https://rdrr.io/r/graphics/persp.html
+persp(x1, x2, z, xlab = "x1", ylab = "x2", zlab = "f",
+      theta = 30, phi = 30, col = "lightblue", shade = 0.5, border = NA)

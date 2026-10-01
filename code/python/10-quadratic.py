@@ -51,3 +51,12 @@ plt.ylabel("x₂")
 plt.gca().set_aspect("equal")
 plt.legend()
 plt.show()
+
+### And a surface plot
+
+fig = plt.figure(figsize=(5, 5))
+ax = fig.add_subplot(projection="3d")
+ax.plot_surface(X1, X2, Z, cmap="viridis")
+ax.set_xlabel("x₁")
+ax.set_ylabel("x₂")
+plt.show()
