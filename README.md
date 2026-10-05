@@ -35,25 +35,26 @@ One lecture on each of the following topics. Please see the class website and my
 | Sep 29 | Tue | Diagonalization, Vector functions and quadratic forms          | ILA 6.2,6.4, CO A.3-A.5    |
 | Oct 1  | Thu | Diagonalization, Positive definiteness and convexity           | ILA 6.2,6.4, CO A.3-A.5    |
 | Oct 6  | Tue | Multivariate calculus: chain rule and Jacobian                 | CO A.4; MML 5.2            |
-| Oct 8  | Thu | Optimization basics: convexity and optimality conditions       | CO 2.1-2.2, 3.1-3.2        |
+| Oct 8  | Thu | Optimization basics: convexity and optimality conditions       | CO 2.1-2.2, 3.1-3.2, 4.1   |
 | Oct 13 | Tue | *No class, Wed schedule*                                       |                            |
-| Oct 15 | Thu | Convex optimization                                            | CO 4.1-4.2                 |
+| Oct 15 | Thu | Gradient descent                                               | CO 7.1; MML 7.1            |
 | Oct 20 | Tue | Linear programming                                             | CO 4.3; ILA 10.4           |
 | Oct 22 | Thu | Machine learning: linear regression                            | ISL 2-3                    |
-| Oct 27 | Tue | Logistic regression and gradient descent                       | ISL 4; CO 7.1; MML 7.1     |
-| Oct 29 | Thu | Gradient descent: solving logistic regression                  | ISL 4; CO 9.3              |
-| Nov 3  | Tue | Neural networks: basics                                        | UDL 3-4                    |
-| Nov 5  | Thu | Fitting neural networks and backpropagation                    | UDL 6-7                    |
-| Nov 10 | Tue | Probability basics: random variables                           | MML 6.1-6.3                |
-| Nov 12 | Thu | Probability basics: distributions                              | MML 6.4-6.5                |
-| Nov 17 | Tue | Maximum likelihood and MAP                                     | MML 8.1, 8.3.1-8.3.2       |
-| Nov 19 | Thu | Principal component analysis                                   | MML 10.1-10.3              |
-| Nov 24 | Tue | Transformers and LLMs                                          | UDL                        |
+| Oct 27 | Tue | Logistic regression and gradient descent                       | ISL 4; CO 9.3              |
+| Oct 29 | Thu | Shallow neural networks                                        | UDL 3                      |
+| Nov 3  | Tue | Deep neural networks                                           | UDL 4                      |
+| Nov 5  | Thu | Backpropagation: Fitting neural networks                       | UDL 6-7                    |
+| Nov 10 | Tue | Principal component analysis                                   | MML 10.1-10.3              |
+| Nov 12 | Thu | Transformers and LLMs                                          | UDL                        |
+| Nov 17 | Tue | Reinforcement learning                                         |                            |
+| Nov 19 | Thu | Reinforcement learning: transformers and LLMs                  | UDL 19                     |
+| Nov 24 | Tue | Review and final exam preparation                              |                            |
 | Nov 26 | Thu | *No class, thanksgiving holiday*                               |                            |
-| Dec 1  | Tue | Markov chain and decision process                              |                            |
-| Dec 3  | Thu | Reinforcement learning                                         |                            |
-| Dec 8  | Tue | Reinforcement learning: transformers and LLMs                  | UDL 19                     |
+| Dec 1  | Tue | Probability basics: random variables                           | MML 6.1-6.3                |
+| Dec 3  | Thu | Probability basics: distributions                              | MML 6.4-6.5                |
+| Dec 8  | Tue | Maximum likelihood, MAP, PCA, overfitting                      | MML 8.1, 8.3.1-8.3.2       |
 | Dec 10 | Thu | Review and final exam preparation                              |                            |
+
 
 ## Textbooks
 
