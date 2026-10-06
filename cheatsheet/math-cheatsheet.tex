@@ -51,10 +51,10 @@
 \newcommand{\mI}{\M{I}} \newcommand{\mP}{\M{P}} \newcommand{\mQ}{\M{Q}}
 \newcommand{\mR}{\M{R}} \newcommand{\mX}{\M{X}} \newcommand{\mH}{\M{H}}
 \newcommand{\mLambda}{\M{\Lambda}} \newcommand{\mJ}{\M{J}}
-\newcommand{\T}{^{\top}}
 \newcommand{\inv}{^{-1}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\tr}{^{\mathsf T}}
 \newcommand{\abs}[1]{\lvert #1 \rvert}
 \newcommand{\ip}[2]{\langle #1, #2 \rangle}
 \DeclareMathOperator{\colsp}{\mathbf{C}}
@@ -95,7 +95,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PAGE 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\sheettitle{Math for ML Cheat Sheet: Linear Algebra}{CS 550 \textbullet{} Foundations of Machine Learning}
+\sheettitle{Math for ML Cheat Sheet: Linear Algebra  (v1.0)}{CS 550 \textbullet{} Foundations of Machine Learning}
 
 \begin{multicols*}{3}
 
@@ -103,10 +103,10 @@
 \begin{tabular}{@{}l@{\;\;}l@{}}
   $\vx\in\R^n$ & column vector, entries $x_1,\dots,x_n$ (Strang: $\mathbf{x}$ or $x$)\\
   $\mA\in\R^{m\times n}$ & matrix, $m$ rows, $n$ columns, entry $a_{ij}$ (Strang: $A$)\\
-  $\va_j$, $\va_i\T$ & column $j$ / row $i$ of $\mA$ \\
-  $\vx\T$ & transpose: row vector (Strang/MML also $\vx^{\mathsf T}$)\\
+  $\va_j$, $\va_i\tr$ & column $j$ / row $i$ of $\mA$ \\
+  $\vx\tr$ & transpose: row vector \\
   $\ve_i$ & $i$-th standard basis vector; $\mI$ = identity\\
-  $\vx\T\vy = \vx\cdot\vy = \ip{\vx}{\vy}$ & dot (inner) product
+  $\vx\tr\vy = \vx\cdot\vy = \ip{\vx}{\vy}$ & dot (inner) product
 \end{tabular}
 
 \sect{Vectors}
@@ -116,14 +116,14 @@ $\spn\{\vv_1,\dots,\vv_k\}$ = set of \emph{all} linear combinations. The vectors
 \emph{linearly independent} if $\sum_i c_i\vv_i = \vzero$ only when all $c_i=0$.
 
 \topic{Dot product}
-\[ \vx\T\vy = \sum_{i=1}^n x_i y_i = x_1y_1+\dots+x_ny_n \in\R . \]
-Symmetric, linear in each argument, $\vx\T\vx = \norm{\vx}_2^2 \ge 0$.
+\[ \vx\tr\vy = \sum_{i=1}^n x_i y_i = x_1y_1+\dots+x_ny_n \in\R . \]
+Symmetric, linear in each argument, $\vx\tr\vx = \norm{\vx}_2^2 \ge 0$.
 
 \begin{minipage}[c]{0.52\linewidth}
 \topic{Dot product and angle}
-\[ \vx\T\vy = \norm{\vx}_2\,\norm{\vy}_2\cos\theta \]
-\[ \cos\theta = \frac{\vx\T\vy}{\norm{\vx}_2\norm{\vy}_2} \]
-$\vx\T\vy>0$: acute, $=0$: \textbf{orthogonal} ($\vx\perp\vy$), $<0$: obtuse.
+\[ \vx\tr\vy = \norm{\vx}_2\,\norm{\vy}_2\cos\theta \]
+\[ \cos\theta = \frac{\vx\tr\vy}{\norm{\vx}_2\norm{\vy}_2} \]
+$\vx\tr\vy>0$: acute, $=0$: \textbf{orthogonal} ($\vx\perp\vy$), $<0$: obtuse.
 \end{minipage}\hfill
 \begin{minipage}[c]{0.44\linewidth}
 \centering
@@ -143,7 +143,7 @@ $\vx\T\vy>0$: acute, $=0$: \textbf{orthogonal} ($\vx\perp\vy$), $<0$: obtuse.
 \end{minipage}
 
 \topic{Cauchy--Schwarz inequality}
-\[ \abs{\vx\T\vy} \le \norm{\vx}_2\,\norm{\vy}_2 \]
+\[ \abs{\vx\tr\vy} \le \norm{\vx}_2\,\norm{\vy}_2 \]
 with equality iff $\vx,\vy$ are parallel. (Equivalent to $\abs{\cos\theta}\le 1$.)
 
 \begin{minipage}[c]{0.58\linewidth}
@@ -166,10 +166,14 @@ with equality iff $\vx,\vy$ are parallel. (Equivalent to $\abs{\cos\theta}\le 1$
 
 \begin{minipage}[c]{0.64\linewidth}
 Common norms:\\[1pt]
-$\norm{\vx}_2=\sqrt{\vx\T\vx}=\sqrt{\textstyle\sum_i x_i^2}$ \hfill (Euclidean, default)\\
+$\norm{\vx}_2=\sqrt{\vx\tr\vx}=\sqrt{\textstyle\sum_i x_i^2}$ \hfill (Euclidean, default)\\
 $\norm{\vx}_1=\sum_i\abs{x_i}$ \hfill (Manhattan)\\
 $\norm{\vx}_\infty=\max_i\abs{x_i}$ \hfill (max)\\
-\note{Unit vector: $\vu = \vx/\norm{\vx}_2$ has $\norm{\vu}_2=1$.}
+\end{minipage} \hfill
+
+\begin{minipage}[c]{0.64\linewidth}
+
+\topic{Unit vector} $\vu = \vx/\norm{\vx}_2$ has $\norm{\vu}_2=1$.
 \end{minipage}\hfill
 \begin{minipage}[c]{0.32\linewidth}
 \centering
@@ -192,7 +196,7 @@ $\mA\in\R^{m\times n}$, $\mB\in\R^{n\times p}$ $\Rightarrow$ $\mC=\mA\mB\in\R^{m
 Inner dimensions must agree. In general $\mA\mB\ne\mB\mA$; but $(\mA\mB)\mC=\mA(\mB\mC)$.
 
 \topic{As inner products} (row $\cdot$ column)
-\[ c_{ij} = \va_i\T\vb_j = \sum_{k=1}^n a_{ik}b_{kj} \]
+\[ c_{ij} = \va_i\tr\vb_j = \sum_{k=1}^n a_{ik}b_{kj} \]
 \centering
 \begin{tikzpicture}[mat]
   \grid{4}{3}{plight} \foreach \j in {1,2,3}{\cell{2}{\j}{porange}}
@@ -213,15 +217,15 @@ Inner dimensions must agree. In general $\mA\mB\ne\mB\mA$; but $(\mA\mB)\mC=\mA(
 
 \raggedright
 \topic{As outer products} (column $\times$ row, sum of rank-one matrices)
-\[ \mA\mB = \sum_{k=1}^n \va_k\,\vb_k\T \qquad(\va_k=\text{col } k \text{ of } \mA,\ \vb_k\T=\text{row } k \text{ of } \mB)\]
+\[ \mA\mB = \sum_{k=1}^n \va_k\,\vb_k\tr \qquad(\va_k=\text{col } k \text{ of } \mA,\ \vb_k\tr=\text{row } k \text{ of } \mB)\]
 \centering
 \begin{tikzpicture}[mat]
-  \node at (-1.3,-2) {$\displaystyle\sum_{k}$};
+  \node at (-1.8,-2) {$=\displaystyle\sum_{k}$};
   \foreach \i in {1,...,4}{\cell{\i}{1}{porange}}
   \lbl{0.5}{-4.1}{$\va_k$}
   \begin{scope}[shift={(1.6,0)}]
     \foreach \j in {1,...,4}{\cell{1}{\j}{pblue}}
-    \lbl{2}{-0.9}{$\vb_k\T$}
+    \lbl{2}{-0.9}{$\vb_k\tr$}
   \end{scope}
   \node at (6.6,-2) {$=$};
   \begin{scope}[shift={(7.6,0)}]
@@ -258,12 +262,12 @@ Inner dimensions must agree. In general $\mA\mB\ne\mB\mA$; but $(\mA\mB)\mC=\mA(
 \raggedright
 \sect{Transpose}
 \begin{minipage}[c]{0.58\linewidth}
-$(\mA\T)_{ij}=a_{ji}$: rows become columns.
+$(\mA\tr)_{ij}=a_{ji}$: rows become columns.
 \begin{itemize}
-  \item $(\mA\T)\T=\mA$, \ $(\mA+\mB)\T=\mA\T+\mB\T$
-  \item $(\mA\mB)\T=\mB\T\mA\T$ \ (order reverses)
-  \item $\vx\T\vy$ is a scalar; $\vx\vy\T$ is a matrix
-  \item $(\mA\vx)\T\vy = \vx\T(\mA\T\vy)$
+  \item $(\mA\tr)\tr=\mA$, \ $(\mA+\mB)\tr=\mA\tr+\mB\tr$
+  \item $(\mA\mB)\tr=\mB\tr\mA\tr$ \ (order reverses)
+  \item $\vx\tr\vy$ is a scalar; $\vx\vy\tr$ is a matrix
+  \item $(\mA\vx)\tr\vy = \vx\tr(\mA\tr\vy)$
 \end{itemize}
 \end{minipage}\hfill
 \begin{minipage}[c]{0.38\linewidth}
@@ -274,15 +278,15 @@ $(\mA\T)_{ij}=a_{ji}$: rows become columns.
   \node at (5,-1.5) {$\to$};
   \begin{scope}[shift={(6,0.5)}]
     \grid{4}{2}{plight} \foreach \i in {1,...,4}{\cell{\i}{1}{porange}}
-    \lbl{1}{-4.1}{$\mA\T$}
+    \lbl{1}{-4.1}{$\mA\tr$}
   \end{scope}
 \end{tikzpicture}
 \end{minipage}
 
 \sect{Special Matrices}
 \begin{minipage}[c]{0.66\linewidth}
-\topic{Symmetric} $\mA=\mA\T$, i.e.\ $a_{ij}=a_{ji}$ (square).
-$\mA\T\mA$ and $\mA\mA\T$ are always symmetric. Symmetric matrices have real eigenvalues
+\topic{Symmetric} $\mA=\mA\tr$, i.e.\ $a_{ij}=a_{ji}$ (square).
+$\mA\tr\mA$ and $\mA\mA\tr$ are always symmetric. Symmetric matrices have real eigenvalues
 and orthogonal eigenvectors (see p.\,2).
 \end{minipage}\hfill
 \begin{minipage}[c]{0.3\linewidth}
@@ -299,7 +303,7 @@ and orthogonal eigenvectors (see p.\,2).
 $\mA\inv\mA = \mA\mA\inv = \mI$. Then $\mA\vx=\vb$ has the unique solution $\vx=\mA\inv\vb$.
 \begin{itemize}
   \item invertible $\iff$ $\det\mA\ne0$ $\iff$ columns independent $\iff$ $\mA\vx=\vzero$ only for $\vx=\vzero$
-  \item $(\mA\mB)\inv=\mB\inv\mA\inv$, \quad $(\mA\T)\inv=(\mA\inv)\T$
+  \item $(\mA\mB)\inv=\mB\inv\mA\inv$, \quad $(\mA\tr)\inv=(\mA\inv)\tr$
   \item $\begin{bmatrix} a & b\\ c& d\end{bmatrix}^{-1} = \dfrac{1}{ad-bc}\begin{bmatrix} d & -b\\ -c& a\end{bmatrix}$
 \end{itemize}
 
@@ -308,14 +312,14 @@ $\mA\inv\mA = \mA\mA\inv = \mI$. Then $\mA\vx=\vb$ has the unique solution $\vx=
 \sect{Orthogonal Matrices}
 \begin{minipage}[c]{0.6\linewidth}
 \topic{Orthogonal matrix} Square $\mQ$ with \emph{orthonormal} columns
-($\vq_i\T\vq_j=0$ for $i\neq j$, $\norm{\vq_i}_2=1$):
-\[ \mQ\T\mQ = \mQ\mQ\T = \mI, \qquad \mQ\inv=\mQ\T. \]
+($\vq_i\tr\vq_j=0$ for $i\neq j$, $\norm{\vq_i}_2=1$):
+\[ \mQ\tr\mQ = \mQ\mQ\tr = \mI, \qquad \mQ\inv=\mQ\tr. \]
 \end{minipage}\hfill
 \begin{minipage}[c]{0.38\linewidth}
 \centering
 \begin{tikzpicture}[mat]
   \foreach \j in {1,2,3}{\cell{1}{\j}{porange}\cell{2}{\j}{pblue}\cell{3}{\j}{pgreen}}
-  \lbl{1.5}{-3.1}{$\mQ\T$}
+  \lbl{1.5}{-3.1}{$\mQ\tr$}
   \begin{scope}[shift={(3.4,0)}]
     \foreach \i in {1,2,3}{\cell{\i}{1}{porange}\cell{\i}{2}{pblue}\cell{\i}{3}{pgreen}}
     \lbl{1.5}{-3.1}{$\mQ$}
@@ -327,14 +331,14 @@ $\mA\inv\mA = \mA\mA\inv = \mI$. Then $\mA\vx=\vb$ has the unique solution $\vx=
   \end{scope}
 \end{tikzpicture}
 \end{minipage}
-Preserves lengths and angles: $\norm{\mQ\vx}_2=\norm{\vx}_2$, $(\mQ\vx)\T(\mQ\vy)=\vx\T\vy$.
+Preserves lengths and angles: $\norm{\mQ\vx}_2=\norm{\vx}_2$, $(\mQ\vx)\tr(\mQ\vy)=\vx\tr\vy$.
 Examples: rotations, reflections, permutations.
 
 \begin{minipage}[c]{0.6\linewidth}
 \topic{Rotation in 2D} by angle $\theta$ (counterclockwise):
-\[ \mR(\theta)=\begin{bmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{bmatrix} \]
+\[ \mR_{\theta}=\begin{bmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{bmatrix} \]
 Columns = images of $\ve_1,\ve_2$.
-$\mR(\theta)\inv=\mR(\theta)\T=\mR(-\theta)$, $\det\mR=1$, $\mR(\alpha)\mR(\beta)=\mR(\alpha+\beta)$.
+$\mR_{\theta}\inv=\mR_{\theta}\tr=\mR_{-\theta}$, $\det\mR=1$, $\mR_{\alpha}\mR_{\beta}=\mR_{\alpha+\beta}$.
 \end{minipage}\hfill
 \begin{minipage}[c]{0.38\linewidth}
 \centering
@@ -352,16 +356,16 @@ $\mR(\theta)\inv=\mR(\theta)\T=\mR(-\theta)$, $\det\mR=1$, $\mR(\alpha)\mR(\beta
 \topic{Vector subspace} $S\subseteq\R^n$ is a subspace if $\vzero\in S$ and it is closed under linear combinations:
 \[ \vx,\vy\in S,\ \alpha,\beta\in\R \ \Rightarrow\ \alpha\vx+\beta\vy\in S . \]
 Examples: lines/planes through the origin, $\spn\{\vv_1,\dots,\vv_k\}$,
-column space $\colsp(\mA)=\{\mA\vx\}$, nullspace $\nullsp(\mA)=\{\vx:\mA\vx=\vzero\}$.
+column space $\colsp(\mA)=\{\mA\vx\mid\vx\in\R^n\}$, nullspace $\nullsp(\mA)=\{\vx\mid \mA\vx=\vzero,\vx\in\R^n\}$.
 A \emph{basis} is an independent spanning set; its size is the \emph{dimension}.
-$\vx\perp S$ means $\vx\T\vy=0$ for all $\vy\in S$.
+$\vx\perp S$ means $\vx\tr\vy=0$ for all $\vy\in S$.
 
 \sect{Orthogonal Projection}
 \begin{minipage}[c]{0.5\linewidth}
-Project $\vb$ onto the line through $\va$:
-\[ \vp = \frac{\va\T\vb}{\va\T\va}\,\va, \qquad \mP=\frac{\va\va\T}{\va\T\va}. \]
-Error $\ve=\vb-\vp$ is \textbf{orthogonal} to the line: $\va\T\ve=0$.
-$\vp$ is the closest point: every other $\hat\vx\va$ has larger error.
+\topic{Project $\vb$ onto the line through $\va$}
+\[ \vp = \frac{\va\va\tr}{\va\tr\va}\,\vb = \mP\vb, \qquad \mP=\frac{\va\va\tr}{\va\tr\va}. \]
+Error $\ve=\vb-\vp$ is \textbf{orthogonal} to the line: $\va\tr\ve=0$
+and $\| \vb - \vp \|_2^2  = \min_{x} \| \vb - \va x\|_2^2$.
 \end{minipage}\hfill
 \begin{minipage}[c]{0.48\linewidth}
 \centering
@@ -378,23 +382,35 @@ $\vp$ is the closest point: every other $\hat\vx\va$ has larger error.
   \draw[->,thick,porange] (P) -- (B) node[midway,right] {$\ve$};
   \draw[dashed,ppurple] (Q) -- (B);
   \fill[ppurple] (Q) circle (1pt);
-  \node[ppurple,font=\scriptsize,below] at (Q) {$\hat x\va$};
+  \node[ppurple,font=\scriptsize,below] at (Q) {$\bar x\va$};
   \pic[draw,pdark,angle radius=0.18cm] {right angle=B--P--O};
 \end{tikzpicture}\\
-\note{dashed: $\norm{\vb-\hat x\va}_2>\norm{\ve}_2$}
+\note{dashed: $\norm{\vb- \bar x \va}_2>\norm{\ve}_2$}
 \end{minipage}
 
-\topic{Onto a subspace $\colsp(\mA)$} (independent columns).
+\topic{Onto a subspace $\colsp(\mA)$}
+\[ \vp = \mP \vb, \quad \ve = (\mI - \mP) \vb, \quad \mP=\mA(\mA\tr\mA)\inv\mA\tr  \]
 $\vp=\mA\hat\vx$ minimizes the error:
-\[ \hat\vx=\arg\min_{\vx}\norm{\vb-\mA\vx}_2^2 \ \text{ solves }\ \mA\T\mA\hat\vx = \mA\T\vb \]
-(the \emph{normal equations} $\Leftrightarrow$ $\mA\T\ve=\vzero$, error $\perp$ every column), so
-\[ \hat\vx=(\mA\T\mA)\inv\mA\T\vb,\quad \mP=\mA(\mA\T\mA)\inv\mA\T . \]
-Orthonormal columns ($\mA=\mQ$): $\mP=\mQ\mQ\T$, $\vp=\sum_i(\vq_i\T\vb)\vq_i$.
+\[
+  \begin{aligned}
+    \hat\vx&=\arg\min_{\vx}\norm{\vb-\mA\vx}_2^2 = \arg\min_{\vx} \left(  \vx\tr\mA\tr\mA\vx - 2\vb\tr\mA\vx \right) \\
+    &= (\mA\tr\mA)\inv\mA\tr\vb  
+  \end{aligned}
+  \]
+Error $\perp$ every column: $\mA\tr\ve=\vzero$.
+
+Orthonormal columns ($\mA=\mQ$): $\mP=\mQ\mQ\tr$, $\vp=\sum_i(\vq_i\tr\vb)\vq_i$.
+
+\topic{Important properties}
+\begin{itemize}
+\item $(\mA\tr \mA)^{-1}$ exists iff columns of $\mA$ are independent
+\end{itemize}
+
 
 \topic{Properties of a projection matrix $\mP$}
 \begin{itemize}
   \item $\mP^2=\mP$ (idempotent: projecting twice changes nothing)
-  \item $\mP\T=\mP$ (symmetric); eigenvalues are $0$ or $1$
+  \item $\mP\tr=\mP$ (symmetric); eigenvalues are $0$ or $1$
   \item $\mI-\mP$ projects onto the orthogonal complement; $\ve=(\mI-\mP)\vb$
   \item Pythagoras: $\norm{\vb}_2^2=\norm{\vp}_2^2+\norm{\ve}_2^2$, so $\norm{\mP\vb}_2\le\norm{\vb}_2$
   \item $\vp$ is the unique closest point of the subspace to $\vb$
@@ -445,12 +461,12 @@ $\mA$ only stretches $\vx$ by $\lambda$, never changes its direction (up to sign
 \raggedright
 \textcolor{porange}{\bfseries Not always possible!} E.g.\
 $\begin{bsmallmatrix}0&1\\0&0\end{bsmallmatrix}$ has $\lambda=0$ twice but only one
-eigenvector direction. Guaranteed when the $n$ eigenvalues are distinct, or $\mA$ is symmetric.
+eigenvector direction. Guaranteed when the $n$ eigenvalues are distinct and real, or $\mA$ is symmetric.
 Eigenvalues may be complex (e.g.\ rotations).
 
-\topic{Symmetric matrices} (spectral theorem) If $\mA=\mA\T$: all $\lambda_i$ real,
+\topic{Symmetric matrices} (spectral theorem) If $\mA=\mA\tr$: all $\lambda_i$ real,
 eigenvectors can be chosen orthonormal, so $\mX=\mQ$ is orthogonal:
-\[ \mA=\mQ\mLambda\mQ\T=\sum_{i=1}^n\lambda_i\,\vq_i\vq_i\T . \]
+\[ \mA=\mQ\mLambda\mQ\tr=\sum_{i=1}^n\lambda_i\,\vq_i\vq_i\tr . \]
 \centering
 \begin{tikzpicture}[mat]
   \grid{3}{3}{plight} \lbl{1.5}{-3.1}{$\mA$}
@@ -465,35 +481,35 @@ eigenvectors can be chosen orthonormal, so $\mX=\mQ$ is orthogonal:
   \end{scope}
   \begin{scope}[shift={(11.4,0)}]
     \foreach \j in {1,2,3}{\cell{1}{\j}{porange}\cell{2}{\j}{pblue}\cell{3}{\j}{pgreen}}
-    \lbl{1.5}{-3.1}{$\mQ\T$}
+    \lbl{1.5}{-3.1}{$\mQ\tr$}
   \end{scope}
   \node at (15.4,-1.5) {$=$};
   \node at (16.9,-1.5) {$\lambda_1$};
-  \begin{scope}[shift={(17.9,0)}] \grid{3}{3}{porange!45} \lbl{1.5}{-3.1}{$\vq_1\vq_1\T$} \end{scope}
+  \begin{scope}[shift={(17.9,0)}] \grid{3}{3}{porange!45} \lbl{1.5}{-3.1}{$\vq_1\vq_1\tr$} \end{scope}
   \node at (23.3,-1.5) {$+\,\cdots$};
 \end{tikzpicture}
 
 \raggedright
 \sect{Definiteness \& Quadratic Forms}
 \topic{Quadratic form} For symmetric $\mA\in\R^{n\times n}$:
-\[ \vx\T\mA\vx=\sum_{i=1}^n\sum_{j=1}^n a_{ij}x_ix_j \]
+\[ \vx\tr\mA\vx=\sum_{i=1}^n\sum_{j=1}^n a_{ij}x_ix_j \]
 \[ \begin{bmatrix}x_1\\x_2\end{bmatrix}^{\!\top}\!\begin{bmatrix}a&b\\b&c\end{bmatrix}\!\begin{bmatrix}x_1\\x_2\end{bmatrix}
   = a x_1^2+2b\,x_1x_2+c\,x_2^2 . \]
-Non-symmetric $\mA$: same form as $\tfrac12(\mA+\mA\T)$. With $\mA=\mQ\mLambda\mQ\T$ it is a
+Non-symmetric $\mA$: same form as $\tfrac12(\mA+\mA\tr)$. With $\mA=\mQ\mLambda\mQ\tr$ it is a
 \textbf{sum of squares} along the eigenvectors:
-\[ \vx\T\mA\vx=\sum_{i=1}^n\lambda_i\,(\vq_i\T\vx)^2 . \]
+\[ \vx\tr\mA\vx=\sum_{i=1}^n\lambda_i\,(\vq_i\tr\vx)^2 . \]
 
 \topic{Positive (semi-)definite} Symmetric $\mA$ is
 \begin{itemize}
-  \item \textbf{PD} ($\mA\succ0$): $\vx\T\mA\vx>0$ for all $\vx\ne\vzero$ $\iff$ all $\lambda_i>0$
-  \item \textbf{PSD} ($\mA\succeq0$): $\vx\T\mA\vx\ge0$ for all $\vx$ $\iff$ all $\lambda_i\ge0$
+  \item \textbf{PD} ($\mA\succ0$): $\vx\tr\mA\vx>0$ for all $\vx\ne\vzero$ $\iff$ all $\lambda_i>0$
+  \item \textbf{PSD} ($\mA\succeq0$): $\vx\tr\mA\vx\ge0$ for all $\vx$ $\iff$ all $\lambda_i\ge0$
 \end{itemize}
-$\mA\T\mA$ is always PSD (PD if the columns of $\mA$ are independent), since
-$\vx\T\mA\T\mA\vx=\norm{\mA\vx}_2^2$. PD $\Rightarrow$ invertible.
+$\mA\tr\mA$ is always PSD (PD if the columns of $\mA$ are independent), since
+$\vx\tr\mA\tr\mA\vx=\norm{\mA\vx}_2^2$. PD $\Rightarrow$ invertible.
 
 \columnbreak
 %------------------------------------------------------------------------------
-\topic{Picture of a quadratic} $f(\vx)=\vx\T\mA\vx$ with
+\topic{Picture of a quadratic} $f(\vx)=\vx\tr\mA\vx$ with
 $\mA=\begin{bsmallmatrix}0.7&-0.3\\-0.3&0.7\end{bsmallmatrix}$,
 $\lambda_1=0.4$, $\vq_1=\tfrac1{\sqrt2}\begin{bsmallmatrix}1\\1\end{bsmallmatrix}$,
 $\lambda_2=1$, $\vq_2=\tfrac1{\sqrt2}\begin{bsmallmatrix}1\\-1\end{bsmallmatrix}$
@@ -535,7 +551,7 @@ $\lambda_2=1$, $\vq_2=\tfrac1{\sqrt2}\begin{bsmallmatrix}1\\-1\end{bsmallmatrix}
 \end{tikzpicture}
 
 \raggedright
-Level sets $\vx\T\mA\vx=c$ are ellipses with axes along $\vq_i$ and half-lengths
+Level sets $\vx\tr\mA\vx=c$ are ellipses with axes along $\vq_i$ and half-lengths
 $\sqrt{c/\lambda_i}$: small $\lambda$ = long, flat direction. Gradient is $\perp$ to level sets.
 PD: bowl; PSD: valley; indefinite: saddle.
 
@@ -544,9 +560,9 @@ PD: bowl; PSD: valley; indefinite: saddle.
 \[ \frac{\partial f}{\partial x_i}(\vx)=\lim_{h\to0}\frac{f(\vx+h\ve_i)-f(\vx)}{h} \]
 
 \topic{Gradient} column vector of partials
-\[ \nabla f(\vx)=\begin{bmatrix}\frac{\partial f}{\partial x_1}(\vx)&\cdots&\frac{\partial f}{\partial x_n}(\vx)\end{bmatrix}\T\in\R^n \]
+\[ \nabla f(\vx)=\begin{bmatrix}\frac{\partial f}{\partial x_1}(\vx)&\cdots&\frac{\partial f}{\partial x_n}(\vx)\end{bmatrix}\tr\in\R^n \]
 Points in the direction of steepest ascent; directional derivative along $\vd$ is
-$\nabla f(\vx)\T\vd$. \note{MML writes the row vector $\frac{df}{d\vx}=\nabla f(\vx)\T$.}
+$\nabla f(\vx)\tr\vd$. \note{MML writes the row vector $\frac{df}{d\vx}=\nabla f(\vx)\tr$.}
 
 \topic{Hessian} $\nabla^2 f(\vx)\in\R^{n\times n}$, $[\nabla^2 f(\vx)]_{ij}=\dfrac{\partial^2 f}{\partial x_i\partial x_j}$,
 symmetric when $f$ is twice continuously differentiable.
@@ -558,11 +574,11 @@ symmetric when $f$ is twice continuously differentiable.
 \renewcommand{\arraystretch}{1.25}
 \begin{tabular}{@{}l@{\quad}l@{\quad}l@{}}
   $f(\vx)$ & $\nabla f(\vx)$ & $\nabla^2 f(\vx)$\\\hline
-  $\va\T\vx+c$ & $\va$ & $\M{0}$\\
-  $\vx\T\mA\vx$ & $(\mA+\mA\T)\vx$ & $\mA+\mA\T$\\
-  $\vx\T\mA\vx$, $\mA$ sym. & $2\mA\vx$ & $2\mA$\\
-  $\tfrac12\vx\T\mA\vx-\vb\T\vx$, sym. & $\mA\vx-\vb$ & $\mA$\\
-  $\norm{\mB\vx-\vy}_2^2$ & $2\mB\T(\mB\vx-\vy)$ & $2\mB\T\mB$
+  $\va\tr\vx+c$ & $\va$ & $\M{0}$\\
+  $\vx\tr\mA\vx$ & $(\mA+\mA\tr)\vx$ & $\mA+\mA\tr$\\
+  $\vx\tr\mA\vx$, $\mA$ sym. & $2\mA\vx$ & $2\mA$\\
+  $\tfrac12\vx\tr\mA\vx-\vb\tr\vx$, sym. & $\mA\vx-\vb$ & $\mA$\\
+  $\norm{\mB\vx-\vy}_2^2$ & $2\mB\tr(\mB\vx-\vy)$ & $2\mB\tr\mB$
 \end{tabular}\\
 Vector-valued: $\V g(\vx)=\mB\vx$ has Jacobian $\mJ_{\V g}=\mB$.
 
@@ -572,18 +588,18 @@ Vector-valued: $\V g(\vx)=\mB\vx$ has Jacobian $\mJ_{\V g}=\mB$.
 \[ h'(x)=f'(g(x))\,g'(x) \]
 
 \topic{Chain rule, multi-d} $h(\vx)=f(\V g(\vx))$, $\V g:\R^n\to\R^m$, $f:\R^m\to\R$:
-\[ \nabla h(\vx)=\mJ_{\V g}(\vx)\T\,\nabla f(\V g(\vx)) \]
+\[ \nabla h(\vx)=\mJ_{\V g}(\vx)\tr\,\nabla f(\V g(\vx)) \]
 \note{MML (row form): $\frac{dh}{d\vx}=\frac{df}{d\V g}\,\frac{d\V g}{d\vx}$, sizes $(1\times n)=(1\times m)(m\times n)$.}
-Useful cases: \ $\nabla_{\vx} f(\mB\vx+\vy)=\mB\T\nabla f(\mB\vx+\vy)$;\
-along a line, $\frac{d}{dt}f(\vx+t\vd)=\nabla f(\vx+t\vd)\T\vd$.
+Useful cases: \ $\nabla_{\vx} f(\mB\vx+\vy)=\mB\tr\nabla f(\mB\vx+\vy)$;\
+along a line, $\frac{d}{dt}f(\vx+t\vd)=\nabla f(\vx+t\vd)\tr\vd$.
 
 \sect{Taylor Approximation}
 $g(\vd)=o(\norm{\vd}_2^k)$ means $g(\vd)/\norm{\vd}_2^k\to0$ as $\vd\to\vzero$ (smaller than $\norm{\vd}_2^k$).
 
 \topic{Linear (1st order)}
-\[ f(\vx+\vd)=f(\vx)+\nabla f(\vx)\T\vd+o(\norm{\vd}_2) \]
+\[ f(\vx+\vd)=f(\vx)+\nabla f(\vx)\tr\vd+o(\norm{\vd}_2) \]
 \topic{Quadratic (2nd order)}
-\[ f(\vx+\vd)=f(\vx)+\nabla f(\vx)\T\vd+\tfrac12\vd\T\nabla^2 f(\vx)\,\vd+o(\norm{\vd}_2^2) \]
+\[ f(\vx+\vd)=f(\vx)+\nabla f(\vx)\tr\vd+\tfrac12\vd\tr\nabla^2 f(\vx)\,\vd+o(\norm{\vd}_2^2) \]
 1-d: $f(x+d)=f(x)+f'(x)\,d+\tfrac12f''(x)\,d^2+o(d^2)$.
 
 \sect{Convexity}
@@ -620,10 +636,10 @@ A set is convex if it contains all convex combinations of its points.
   \item 1-d: $f''(x)\ge0$ for all $x$ $\iff$ $f$ convex (twice differentiable)
   \item multi-d: $\nabla^2 f(\vx)\succeq0$ (PSD) for all $\vx$ $\iff$ $f$ convex;
         $\nabla^2 f\succ0$ $\Rightarrow$ strictly convex
-  \item 1st order: $f(\vy)\ge f(\vx)+\nabla f(\vx)\T(\vy-\vx)$ (tangent below graph)
+  \item 1st order: $f(\vy)\ge f(\vx)+\nabla f(\vx)\tr(\vy-\vx)$ (tangent below graph)
   \item preserved by: nonnegative sums $\alpha f+\beta g$, composition with affine map
         $f(\mB\vx+\vy)$, pointwise $\max\{f,g\}$
-  \item e.g.\ $\vx\T\mA\vx$ convex $\iff$ $\mA\succeq0$; \ every norm is convex
+  \item e.g.\ $\vx\tr\mA\vx$ convex $\iff$ $\mA\succeq0$; \ every norm is convex
 \end{itemize}
 
 \sect{Optimality \& Gradient Descent}
@@ -634,13 +650,13 @@ A set is convex if it contains all convex combinations of its points.
   \item \textbf{convex $f$:} $\nabla f(\vx^\star)=\vzero$ $\iff$ $\vx^\star$ is a \emph{global} minimum
 \end{itemize}
 1-d: $f'(x^\star)=0$, and $f''(x^\star)\ge0$ (necessary) / $>0$ (sufficient).
-\note{Ex.: $\min\tfrac12\vx\T\mA\vx-\vb\T\vx$, $\mA\succ0$ $\Rightarrow$ $\vx^\star=\mA\inv\vb$.}
+\note{Ex.: $\min\tfrac12\vx\tr\mA\vx-\vb\tr\vx$, $\mA\succ0$ $\Rightarrow$ $\vx^\star=\mA\inv\vb$.}
 
 \begin{minipage}[c]{0.6\linewidth}
 \topic{Gradient descent} from $\vx_0$ with step size (learning rate) $\alpha>0$:
 \[ \vx_{k+1}=\vx_k-\alpha\,\nabla f(\vx_k) \]
 Moves against the gradient (steepest descent). Too large $\alpha$ diverges; for
-$\tfrac12\vx\T\mA\vx-\vb\T\vx$ it converges iff $0<\alpha<2/\lambda_{\max}(\mA)$.
+$\tfrac12\vx\tr\mA\vx-\vb\tr\vx$ it converges iff $0<\alpha<2/\lambda_{\max}(\mA)$.
 \end{minipage}\hfill
 \begin{minipage}[c]{0.38\linewidth}
 \centering
@@ -663,3 +679,8 @@ $\tfrac12\vx\T\mA\vx-\vb\T\vx$ it converges iff $0<\alpha<2/\lambda_{\max}(\mA)$
 
 \end{multicols*}
 \end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:
