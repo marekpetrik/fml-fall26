@@ -4,6 +4,7 @@
 \usepackage{amsmath,amsfonts}
 \usepackage{url}
 \usepackage{bm}
+\usepackage[colorlinks=true,urlcolor=blue,linkcolor=black]{hyperref}
 
 \newcommand{\Real}{\mathbb{R}}
 \newcommand{\tr}{^\top}
@@ -21,26 +22,56 @@
 
 \begin{itemize}
 \item \textbf{Submission}: Turn in as a \texttt{PDF} and a \textbf{separate source code file} on \url{http://mycourses.unh.edu}. Scanned hand-written notes are encouraged.
-\item \textbf{Questions}: See the class website for a link to office hours
+\item \textbf{Questions}: See the class website for a link to office hours.
 \end{itemize}
 
-% Covers: Multivariate calculus: chain rule and Jacobian (CO A.4, MML 5.2--5.3) and
-% Optimization basics: convex sets and functions (CO 2.1--2.2, 3.1--3.2).
-
-\textbf{Relevant reading}: MML 5.2--5.3 (chain rule, Jacobian); CO 2.1--2.2, 3.1--3.2 (convex sets and functions). Both of the books are available online for free. 
+\textbf{Relevant reading}: MML 5.1--5.6. The book is available online for free. 
 
 Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia or Python recommended). 
 
 \begin{enumerate}
-\item MML, Chapter 5 exercises: any two on the chain rule and the Jacobian of a vector-valued function.
-\item CO, Chapter 2 exercises: any two on convex sets (e.g.\ Exercises 2.1 and 2.5).
-\item CO, Chapter 3 exercises: any two on convex functions (e.g.\ Exercises 3.1 and 3.6).
 
-
+\item Suppose that
+  \[
+    \bm{A} = \begin{bmatrix} 3 & 9 \\ 0 & 2 \end{bmatrix}, \quad
+    \bm{B} = \begin{bmatrix} 12 & 1 \\ -3 & 2 \end{bmatrix}, \quad
+    \bm{c} = \begin{bmatrix} 7 \\ 5 \end{bmatrix}, 
+  \]
+  and let
+  \[
+    f(\bm{x}) = \bm{x}\tr \bm{A} \bm{x} - \bm{c}\tr \bm{x},
+    \qquad
+    g(\bm{x}) = \bm{B} \bm{x}.
+  \]
+  \emph{Note}: The matrix $\bm{A}$ above is NOT symmetric.
   
-\item \textbf{[code]} For a composition $h(x) = g(f(x))$ of two vector-valued functions of your choice, compute the Jacobian by the chain rule, then verify it numerically by finite differences at a point.
+  Derive:
+  \begin{enumerate}
+  \item Gradient of $f$
+  \item Hessian of $f$
+  \item Jacobian of $g$
+  \item Gradient of $f \circ g$ \emph{using the chain rule}
+  \item Hessian of $f \circ g$ \emph{using the chain rule}
+  \end{enumerate}
+  
+ \item Derive the gradient and Hessian of the following functions:
+   \begin{enumerate}
+   \item $f(x) = \| \bm{b} - \bm{a} x \|^2$
+   \item $f(x) = \| \bm{b} - \bm{a} x \|$ where it exists
+   \item $f(\bm{x}) = \| \bm{A}\bm{x} - \bm{b} \|^{2}$
+   \end{enumerate}
+   Here, $\bm{a}, \bm{b} \in \Real^n$ and $\bm{A} \in \Real^{n \times m}$.
+   
+\item MML Problems: 5.2, 5.3, 5.5, 5.7 
+  
+\item \textbf{[code]} Verify at least 4 derivatives above using an automatic differentiation package of your choice (Julia: ForwardDiff\footnote{\url{https://github.com/JuliaDiff/ForwardDiff.jl}} or DifferentiationInterface\footnote{\url{https://github.com/JuliaDiff/DifferentiationInterface.jl}}, Python: PyTorch\footnote{\url{https://pytorch.org}} or JAX\footnote{\url{https://github.com/jax-ml/jax}}, R: torch\footnote{\url{https://torch.mlverse.org}} or RTMB\footnote{\url{https://cran.r-project.org/package=RTMB}}). See the repository for some examples. Please do NOT use a symbolic differentiation package, like Mathematica or SymPy. 
   
 \item \textbf{Time spent.} Report approximately how many hours you spent completing this problem set (including the reading).
 \end{enumerate}
 
 \end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:
