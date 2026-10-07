@@ -38,8 +38,8 @@
 \colorlet{columnseprulecolor}{plight}
 
 % ---------------------------------------------------------------- notation
-% Vectors: bold lower case (MML); Strang writes them upright, e.g. v.
-% Matrices: bold upper case (MML); Strang writes them upright, e.g. A.
+% Vectors: MML bold lower case; Strang: upright bold (mathbf)
+% Matrices: MML bold upper case; Strang: upright not bold
 \newcommand{\V}[1]{\bm{#1}}
 \newcommand{\M}[1]{\bm{#1}}
 \newcommand{\va}{\V{a}}  \newcommand{\vb}{\V{b}}  \newcommand{\vd}{\V{d}}
@@ -95,7 +95,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PAGE 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\sheettitle{Math for ML Cheat Sheet: Linear Algebra  (v1.1)}{CS 550 \textbullet{} Foundations of Machine Learning}
+\sheettitle{Math for ML Cheat Sheet: Linear Algebra  (v1.2)}{CS 550 \textbullet{} Foundations of Machine Learning}
 
 \begin{multicols*}{3}
 
@@ -573,29 +573,30 @@ Row $i$ is the gradient of the component $g_i$, transposed.
 \centering
 \begin{tikzpicture}[mat,x=0.34cm,y=0.34cm]
   \foreach \i in {1,2,3}{\cell{\i}{1}{ppurple}}
-  \lbl{0.5}{-4.1}{$\nabla f\in\R^{n}$}
+  \lbl{0.5}{-4.1}{$\nabla f(\vx)\in\R^{n}$}
   \begin{scope}[shift={(4.5,0)}]
     \foreach \i in {1,2,3}{\cell{\i}{\i}{pgray}}
     \cell{1}{2}{porange}\cell{2}{1}{porange}
     \cell{1}{3}{pblue}\cell{3}{1}{pblue}
     \cell{2}{3}{pgreen}\cell{3}{2}{pgreen}
-    \lbl{1.5}{-4.1}{$\nabla^2 f\in\R^{n\times n}$}
+    \lbl{1.5}{-4.1}{$\nabla^2 f(\vx)\in\R^{n\times n}$}
     \lbl{1.5}{-5.1}{\note{symmetric}}
   \end{scope}
   \begin{scope}[shift={(11.5,0)}]
     \foreach \j in {1,2,3}{\cell{1}{\j}{porange}\cell{2}{\j}{pblue}\cell{3}{\j}{pgreen}\cell{4}{\j}{pyellow}}
     \foreach \i/\c in {1/porange,2/pblue,3/pgreen,4/pyellow}{
       \node[font=\tiny,anchor=west,text=\c!80!black,inner sep=1pt] at (3.1,{-\i+0.5}) {$\nabla g_{\i}(\vx)\tr$};}
-    \lbl{1.5}{-4.1}{$\mJ_{\V g}\in\R^{m\times n}$}
+    \lbl{1.5}{-4.1}{$\mJ_{\V g}(\vx)\in\R^{m\times n}$}
   \end{scope}
 \end{tikzpicture}
 
 \raggedright
 \topic{Example} $\V g(\vx)=\begin{bsmallmatrix}\textcolor{porange}{x_1^2x_2}\\ \textcolor{pblue}{x_1+3x_2}\end{bsmallmatrix}$, \ $\V g:\R^2\to\R^2$:
-\[ \nabla g_1=\begin{bmatrix}2x_1x_2\\x_1^2\end{bmatrix}\!,\ \nabla g_2=\begin{bmatrix}1\\3\end{bmatrix}
-   \;\Rightarrow\; \mJ_{\V g}=\begin{bmatrix}\textcolor{porange}{\nabla g_1\tr}\\ \textcolor{pblue}{\nabla g_2\tr}\end{bmatrix}
-   =\begin{bmatrix}\textcolor{porange}{2x_1x_2}&\textcolor{porange}{x_1^2}\\ \textcolor{pblue}{1}&\textcolor{pblue}{3}\end{bmatrix} \]
-The Hessian is the Jacobian of the gradient: $\nabla^2 g_1=\mJ_{\nabla g_1}=\begin{bsmallmatrix}2x_2&2x_1\\2x_1&0\end{bsmallmatrix}$.
+\[ \nabla g_1(\vx) =\begin{bsmallmatrix}\textcolor{porange}{2x_1x_2}\\\textcolor{porange}{x_1^2}\end{bsmallmatrix}\!,\
+  \nabla g_2(\vx) =\begin{bsmallmatrix}\textcolor{pblue}{1}\\\textcolor{pblue}{3}\end{bsmallmatrix},
+  \; \mJ_{\V g}(\vx) = \begin{bsmallmatrix}\textcolor{porange}{\nabla g_1\tr}\\ \textcolor{pblue}{\nabla g_2\tr}\end{bsmallmatrix}
+   =\begin{bsmallmatrix}\textcolor{porange}{2x_1x_2}&\textcolor{porange}{x_1^2}\\ \textcolor{pblue}{1}&\textcolor{pblue}{3}\end{bsmallmatrix} \]
+The Hessian is the Jacobian of the gradient: $\nabla^2 g_1(\vx) =\mJ_{\nabla g_1}(\vx) =\begin{bsmallmatrix}2x_2&2x_1\\2x_1&0\end{bsmallmatrix}$.
 
 \topic{Linear \& quadratic functions}
 \note{$\va,\vb\in\R^n$, $\mA\in\R^{n\times n}$, $\mB\in\R^{m\times n}$, $\vy\in\R^m$}\par

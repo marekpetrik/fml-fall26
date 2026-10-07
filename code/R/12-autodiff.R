@@ -75,3 +75,4 @@ legend("topright", legend = expression(x, nabla * f(x)), col = "red",
 
 cat("Analytical:", grad_f1(x), "\n")
 cat("torch:", grad_f2(x), "\n")
+
