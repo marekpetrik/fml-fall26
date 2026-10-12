@@ -34,8 +34,8 @@ One lecture on each of the following topics. Please see the class website and my
 | Sep 24 | Thu | Eigenvalues and eigenvectors                                   | ILA 6.1                    |
 | Sep 29 | Tue | Diagonalization, Vector functions and quadratic forms          | ILA 6.2,6.4, CO A.3-A.5    |
 | Oct 1  | Thu | Diagonalization, Positive definiteness and convexity           | ILA 6.2,6.4, CO A.3-A.5    |
-| Oct 6  | Tue | Multivariate calculus: chain rule and Jacobian                 | CO A.4; MML 5.2            |
-| Oct 8  | Thu | Optimization basics: convexity and optimality conditions       | CO 2.1-2.2, 3.1-3.2, 4.1   |
+| Oct 6  | Tue | Multivariate calculus: chain rule and Jacobian                 | MML 5.1-5.7                |
+| Oct 8  | Thu | Optimization basics: convexity and optimality conditions       | MML 5.1-5.7                |
 | Oct 13 | Tue | *No class, Wed schedule*                                       |                            |
 | Oct 15 | Thu | Gradient descent                                               | CO 7.1; MML 7.1            |
 | Oct 20 | Tue | Linear programming                                             | CO 4.3; ILA 10.4           |
