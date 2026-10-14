@@ -16,23 +16,62 @@
 \author{Foundations of Machine Learning}
 \date{}
 
+
+
 \begin{document}
 \maketitle
 
 \begin{itemize}
-\item \textbf{Submission}: Turn in as a \texttt{PDF} and a \textbf{separate source code file} on \url{http://mycourses.unh.edu}. Scanned hand-written notes are encouraged.
-\item \textbf{Questions}: See the class website for a link to office hours
+\item \textbf{Submission}: Turn in as a \texttt{PDF} and a \textbf{separate source code file} on \url{https://mycourses.unh.edu}. Scanned handwritten notes are encouraged.
+\item \textbf{Questions}: See the class website for a link to office hours.
 \end{itemize}
 
-% Covers: Convex optimization: optimization problems, convex problems, optimality (CO 4.1--4.2).
+\textbf{Relevant reading}: MML 7.1, 7.3. The book is available online for free.
 
-\textbf{Relevant reading}: CO 4.1--4.2. Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia or Python recommended). The cited exercise numbers are from CO (Boyd \& Vandenberghe, 2004).
+Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia or Python recommended).
 
 \begin{enumerate}
-\item CO, Chapter 4 exercises: any three on optimization problems and convex optimization (e.g.\ Exercises 4.1--4.3).
-\item CO, Chapter 4 exercises: one exercise on reformulating a problem into an equivalent convex form.
-\item \textbf{[code]} Formulate a small convex optimization problem (for example, a constrained least-squares problem) and solve it numerically with a convex solver (e.g.\ Convex.jl/JuMP in Julia or CVXPY in Python). Report the optimal solution and value, and state which constraints are active at the optimum.
+
+\item \label{prob:projection} Recall that one way of framing the projection of $\bm{b} \in \Real^m$ onto the column space of $\bm{A} \in \Real^{m \times n}$, whose columns are linearly independent, is to see it as computing the point $\bm{p} \in \Real^m$ closest to $\bm{b}$ (in the Euclidean norm) such that $\bm{p} = \bm{A} \bm{x}$ for some $\bm{x}\in \Real^n$. In other words, $\bm{p}$ is a linear combination of columns of $\bm{A}$. Given this setup, please answer the following questions:
+  \begin{enumerate}
+  \item Formulate the projection described above as an optimization (minimization) problem.
+  \item Derive the gradient and the Hessian of the objective function. 
+  \item Determine whether the optimization problem is guaranteed to be convex or not.
+  \item Derive the gradient descent update for this problem for some step size $\alpha$.
+  \item Use the first-order optimality conditions to derive an optimal $\bm{x}$ and argue that this $\bm{x}$ is a global minimum of the objective. If there are any matrix inverses involved, argue why they exist. Is this solution preferable to using gradient descent?
+  \item Briefly show how you get the orthogonal projection matrix $\bm{A}(\bm{A}\tr \bm{A})^{-1} \bm{A}\tr$ from the derivations above. 
+  \end{enumerate}
+
+\item \textbf{[code]} Solve the projection problem above using gradient descent for
+  \[
+   \bm{A} =  
+   \begin{bmatrix}
+     1 & 5 \\
+     1 & 12 \\
+     1 & -1 \\
+     1 & 6
+   \end{bmatrix}, \qquad
+   \bm{b} =
+   \begin{bmatrix}
+     7.2 \\ 13.8 \\ 0.1 \\ 10.2
+   \end{bmatrix}.
+  \]
+  Compare your solution with the closed-form solution from Problem~\ref{prob:projection}(e). Report the step size and the number of iterations you used. Try several step sizes (such as, $\alpha \in \{10^{-4}, 10^{-3}, 5\cdot 10^{-3}, 10^{-2}\}$), plot the objective value against the iteration number, and describe what happens when $\alpha$ is too small or too large.
+  
+\item \label{prob:logistic} Suppose that you are given the following function $f\colon \Real^n \to \Real$ defined as
+  \begin{equation} \label{eq:loglikelihood-logistic}
+    f(\bm{x}) = \sum_{i=1}^m \left( y_i \log  \left( \frac{\exp(\bm{a}_i\tr \bm{x})}{1+\exp(\bm{a}_i\tr  \bm{x})} \right) +  (1-y_i) \log  \left( \frac{1}{1+\exp(\bm{a}_i\tr  \bm{x})} \right) \right) ,
+\end{equation}
+  where $y_i\in \{0,1\}$ and $\bm{a}_i\in \Real^n$ are some given values. Derive the gradient of this function.
+  
+\item \textbf{[code]} Verify the gradient of the function in \eqref{eq:loglikelihood-logistic} using an automatic differentiation tool (e.g., ForwardDiff.jl in Julia or JAX/PyTorch in Python). Generate random (or arbitrary) $\bm{a}_i$, $y_i$, and $\bm{x}$, and check that the gradient you derived in Problem~\ref{prob:logistic} matches the one computed by automatic differentiation.
+  
 \item \textbf{Time spent.} Report approximately how many hours you spent completing this problem set (including the reading).
 \end{enumerate}
 
 \end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:
