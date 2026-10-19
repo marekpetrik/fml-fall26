@@ -147,7 +147,7 @@ $\vx\tr\vy>0$: acute, $=0$: \textbf{orthogonal} ($\vx\perp\vy$), $<0$: obtuse.
 with equality iff $\vx,\vy$ are parallel. (Equivalent to $\abs{\cos\theta}\le 1$.)
 
 \begin{minipage}[c]{0.58\linewidth}
-\topic{Norm} A function $\norm{\cdot}:\R^n\to\R$ with, for all $\vx,\vy$, $\alpha$:
+\topic{Norm} A function $\norm{\cdot}\colon\R^n\to\R$ with, for all $\vx,\vy$, $\alpha$:
 \begin{enumerate}[label=\textcolor{pblue}{\arabic*.},leftmargin=1.2em]
   \item $\norm{\vx}\ge 0$ and $\norm{\vx}=0 \iff \vx=\vzero$
   \item $\norm{\alpha\vx} = \abs{\alpha}\,\norm{\vx}$
@@ -556,7 +556,7 @@ $\sqrt{c/\lambda_i}$: small $\lambda$ = long, flat direction. Gradient is $\perp
 PD: bowl; PSD: valley; indefinite: saddle.
 
 \sect{Derivatives}
-\topic{Partial derivative} of $f:\R^n\to\R$ w.r.t.\ $x_i$ (others fixed):
+\topic{Partial derivative} of $f\colon\R^n\to\R$ w.r.t.\ $x_i$ (others fixed):
 \[ \frac{\partial f}{\partial x_i}(\vx)=\lim_{h\to0}\frac{f(\vx+h\ve_i)-f(\vx)}{h} \]
 
 \topic{Gradient} column vector of partials
@@ -567,7 +567,7 @@ $\nabla f(\vx)\tr\vd$. \note{MML writes the row vector $\frac{df}{d\vx}=\nabla f
 \topic{Hessian} $\nabla^2 f(\vx)\in\R^{n\times n}$, $[\nabla^2 f(\vx)]_{ij}=\dfrac{\partial^2 f}{\partial x_i\partial x_j}$,
 symmetric when $f$ is twice continuously differentiable.
 
-\topic{Jacobian} of $\V{g}:\R^n\to\R^m$: $\mJ_{\V g}(\vx)\in\R^{m\times n}$, $[\mJ_{\V g}]_{ij}=\partial g_i/\partial x_j$.
+\topic{Jacobian} of $\V{g}\colon\R^n\to\R^m$: $\mJ_{\V g}(\vx)\in\R^{m\times n}$, $[\mJ_{\V g}]_{ij}=\partial g_i/\partial x_j$.
 Row $i$ is the gradient of the component $g_i$, transposed.
 
 \centering
@@ -591,7 +591,7 @@ Row $i$ is the gradient of the component $g_i$, transposed.
 \end{tikzpicture}
 
 \raggedright
-\topic{Example} $\V g(\vx)=\begin{bsmallmatrix}\textcolor{porange}{x_1^2x_2}\\ \textcolor{pblue}{x_1+3x_2}\end{bsmallmatrix}$, \ $\V g:\R^2\to\R^2$:
+\topic{Example} $\V g(\vx)=\begin{bsmallmatrix}\textcolor{porange}{x_1^2x_2}\\ \textcolor{pblue}{x_1+3x_2}\end{bsmallmatrix}$, \ $\V g\colon\R^2\to\R^2$:
 \[ \nabla g_1(\vx) =\begin{bsmallmatrix}\textcolor{porange}{2x_1x_2}\\\textcolor{porange}{x_1^2}\end{bsmallmatrix}\!,\
   \nabla g_2(\vx) =\begin{bsmallmatrix}\textcolor{pblue}{1}\\\textcolor{pblue}{3}\end{bsmallmatrix},
   \; \mJ_{\V g}(\vx) = \begin{bsmallmatrix}\textcolor{porange}{\nabla g_1\tr}\\ \textcolor{pblue}{\nabla g_2\tr}\end{bsmallmatrix}
@@ -616,7 +616,7 @@ Vector-valued: $\V g(\vx)=\mB\vx$ has Jacobian $\mJ_{\V g}=\mB$.
 \topic{Chain rule, 1-d} $h(x)=f(g(x))$:
 \[ h'(x)=f'(g(x))\,g'(x) \]
 
-\topic{Chain rule, multi-d} $h(\vx)=f(\V g(\vx))$, $\V g:\R^n\to\R^m$, $f:\R^m\to\R$:
+\topic{Chain rule, multi-d} $h(\vx)=f(\V g(\vx))$, $\V g\colon\R^n\to\R^m$, $f\colon\R^m\to\R$:
 \[ \nabla h(\vx)=\mJ_{\V g}(\vx)\tr\,\nabla f(\V g(\vx)) \]
 \note{MML (row form): $\frac{dh}{d\vx}=\frac{df}{d\V g}\,\frac{d\V g}{d\vx}$, sizes $(1\times n)=(1\times m)(m\times n)$.}
 Useful cases: \ $\nabla_{\vx} f(\mB\vx+\vy)=\mB\tr\nabla f(\mB\vx+\vy)$;\

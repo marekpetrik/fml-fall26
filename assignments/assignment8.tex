@@ -24,16 +24,177 @@
 \item \textbf{Questions}: See the class website for a link to office hours
 \end{itemize}
 
-% Covers: Linear programming (CO 4.3, ILA 10.4) and Machine learning: linear regression (ISL 2--3).
+\textbf{Relevant reading}: ISL 3, 4, 6, ILA 4.3, UDL 5
 
-\textbf{Relevant reading}: CO 4.3, ILA 10.4 (linear programming); ISL 2--3 (linear regression). Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia or Python recommended). The cited problem numbers are from ILA, 5th edition (Strang, 2016), and ISL, 2nd edition (James et al., 2021).
+\textbf{Reminders}:
+\begin{enumerate}
+\item Please come to see me (or Maeve) during my office hours if you are struggling with the quizzes or assignments
+\item I am happy to make myself available at other times of the current hours do not work for you
+\item Please refrain from using AI to answer any of the problems on any of the assignment
+\item You need to be able to explain and defend all solutions that you submit 
+\item This entire assignment has an extra 30\%. To get at least 100\%, you can pick one of the following options:
+  \begin{enumerate}
+  \item Skip Problems~\ref{prob:gd-quadratic} and \ref{item:superhard} and solve Problems \ref{item:easy-1} and \ref{item:easy-2}
+  \item Skip Problems \ref{item:easy-1} and \ref{item:easy-2} and solve Problems~\ref{prob:gd-quadratic} 
+  \item Solving Problem \ref{item:superhard} alone gets you 130\% (you still need to be able to solve the other problems on quizzes)
+  \end{enumerate}
+\end{enumerate}
+
+\section*{Problems}
+
 
 \begin{enumerate}
-\item ILA, Problem Set 10.4 (linear programming): problems 1, 3.
-\item \textbf{[code]} Formulate and solve a small revenue-maximization linear program (using, e.g., JuMP in Julia or PuLP/SciPy in Python). Report the optimal solution, the optimal value, and which constraints are active.
-\item ISL, Chapter 3, Conceptual exercises: problems 1, 3, 4.
-\item ISL, Chapter 3, Applied exercises: the simple linear regression exercise on the \texttt{Auto} data set (problem 8) \textbf{[code]}.
+% ----------------------------------------------------------
+\item Let $\bm{A}\in \Real^{m \times n}$.
+\begin{enumerate}
+\item Prove that $\bm{A}\tr \bm{A}$ is always positive semidefinite.
+\item Prove (sufficient to outline the argument) that $\bm{A}\tr \bm{A}$ is positive definite if and only if the columns of $\bm{A}$ are linearly independent.
+\end{enumerate}
+% ----------------------------------------------------------
+\item \textbf{[code]} \label{item:linreg} Consider the following five data points $(t_i, y_i)$:
+  \[
+    \begin{array}{c|ccccc}
+      t_i & 1 & 2 & 3 & 4 & 5 \\ \hline
+      y_i & 2.1 & 3.9 & 6.2 & 7.8 & 10.1
+    \end{array}
+  \]
+  You will fit the simple linear regression model $y \approx x_1 + x_2 t$, where $x_1$ is the intercept and $x_2$ is the slope. Solve this problem \emph{from scratch} using only basic matrix operations (such as matrix multiplication and solving a linear system); do \textbf{not} use a linear regression or curve-fitting library (such as \texttt{GLM.jl}, \texttt{scikit-learn}, \texttt{numpy.polyfit}, \texttt{numpy.linalg.lstsq}, or R's \texttt{lm}).
+  \begin{enumerate}
+  \item Construct the matrix $\bm{A} \in \Real^{5\times 2}$ and the vector $\bm{b} \in \Real^5$ so that fitting the model is equivalent to minimizing $\| \bm{A}\bm{x} - \bm{b} \|^2$ over $\bm{x} = (x_1, x_2)\tr$. Write out $\bm{A}$ and $\bm{b}$ explicitly.
+  \item Compute the least-squares solution $\bm{x}\opt$ by solving the normal equations $\bm{A}\tr \bm{A} \bm{x} = \bm{A}\tr \bm{b}$. Report the intercept, the slope, and the residual sum of squares $\| \bm{A}\bm{x}\opt - \bm{b} \|^2$.
+  \item Plot the five data points together with the fitted line $y = x_1\opt + x_2\opt t$.
+  \item \label{item:dependent} Now consider a data set with three features $t_1, t_2, t_3$ and only three data points:
+    \[
+      \begin{array}{c|ccc|c}
+        i & t_{i1} & t_{i2} & t_{i3} & y_i \\ \hline
+        1 & 1 & 2 & 0 & 3 \\
+        2 & 0 & 1 & 3 & 5 \\
+        3 & 2 & 1 & 1 & 4
+      \end{array}
+    \]
+    Repeat parts (a) and (b) for the linear regression model with an intercept, $y \approx x_1 + x_2 t_1 + x_3 t_2 + x_4 t_3$ (there is no need for a plot). What do you observe when you try to solve the normal equations? Explain why this happens.
+  \item For the data set in part (d), can you find a vector $\bm{x}$ that minimizes $\| \bm{A}\bm{x} - \bm{b} \|^2$? Is there more than one? Can you find them?
+  \end{enumerate}
+% ----------------------------------------------------------
+\item Let $\bm{A} \in \Real^{m\times n}$ and $\bm{b} \in \Real^m$, let $\bm{x}\opt$ be a solution of the normal equations $\bm{A}\tr \bm{A} \bm{x} = \bm{A}\tr \bm{b}$, and let $\bm{r} = \bm{b} - \bm{A}\bm{x}\opt$ be the vector of residuals.
+  \begin{enumerate}
+  \item Show that $\bm{A}\tr \bm{r} = \bm{0}$, that is, the residual vector is orthogonal to every column of $\bm{A}$.
+  \item Suppose that the first column of $\bm{A}$ is all ones, as in a model with an intercept. Show that the residuals sum to zero: $\sum_{i=1}^m r_i = 0$.
+  \item Use part (b) to show that the fitted line $y = x_1\opt + x_2\opt t$ in Problem~\ref{item:linreg} passes through the point of averages $(\bar{t}, \bar{y})$, where $\bar{t} = \frac{1}{m}\sum_{i=1}^m t_i$ and $\bar{y} = \frac{1}{m}\sum_{i=1}^m y_i$. Verify this numerically using the intercept and slope you computed in Problem~\ref{item:linreg}.
+  \end{enumerate}
+% ----------------------------------------------------------
+\item Let $\bm{A} \in \Real^{n\times n}$ be a symmetric positive semidefinite matrix, that is, $\bm{x}\tr \bm{A} \bm{x} \ge 0$ for all $\bm{x} \in \Real^n$. Show that for any $\epsilon > 0$, the matrix $\bm{A} + \epsilon \bm{I}$ is positive definite, that is, $\bm{x}\tr (\bm{A} + \epsilon \bm{I}) \bm{x} > 0$ for all $\bm{x} \neq \bm{0}$. Then show that $\bm{A} + \epsilon \bm{I}$ is invertible. \emph{Hint}: Can you use the eigendecomposition $\bm{A} = \bm{Q}\bm{\Lambda}\bm{Q}\tr$ to construct the inverse of $\bm{A} + \epsilon \bm{I}$?
+\item Recall that linear regression (least squares) computes the coefficients $\bm{x} \in \Real^n$ by minimizing $\| \bm{A} \bm{x} - \bm{b} \|^2$, where $\bm{A} \in \Real^{m\times n}$ is the matrix of features and $\bm{b} \in \Real^m$ is the vector of responses. Ridge regression adds a penalty on the size of the coefficients and instead minimizes the function $f\colon \Real^n \to \Real$ defined as
+  \[
+    f(\bm{x}) = \| \bm{A} \bm{x} - \bm{b} \|^2 + \lambda \| \bm{x} \|^2,
+  \]
+  for some regularization parameter $\lambda > 0$.
+  \begin{enumerate}
+  \item Derive the gradient and the Hessian of $f$, and show that $f$ is convex.
+  \item Use the first-order optimality conditions to show that the ridge regression solution is $\bm{x}\opt = (\bm{A}\tr \bm{A} + \lambda \bm{I})^{-1} \bm{A}\tr \bm{b}$.
+  \item Show that $\bm{A}\tr \bm{A} + \lambda \bm{I}$ is positive definite, and hence invertible, for every $\lambda > 0$, even when the columns of $\bm{A}$ are linearly dependent (for example, when $m < n$). Why does this matter in contrast with the least-squares solution $(\bm{A}\tr \bm{A})^{-1} \bm{A}\tr \bm{b}$?
+  \item \textbf{[code]} Compute the ridge regression solution for the data set in Problem~\ref{item:linreg}(d) with $\lambda=0.001$. What is the residual sum of squares $\| \bm{A}\bm{x}\opt - \bm{b} \|^2$?
+  \end{enumerate}
+% ----------------------------------------------------------
+\item \textbf{[code]} The \emph{cross entropy} between a label $y \in \{0, 1\}$ and a predicted probability $p \in (0, 1)$ that the label is $1$ is
+  \[
+    H(y, p) = - y \log p - (1 - y) \log (1 - p).
+  \]
+  Logistic regression predicts the probability that $y_i = 1$ as $p_i = \sigma(\bm{a}_i\tr \bm{x})$, where $\bm{a}_i \in \Real^n$ is the feature vector of data point $i$, $\bm{x} \in \Real^n$ are the coefficients, and $\sigma(z) = 1 / (1 + e^{-z})$ is the sigmoid function. The coefficients are computed by minimizing the total cross entropy $L(\bm{x}) = \sum_{i=1}^m H(y_i, \sigma(\bm{a}_i\tr \bm{x}))$ over the $m$ data points.
+  \begin{enumerate}
+  \item Show that $H(y_i, p_i)$ is the negative log-likelihood of observing $y_i$ when $y_i$ is a Bernoulli random variable with $\Pr[y_i = 1] = p_i$. Then show that the loss simplifies to
+    \[
+      L(\bm{x}) = \sum_{i=1}^m \left( \log\left(1 + e^{\bm{a}_i\tr \bm{x}}\right) - y_i\, \bm{a}_i\tr \bm{x} \right).
+    \]
+  \item Show that $\sigma'(z) = \sigma(z) (1 - \sigma(z))$ and use it to derive the gradient
+    \[
+      \nabla L(\bm{x}) = \sum_{i=1}^m \left( \sigma(\bm{a}_i\tr \bm{x}) - y_i \right) \bm{a}_i = \bm{A}\tr \left( \sigma(\bm{A}\bm{x}) - \bm{y} \right),
+    \]
+    where the rows of $\bm{A} \in \Real^{m\times n}$ are $\bm{a}_i\tr$, $\bm{y} = (y_1, \dots, y_m)\tr$, and $\sigma$ is applied to each element of $\bm{A}\bm{x}$.
+  \item Consider the following eight data points $(t_i, y_i)$:
+    \[
+      \begin{array}{c|cccccccc}
+        t_i & 0.5 & 1.0 & 1.5 & 2.0 & 2.5 & 3.0 & 3.5 & 4.0 \\ \hline
+        y_i & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 1
+      \end{array}
+    \]
+    Fit the logistic regression model $\Pr[y = 1 \mid t] = \sigma(x_1 + x_2 t)$ with an intercept $x_1$ and slope $x_2$. Construct the matrix $\bm{A}$ and implement gradient descent \emph{from scratch} using the gradient from part (b); do \textbf{not} use a logistic regression library (such as \texttt{GLM.jl}, \texttt{scikit-learn}, or R's \texttt{glm}). Report the step size, the number of iterations, and the coefficients $\bm{x}\opt = (x_1\opt, x_2\opt)\tr$ you obtain, and plot the loss $L(\bm{x}_k)$ against the iteration number $k$.
+  \item Plot the eight data points together with the predicted probability $\sigma(x_1\opt + x_2\opt t)$ as a function of $t \in [0, 4.5]$. At what value of $t$ does the model predict $\Pr[y = 1 \mid t] = 0.5$?
+  \end{enumerate}
+% ----------------------------------------------------------
+\item \ [\emph{Hard}] \label{prob:gd-quadratic} Consider the quadratic function $f\colon \Real^n \to \Real$ defined as
+  \[
+    f(\bm{x}) = \frac{1}{2} \bm{x}\tr \bm{A} \bm{x} - \bm{b}\tr \bm{x},
+  \]
+  where $\bm{A} \in \Real^{n\times n}$ is symmetric positive definite with eigenvalues $0 < \lambda_{\min} = \lambda_1 \le \lambda_2 \le \dots \le \lambda_n = \lambda_{\max}$, and let $\bm{x}\opt = \bm{A}^{-1}\bm{b}$ be its unique minimizer. Gradient descent with a constant step size $\alpha > 0$ computes $\bm{x}_{k+1} = \bm{x}_k - \alpha \nabla f(\bm{x}_k)$ starting from some $\bm{x}_0 \in \Real^n$. Let $\bm{e}_k = \bm{x}_k - \bm{x}\opt$ denote the error at iteration $k$.
+  \begin{enumerate}
+  \item Show that the error satisfies $\bm{e}_{k+1} = (\bm{I} - \alpha \bm{A})\, \bm{e}_k$ and, therefore, $\bm{e}_k = (\bm{I} - \alpha \bm{A})^k \bm{e}_0$.
+  \item Using the eigendecomposition $\bm{A} = \bm{Q} \bm{\Lambda} \bm{Q}\tr$, where $\bm{Q}$ is orthogonal, show that
+    \[
+      \| \bm{e}_k \| \le \rho(\alpha)^k \, \| \bm{e}_0 \|,
+      \qquad \text{where} \qquad
+      \rho(\alpha) = \max_{i=1,\dots,n} |1 - \alpha \lambda_i| = \max \left\{ |1 - \alpha \lambda_{\min}|,\; |1 - \alpha \lambda_{\max}| \right\}.
+    \]
+    \emph{Hint}: Express $\bm{e}_k$ in the basis of the eigenvectors of $\bm{A}$ and recall that multiplying by an orthogonal matrix does not change the Euclidean norm.
+  \item Show that gradient descent converges to $\bm{x}\opt$ from every starting point $\bm{x}_0$ if and only if $0 < \alpha < 2 / \lambda_{\max}$. What happens to the iterates when $\alpha > 2/\lambda_{\max}$?
+  \item Find the step size $\alpha\opt$ that minimizes $\rho(\alpha)$ and show that
+    \[
+      \rho(\alpha\opt) = \frac{\kappa - 1}{\kappa + 1},
+      \qquad \text{where} \qquad
+      \kappa = \frac{\lambda_{\max}}{\lambda_{\min}}
+    \]
+    is the condition number of $\bm{A}$. Approximately how many iterations are needed to reduce the error by a factor of $10^{-6}$ when $\kappa = 10$ and when $\kappa = 1000$? Explain what this implies about gradient descent on poorly conditioned problems.
+  \end{enumerate}
+% ----------------------------------------------------------
+\item \ [\textbf{Seriously hard}] \label{item:superhard} Consider the same quadratic function $f$, minimizer $\bm{x}\opt$, and error $\bm{e}_k = \bm{x}_k - \bm{x}\opt$ as in Problem~\ref{prob:gd-quadratic}. The \emph{heavy ball method} (Polyak's momentum) adds a multiple of the previous step to the gradient descent update:
+  \[
+    \bm{x}_{k+1} = \bm{x}_k - \alpha \nabla f(\bm{x}_k) + \beta \left( \bm{x}_k - \bm{x}_{k-1} \right),
+  \]
+  where $\alpha > 0$ is the step size, $\beta \in [0, 1)$ is the momentum parameter, and $\bm{x}_{-1} = \bm{x}_0$. In this problem, you will show that a good choice of $\alpha$ and $\beta$ improves the rate from Problem~\ref{prob:gd-quadratic}(d) by replacing $\kappa$ with $\sqrt{\kappa}$.
+  \begin{enumerate}
+  \item Show that the error satisfies $\bm{e}_{k+1} = \left( (1+\beta)\bm{I} - \alpha \bm{A} \right) \bm{e}_k - \beta \bm{e}_{k-1}$. Then show that the stacked error $\bm{z}_k = \begin{bmatrix} \bm{e}_k \\ \bm{e}_{k-1} \end{bmatrix} \in \Real^{2n}$ satisfies $\bm{z}_{k+1} = \bm{T} \bm{z}_k$ for
+    \[
+      \bm{T} =
+      \begin{bmatrix}
+        (1+\beta)\bm{I} - \alpha \bm{A} & -\beta \bm{I} \\
+        \bm{I} & \bm{0}
+      \end{bmatrix}.
+    \]
+  \item Using the eigendecomposition $\bm{A} = \bm{Q}\bm{\Lambda}\bm{Q}\tr$, show that the eigenvalues of $\bm{T}$ are exactly the eigenvalues of the $n$ matrices
+    \[
+      \bm{T}_i =
+      \begin{bmatrix}
+        1 + \beta - \alpha \lambda_i & -\beta \\
+        1 & 0
+      \end{bmatrix}, \qquad i = 1, \dots, n,
+    \]
+    and that the eigenvalues $\mu$ of $\bm{T}_i$ are the roots of $\mu^2 - (1 + \beta - \alpha\lambda_i)\mu + \beta = 0$. \emph{Hint}: Change variables to $\tilde{\bm{e}}_k = \bm{Q}\tr \bm{e}_k$ and observe that the recursion decouples into $n$ independent scalar recursions, one for each coordinate.
+  \item Show that if $(1 - \sqrt{\beta})^2 \le \alpha \lambda_i \le (1 + \sqrt{\beta})^2$, then both roots of the quadratic in part (b) satisfy $|\mu| = \sqrt{\beta}$. \emph{Hint}: Show that the discriminant is non-positive; the roots are then complex conjugates (or a repeated real root), and their product is $\beta$.
+  \item Let $\kappa = \lambda_{\max} / \lambda_{\min}$ and choose
+    \[
+      \alpha = \frac{4}{\left(\sqrt{\lambda_{\max}} + \sqrt{\lambda_{\min}}\right)^2},
+      \qquad
+      \beta = \left( \frac{\sqrt{\kappa} - 1}{\sqrt{\kappa} + 1} \right)^2.
+    \]
+    Show that the condition in part (c) holds for every eigenvalue $\lambda_i$ of $\bm{A}$, and conclude that every eigenvalue of $\bm{T}$ has modulus
+    \[
+      \sqrt{\beta} = \frac{\sqrt{\kappa} - 1}{\sqrt{\kappa} + 1}.
+    \]
+    You may use without proof the fact that for any square matrix $\bm{T}$ whose eigenvalues all have modulus at most $r$ and any $\epsilon > 0$, there exists a constant $C$ such that $\|\bm{T}^k \bm{z}\| \le C (r + \epsilon)^k \|\bm{z}\|$ for all $k$ and $\bm{z}$. Approximately how many iterations does the heavy ball method need to reduce the error by a factor of $10^{-6}$ when $\kappa = 10$ and when $\kappa = 1000$? Compare with your answer for gradient descent in Problem~\ref{prob:gd-quadratic}(d).
+  \end{enumerate}
+% ----------------------------------------------------------
+\item \ [\emph{Easy, OK to skip if familiar}]  \label{item:easy-1} ISL \textbf{2nd edition}, Chapter 3, Problem 8. You can use a library or your code. Get the dataset from here \url{https://www.statlearning.com/s/Auto.csv}. Note that missing values of \texttt{horsepower} are recorded as \texttt{?}; treat them as missing (for example, using \texttt{na\_values="?"} in pandas or \texttt{na.strings = "?"} in R) and remove those rows.
+% ----------------------------------------------------------
+\item \ [\emph{Easy, OK to skip if familiar}] \label{item:easy-2} ISL \textbf{2nd edition}, Chapter 4, Problem 14, parts: a, c, f only. The same dataset as above.
+% ----------------------------------------------------------
+
+  
 \item \textbf{Time spent.} Report approximately how many hours you spent completing this problem set (including the reading).
 \end{enumerate}
 
 \end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:
