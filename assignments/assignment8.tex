@@ -51,6 +51,13 @@
 \item Prove (sufficient to outline the argument) that $\bm{A}\tr \bm{A}$ is positive definite if and only if the columns of $\bm{A}$ are linearly independent.
 \end{enumerate}
 % ----------------------------------------------------------
+\item Let $\bm{A} \in \Real^{m\times n}$ and $\bm{b} \in \Real^m$, let $\bm{x}\opt$ be a minimizer of $\| \bm{A} \bm{x} - \bm{b}\|^{2}$, and let $\bm{r} = \bm{b} - \bm{A}\bm{x}\opt$ be the vector of residuals.
+  \begin{enumerate}
+  \item Show that $\bm{A}\tr \bm{r} = \bm{0}$: the residual vector is orthogonal to every column of $\bm{A}$.
+  \item Suppose that the first column of $\bm{A}$ is all ones, as in a model with an intercept. Show that the residuals sum to zero: $\sum_{i=1}^m r_i = 0$.
+  \item Use part (b) to show that the fitted line $y = x_1\opt + x_2\opt t$ in Problem~\ref{item:linreg} passes through the point of averages $(\bar{t}, \bar{y})$, where $\bar{t} = \frac{1}{m}\sum_{i=1}^m t_i$ and $\bar{y} = \frac{1}{m}\sum_{i=1}^m y_i$. Verify this numerically using the intercept and slope you computed in Problem~\ref{item:linreg}.
+  \end{enumerate}
+% ----------------------------------------------------------
 \item \textbf{[code]} \label{item:linreg} Consider the following five data points $(t_i, y_i)$:
   \[
     \begin{array}{c|ccccc}
@@ -74,13 +81,6 @@
     \]
     Repeat parts (a) and (b) for the linear regression model with an intercept, $y \approx x_1 + x_2 t_1 + x_3 t_2 + x_4 t_3$ (there is no need for a plot). What do you observe when you try to solve the normal equations? Explain why this happens.
   \item For the data set in part (d), can you find a vector $\bm{x}$ that minimizes $\| \bm{A}\bm{x} - \bm{b} \|^2$? Is there more than one? Can you find them?
-  \end{enumerate}
-% ----------------------------------------------------------
-\item Let $\bm{A} \in \Real^{m\times n}$ and $\bm{b} \in \Real^m$, let $\bm{x}\opt$ be a solution of the normal equations $\bm{A}\tr \bm{A} \bm{x} = \bm{A}\tr \bm{b}$, and let $\bm{r} = \bm{b} - \bm{A}\bm{x}\opt$ be the vector of residuals.
-  \begin{enumerate}
-  \item Show that $\bm{A}\tr \bm{r} = \bm{0}$, that is, the residual vector is orthogonal to every column of $\bm{A}$.
-  \item Suppose that the first column of $\bm{A}$ is all ones, as in a model with an intercept. Show that the residuals sum to zero: $\sum_{i=1}^m r_i = 0$.
-  \item Use part (b) to show that the fitted line $y = x_1\opt + x_2\opt t$ in Problem~\ref{item:linreg} passes through the point of averages $(\bar{t}, \bar{y})$, where $\bar{t} = \frac{1}{m}\sum_{i=1}^m t_i$ and $\bar{y} = \frac{1}{m}\sum_{i=1}^m y_i$. Verify this numerically using the intercept and slope you computed in Problem~\ref{item:linreg}.
   \end{enumerate}
 % ----------------------------------------------------------
 \item Let $\bm{A} \in \Real^{n\times n}$ be a symmetric positive semidefinite matrix, that is, $\bm{x}\tr \bm{A} \bm{x} \ge 0$ for all $\bm{x} \in \Real^n$. Show that for any $\epsilon > 0$, the matrix $\bm{A} + \epsilon \bm{I}$ is positive definite, that is, $\bm{x}\tr (\bm{A} + \epsilon \bm{I}) \bm{x} > 0$ for all $\bm{x} \neq \bm{0}$. Then show that $\bm{A} + \epsilon \bm{I}$ is invertible. \emph{Hint}: Can you use the eigendecomposition $\bm{A} = \bm{Q}\bm{\Lambda}\bm{Q}\tr$ to construct the inverse of $\bm{A} + \epsilon \bm{I}$?
