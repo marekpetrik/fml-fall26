@@ -4,13 +4,18 @@
 \usepackage{amsmath,amsfonts}
 \usepackage{url}
 \usepackage{bm}
+\usepackage{tikz}
 
 \newcommand{\Real}{\mathbb{R}}
 \newcommand{\tr}{^\top}
 \newcommand{\opt}{^\star}
+\renewcommand{\Pr}{\mathbb{P}}
+
+\DeclareMathOperator{\softmax}{softmax}
 
 \setlength{\parskip}{3mm plus1mm minus1mm}
 \setlength{\parindent}{0mm}
+\renewcommand{\labelenumi}{(\alph{enumi})}
 
 \title{Problem Set 9}
 \author{Foundations of Machine Learning}
@@ -21,17 +26,116 @@
 
 \begin{itemize}
 \item \textbf{Submission}: Turn in as a \texttt{PDF} and a \textbf{separate source code file} on \url{http://mycourses.unh.edu}. Scanned hand-written notes are encouraged.
-\item \textbf{Questions}: See the class website for a link to office hours
+\item \textbf{Questions}: See the class website for a link to office hours.
 \end{itemize}
 
-% Covers: Logistic regression (ISL 4, CO 7.1, MML 7.1) and Gradient descent for logistic regression (ISL 4, CO 9.3).
-
-\textbf{Relevant reading}: ISL 4; CO 7.1, 9.3; MML 7.1. Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia or Python recommended). The cited exercise numbers are from ISL, 2nd edition (James et al., 2021).
-
+\textbf{Relevant reading}:
 \begin{enumerate}
-\item ISL, Chapter 4, Conceptual exercises: problems 1, 6.
-\item ISL, Chapter 4, Applied exercises: a logistic-regression exercise, e.g.\ on the \texttt{Weekly} data set \textbf{[code]}.
-\item \textbf{Time spent.} Report approximately how many hours you spent completing this problem set (including the reading).
+\item UDL (Prince, \emph{Understanding Deep Learning}): Chapters 2 and 3, Section 5.5 (Softmax and multiclass classification), and Sections 7.1--7.4 (Backpropagation), available at \url{https://udlbook.github.io/udlbook/}
+\item You can also check out notebooks that illustrate the concepts: \url{https://udlbook.github.io/udlbook/}
 \end{enumerate}
 
+
+\section*{Problem 1}
+
+Recall that the \emph{softmax} function $\softmax\colon \Real^K \to \Real^K$ maps a vector $\bm{z} = (z_1, \ldots, z_K)$ to a vector of probabilities with the components
+\[
+  (\softmax[\bm{z}])_k = \frac{\exp(z_k)}{\sum_{j=1}^K \exp(z_j)}, \qquad k = 1, \ldots, K.
+\]
+Show that softmax is \emph{translation invariant}: for any $c \in \Real$,
+\[
+  \softmax[\bm{z} + c \bm{1}] = \softmax[\bm{z}],
+\]
+where $\bm{1} = (1, \ldots, 1)$ is the vector of all ones.
+
+\section*{Problem 2}
+
+Consider a classification problem with two classes $y \in \{0, 1\}$ and features $\bm{a} \in \Real^n$. Assume that $a_1 = 1$ represents the intercept. A \emph{linear softmax model} predicts the probability of a data point $\bm{a}$ being in class $k$ as
+\[
+  \hat{y}_k^{\mathrm{s}}(\bm{w}) = (\softmax[(z_0, z_1)])_k, \qquad z_k = \bm{a}\tr \bm{w}_k, \qquad k \in \{0, 1\},
+\]
+where $\bm{w} = (\bm{w}_0, \bm{w}_1)$ are the learned coefficients. Note that, unlike in Problem~1, the components of softmax are indexed from $0$ here, so $K = 2$ and $(\softmax[(z_0, z_1)])_k = \exp(z_k) / (\exp(z_0) + \exp(z_1))$. On the same classification problem, \emph{logistic regression} predicts the probability of each class as
+\[
+  \hat{y}_1^{\mathrm{l}}(\bm{x}) = \frac{1}{1 + e^{-\bm{a}\tr \bm{x}}}, \qquad \hat{y}_0^{\mathrm{l}}(\bm{x}) = 1 - \hat{y}_1^{\mathrm{l}}(\bm{x}).
+\]
+\begin{enumerate}
+\item Use Problem~1 to explain why there are many values of $\bm{w}$ that lead to identical predictions of the linear softmax model. 
+\item Show that for any weights $(\bm{w}_k)_{k\in \{ 0,1 \}}$ in the softmax linear model, there exist weights $\bm{x}$ in logistic regression such that $\hat{y}_k^{\mathrm{s}}(\bm{w}) = \hat{y}_k^{\mathrm{l}}(\bm{x})$ for all $k \in \{0, 1\}$ and all $\bm{a}$.
+\item Show that for any weights $\bm{x}$ in logistic regression, there exist weights $(\bm{w}_k)_{k\in \{ 0,1 \}}$ in the softmax linear model such that $\hat{y}_k^{\mathrm{s}}(\bm{w}) = \hat{y}_k^{\mathrm{l}}(\bm{x})$ for all $k \in \{0, 1\}$ and all $\bm{a}$.
+\item Show that the cross-entropy loss of the softmax model equals the logistic regression loss for the same predictions: $\bm{\hat{y}}^{\mathrm{s}}(\bm{w}) = \bm{\hat{y}}^{\mathrm{l}}(\bm{x})$. It is sufficient to argue the equivalence for a single data point with features $\bm{a} \in \Real^n$ and a label $y_\text{true}$. Recall that for a single data point, the cross-entropy loss is defined as $H(y, p) = - y \log p - (1 - y) \log (1 - p)$.
+\item Argue that both models make the same predictions after fitting. 
+\end{enumerate}
+
+\section*{Problem 3}
+
+Problems 3.1, 3.2, 3.3, 3.4 in UDL (see above for the link to the book).
+
+\section*{Problem 4}
+
+Note that UDL writes function arguments in square brackets, such as $f[x, \bm{\phi}]$ and $a[z]$, to avoid confusing function application with multiplication. It is not a standard convention and the assignment uses parentheses here. 
+
+
+Consider the shallow neural network from UDL Chapter~3 with a scalar input $x$, three hidden units $h_1, h_2, h_3$, and a scalar output $y$:
+\begin{align*}
+  h_1 &= a(\theta_{10} + \theta_{11} x), &
+  h_2 &= a(\theta_{20} + \theta_{21} x), &
+  h_3 &= a(\theta_{30} + \theta_{31} x),
+\end{align*}
+\[
+  y = f(x, \bm{\phi}) = \phi_0 + \phi_1 h_1 + \phi_2 h_2 + \phi_3 h_3,
+\]
+where $a(z) = \operatorname{ReLU}(z) = \max\{0, z\}$ is the activation function and $\bm{\phi} = \{\phi_0, \phi_1, \phi_2, \phi_3, \theta_{10}, \theta_{11}, \theta_{20}, \theta_{21}, \theta_{30}, \theta_{31}\}$ are the 10 parameters. The network is depicted in Figure~\ref{fig:netwowrk}.
+
+\begin{figure}
+\begin{center}
+  \begin{tikzpicture}[
+    unit/.style={circle, draw, minimum size=9mm},
+    bias/.style={circle, draw, dashed, minimum size=9mm},
+    lbl/.style={font=\footnotesize, fill=white, inner sep=1pt},
+    >=latex, x=4.2cm, y=1.1cm]
+    \node[bias] (b0) at (0, 1.2) {$1$};
+    \node[unit] (x)  at (0, -1.2) {$x$};
+    \node[unit] (h1) at (1, 2) {$h_1$};
+    \node[unit] (h2) at (1, 0) {$h_2$};
+    \node[unit] (h3) at (1, -2) {$h_3$};
+    \node[bias] (b1) at (1, 3.5) {$1$};
+    \node[unit] (y)  at (2, 0) {$y$};
+    \foreach \d in {1,2,3} {
+      \draw[->] (b0) -- node[lbl, pos=0.2] {$\theta_{\d 0}$} (h\d);
+      \draw[->] (x)  -- node[lbl, pos=0.2] {$\theta_{\d 1}$} (h\d);
+      \draw[->] (h\d) -- node[lbl, pos=0.5] {$\phi_{\d}$} (y);
+    }
+    \draw[->] (b1) -- node[lbl, pos=0.5] {$\phi_0$} (y);
+  \end{tikzpicture}
+\end{center}
+  \caption{Network used in Problem 4. }
+  \label{fig:netwowrk}
+\end{figure}
+
+For a single training example $(x, y_\text{true})$, the least-squares loss is
+\[
+  \ell(\bm{\phi}) = \left( f(x, \bm{\phi}) - y_\text{true} \right)^2.
+\]
+Use the parameter values
+\begin{align*}
+  \theta_{10} &= 0.5, & \theta_{11} &= 1, & \theta_{20} &= -0.5, & \theta_{21} &= -1, & \theta_{30} &= -1, & \theta_{31} &= 2, \\
+  \phi_0 &= 0.2, & \phi_1 &= 1, & \phi_2 &= -1, & \phi_3 &= 0.5,
+\end{align*}
+and the training example $x = 1$, $y_\text{true} = 1$.
+\begin{enumerate}
+\item Compute the pre-activations $\theta_{d0} + \theta_{d1} x$, the hidden units $h_1, h_2, h_3$, the output $f(x, \bm{\phi})$, and the loss $\ell(\bm{\phi})$.
+\item Use the chain rule to derive general expressions for the derivatives $\partial \ell / \partial \phi_d$ for $d = 0, \ldots, 3$ and $\partial \ell / \partial \theta_{d0}$, $\partial \ell / \partial \theta_{d1}$ for $d = 1, 2, 3$. Recall that $a'(z) = 1$ when $z > 0$ and $a'(z) = 0$ when $z < 0$.
+\item Evaluate all 10 derivatives from part (b) at the parameter values above. Which derivatives are zero and why?
+\item \textbf{[code]} Check your answer to part (c) numerically using automatic differentiation (as in previous problem sets).
+\end{enumerate}
+
+\section*{Time spent}
+
+Report approximately how many hours you spent completing this problem set (including the reading).
+
 \end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:
