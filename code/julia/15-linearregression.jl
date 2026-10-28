@@ -30,7 +30,7 @@ plot(y, xlabel = "time", ylabel = "COVID cases")
 n = length(y)
 A = hcat(ones(n), 1:n)
 
-f(x) = 1/2 * norm(A*x - y)^2  # (half) mean squared error
+f(x) = 1/2 * norm(A*x - y)^2  # 1/2 RSS
 
 
 # this adds polynomial features
@@ -58,7 +58,7 @@ end
 ### --- Linear regression: normal equations
 
 
-x̂ = (A'*A) \ (A'*y)              # solve the normal equations A'A x = A'y
+x̂ = (A'*A) \ (A'*y)              
 println("Normal equations: x̂ = $x̂, f(x̂) = $(f(x̂))")
 
 p = plot(y, xlabel="time", ylabel="COVID cases", label="data", color="black")
@@ -84,15 +84,15 @@ end
 ∇f₁(x) = A'*(A*x - y)      # analytical gradient
 
 α = 0.000000001         
-K = 100                          # number of iterations
-x₀ = zeros(2)
+K = 20                          # number of iterations
+x₀ = [100000,0]
 
 xs₁ = gradient_descent(∇f₁, x₀, α, K)
 println("GD (manual): x = $(xs₁[end]), f(x) = $(f(xs₁[end]))")
 
 p = plot(y, xlabel="time", ylabel="COVID cases", label="data", color="black")
 plot!(A*xs₁[1], label="ŷ₀", color="red", width=2)
-plot!(A*xs₁[50], label="ŷ₁₀", color="red", width=2)
+plot!(A*xs₁[11], label="ŷ₁₀", color="red", width=2)
 plot!(A*xs₁[end], label="ŷ", color="red", width=2)
 
 display(p)
@@ -108,7 +108,7 @@ println("GD (autograd): x = $(xs₂[end]), f(x) = $(f(xs₂[end]))")
 
 p = plot(y, xlabel="time", ylabel="COVID cases", label="data", color="black")
 plot!(A*xs₂[1], label="ŷ₀", color="red", width=2)
-plot!(A*xs₂[10], label="ŷ₁₀", color="red", width=2)
+plot!(A*xs₂[11], label="ŷ₁₀", color="red", width=2)
 plot!(A*xs₂[end], label="ŷ", color="red", width=2)
 
 display(p)
