@@ -32,15 +32,14 @@ A <- cbind(1, 1:n)
 f <- function(x) 1/2 * sum((A %*% x - y)^2)   # 1/2 RSS
 
 
-# this adds polynomial features
-
+# the following block adds polynomial features
 if (FALSE) {
   A <- cbind(A, (1:n)^2)
 }
 
 ReLU <- function(x) pmax(x, 0)
 
-# this adds splines
+# the following block adds splines
 if (FALSE) {
   t10 <- -100; t11 <- 1
   t20 <- -200; t21 <- 1
@@ -77,20 +76,35 @@ gradient_descent <- function(grad_f, x0, alpha, K) {
 
 grad_f1 <- function(x) as.vector(t(A) %*% (A %*% x - y))   # analytical gradient
 
-alpha <- 0.000000001
-K <- 20                          # number of iterations
-x0 <- c(100000, 0)
+# hand-selected stepsize
+alpha <- 0.00000001
+
+# optimal step size (for the quadratic function)
+#lams <- eigen(2 * t(A) %*% A)$values
+#alpha <- 2 / (max(lams) + min(lams))
+
+K <- 100000                      # number of iterations
+x0 <- c(100000, -1000)
+#x0 <- c(0, 0)
 
 xs1 <- gradient_descent(grad_f1, x0, alpha, K)
 cat("GD (manual): x =", xs1[[K + 1]], ", f(x) =", f(xs1[[K + 1]]), "\n")
 
 plot(y, type = "l", xlab = "time", ylab = "COVID cases")
-lines(A %*% xs1[[1]], col = "red", lwd = 2)
-lines(A %*% xs1[[11]], col = "red", lwd = 2)
+lines(A %*% xs1[[1]], col = "red", lwd = 2, lty = 2)
+lines(A %*% xs1[[length(xs1) %/% 2]], col = "red", lwd = 2, lty = 2)
 lines(A %*% xs1[[K + 1]], col = "red", lwd = 2)
-legend("topleft", legend = expression(data, list(hat(y)[0], hat(y)[10], hat(y))), col = c("black", "red"), lwd = c(1, 2))
+legend("topleft", legend = expression(data, list(hat(y)[0], hat(y)[10]), hat(y)),
+       col = c("black", "red", "red"), lwd = c(1, 2, 2), lty = c(1, 2, 1))
 
 if (interactive()) readline("\npress enter to continue")
+
+### --- plot convergence
+
+errors <- sapply(xs1, function(x) sqrt(sum((x - xhat)^2)))
+plot(errors, type = "l")
+
+#max(errors[-1] / errors[-length(errors)])
 
 ### --- Linear regression: gradient descent (autograd)
 

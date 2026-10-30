@@ -40,8 +40,8 @@ One lecture on each of the following topics. Please see the class website and my
 | Oct 15 | Thu | Gradient descent, optimality conditions                        | MML 7.1; CO 7.1;           |
 | Oct 20 | Tue | Linear regression                                              | ISL 2-3                    |
 | Oct 22 | Thu | Logistic regression                                            | ISL 4; CO 9.3              |
-| Oct 27 | Tue | Shallow neural networks                                        | UDL 3, 6                   |
-| Oct 29 | Thu | Deep neural networks                                           | UDL 4, 6                   |
+| Oct 27 | Tue | Shallow neural networks                                        | UDL 3, 6, 7                |
+| Oct 29 | Thu | Deep neural networks                                           | UDL 3, 6, 7                |
 | Nov 3  | Tue | Probability basics: random variables                           | MML 6.1-6.3                |
 | Nov 5  | Thu | Probability basics: distributions                              | MML 6.4-6.5                |
 | Nov 10 | Tue | Principal component analysis                                   | MML 10.1-10.3              |

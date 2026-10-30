@@ -34,7 +34,10 @@ ReLU(z) = max(z, 0)
 
 # hidden units: hⱼ(t) = ReLU(θⱼ₁ t + θⱼ₀),  output: ŷ(t) = w₀ + Σⱼ wⱼ hⱼ(t)
 # with θⱼ₁ = 1 and θⱼ₀ = -knotⱼ, the hidden units are the spline features
-knots = [0, 100, 200, 300] / n   # in days; the knot at 0 is the linear term: ReLU(t) = t
+
+# knots from spline regression
+knots = [0, 100, 200, 300] / n   
+
 m = length(knots)                # number of hidden units
 
 # all parameters in one vector: x = [w₀; w; θ₀; θ₁]
@@ -50,11 +53,11 @@ f(x) = 1/(2n) * norm(network(x) - y)^2  # (half) mean squared error
 
 ### --- Spline regression: normal equations (fixed knots)
 
-θ₀ = -knots
+θ₀ = -knots    # initialize to knots
 θ₁ = ones(m)
 A = hcat(ones(n), ReLU.(t * θ₁' .+ θ₀'))   # features: intercept and splines
 
-ŵ = (A'*A) \ (A'*y)              # solve the normal equations A'A w = A'y
+ŵ = (A'*A) \ (A'*y)                        
 x̂ = [ŵ; θ₀; θ₁]
 println("Spline (normal equations): f(x̂) = $(f(x̂))")
 
@@ -80,27 +83,33 @@ end
 
 ∇f(x) = gradient(f, AutoForwardDiff(), x)
 
-α = 0.05                         # step size; α = 0.5 is unstable at first, but ends in a better local minimum
-K = 5_000                        # number of iterations
-x₀ = x̂                           # start from the spline; GD also moves the knots
+α = 0.0005                       # step size
+K = 10_000                     # number of iterations
+x₀ = x̂                         # start from the spline; GD also moves the knots
+
+
+# This code would randomize the knots
+# x₀[m+2:2m+1] .= rand(4) * 400
 
 xs = gradient_descent(∇f, x₀, α, K)
 println("GD (autograd): f(x) = $(f(xs[end]))")
 
+# initialize the weights
 _, _, θ₀, θ₁ = unpack(xs[end])
 println("Learned knots (days): ", round.(Int, -θ₀ ./ θ₁ * n))
 
 # iterate xₖ is xs[k+1]
 p = plot(y, xlabel="time", ylabel="COVID cases (100k)", label="data", color="black")
 plot!(network(xs[1]), label="ŷ₀ (spline)", color="blue", linestyle=:dash, width=2)
-plot!(network(xs[101]), label="ŷ₁₀₀", color="green", linestyle=:dash, width=2)
+plot!(network(xs[div(length(xs),2)]), label="ŷ₁₀₀", color="green", linestyle=:dash, width=2)
 plot!(network(xs[end]), label="ŷ", color="red", width=2)
 
 display(p)
 println("\npress enter to close plot")
 #readline()
 
-# plot the evolution of the objective
+
+### Plot the evolution of the objective
 p = plot(0:K, f.(xs), xlabel="iteration", ylabel="f(x)", label="GD (autograd)",
          color="red", width=2)
 hline!([f(x̂)], label="spline", color="blue", linestyle=:dash, width=2)

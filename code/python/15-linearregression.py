@@ -42,15 +42,14 @@ def f(x):
     return 1/2 * jnp.linalg.norm(A @ x - y)**2      # 1/2 RSS
 
 
-# this adds polynomial features
-
+# the following block adds polynomial features
 if False:
     A = np.column_stack([A, np.arange(1, n + 1)**2])
 
 def ReLU(x):
     return np.maximum(x, 0)
 
-# this adds splines
+# the following block adds splines
 if False:
     t10, t11 = -100, 1
     t20, t21 = -200, 1
@@ -87,26 +86,43 @@ def gradient_descent(grad_f, x0, alpha, K):
 def grad_f1(x):
     return A.T @ (A @ x - y)        # analytical gradient
 
-alpha = 0.000000001
-K = 20                              # number of iterations
-x0 = np.array([100000.0, 0])
+# hand-selected stepsize
+alpha = 0.00000001
+
+# optimal step size (for the quadratic function)
+#lams = np.linalg.eigvalsh(2 * A.T @ A)
+#alpha = 2 / (max(lams) + min(lams))
+
+K = 100000                          # number of iterations
+x0 = np.array([100000.0, -1000.0])
+#x0 = np.array([0.0, 0.0])
 
 xs1 = gradient_descent(grad_f1, x0, alpha, K)
 print(f"GD (manual): x = {xs1[-1]}, f(x) = {f(xs1[-1])}")
 
 plt.plot(y, label="data", color="black")
-plt.plot(A @ xs1[0], label="ŷ₀", color="red", linewidth=2)
-plt.plot(A @ xs1[10], label="ŷ₁₀", color="red", linewidth=2)
+plt.plot(A @ xs1[0], label="ŷ₀", color="red", linewidth=2, linestyle="--")
+plt.plot(A @ xs1[len(xs1) // 2], label="ŷ₁₀", color="red", linewidth=2, linestyle="--")
 plt.plot(A @ xs1[-1], label="ŷ", color="red", linewidth=2)
 plt.xlabel("time")
 plt.ylabel("COVID cases")
 plt.legend()
 plt.show()
 
+### --- plot convergence
+
+errors = [np.linalg.norm(x - xhat) for x in xs1]
+plt.plot(errors)
+plt.show()
+
+#max(errors[i+1] / errors[i] for i in range(len(errors) - 1))
+
 ### --- Linear regression: gradient descent (autograd)
 
+grad_f2_jit = jax.jit(jax.grad(f))   # compile once: K calls are otherwise slow
+
 def grad_f2(x):
-    return np.asarray(jax.grad(f)(x))
+    return np.asarray(grad_f2_jit(x))
 
 xs2 = gradient_descent(grad_f2, x0, alpha, K)
 print(f"GD (autograd): x = {xs2[-1]}, f(x) = {f(xs2[-1])}")
