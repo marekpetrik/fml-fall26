@@ -2,6 +2,7 @@
 
 \usepackage[margin=1.5cm]{geometry}
 \usepackage{amsmath,amsfonts}
+\usepackage{hyperref}
 \usepackage{url}
 \usepackage{bm}
 
@@ -24,10 +25,29 @@
 \item \textbf{Questions}: See the class website for a link to office hours
 \end{itemize}
 
-TBD
 
-% \item \textbf{Time spent.} Report approximately how many hours you spent completing this problem set (including the reading).
-% \end{enumerate}
+\section{Problem 1}
+
+Imagine you are a data scientist working for a real estate company, Nink, LLC. You have a dataset of historical house sales available: \url{https://gitlab.cs.unh.edu/marekpetrik/fml-fall26/assignments/houses/training.csv}. The dataset has three features for each house and the price at which it was recently sold. You also just read a study showing that house sellers are willing to give up to 10\% of the house's market value for a quick sale. Since this is a significant amount, you realize that Nink can simplify house sales and make some profit on the side. You pitch the following plan to the CEO. Nink will use their state-of-the-art statistical models to estimate each house’s true market price and make each seller an offer to buy their house quickly with no inspections, no agents, and no hassle. Because Nink's process is so convenient, you know that you only need to offer 90\% of its true market value for the seller to accept. If a seller accepts your offer, you buy the house for the price you offered, and then turn around and sell it for its true market value.
+
+The CEO likes your plan and promises you a promotion if your plan can make Nink rich. To prove the value of your idea, you need to make offers to sellers of houses that are currently on the market: \url{https://gitlab.cs.unh.edu/marekpetrik/fml-fall26/assignments/houses/test.csv}
+
+Can you use your machine learning skills to make money for Nink and earn your promotion?
+
+The parameters:
+\begin{itemize}
+\item You can use linear algebra, torch, or a similar framework to fit a linear regression, logistic regression, a neural network or a similar model
+\item You may transform the data as you please (such as adding additional features to use polynomial regression)
+\item Whatever code you use should be either provided to you in the assignment or written by you. 
+\item Your predictions should be output as a CSV file that preserves the rows and columns of the test file. In particular, it is important that the column ``id'' is preserved in your output. Otherwise, I will have no way to match your offers to the houses. 
+\item You can start with the following code for \url{https://gitlab.cs.unh.edu/marekpetrik/fml-fall26/assignments/houses/stater/starter.py}, \url{https://gitlab.cs.unh.edu/marekpetrik/fml-fall26/assignments/houses/stater/starter.R}, \url{https://gitlab.cs.unh.edu/marekpetrik/fml-fall26/assignments/houses/stater/starter.jl}
+\end{itemize}
+
+Turn in:
+\begin{enumerate}
+\item Your source code
+\item A CSV file named: \texttt{test-predictions.csv} with your offers. 
+\end{enumerate}
 
 \end{document}
 
