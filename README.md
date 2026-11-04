@@ -41,20 +41,19 @@ One lecture on each of the following topics. Please see the class website and my
 | Oct 20 | Tue | Linear regression                                              | ISL 2-3                    |
 | Oct 22 | Thu | Logistic regression                                            | ISL 4; CO 9.3              |
 | Oct 27 | Tue | Shallow neural networks                                        | UDL 3, 6, 7                |
-| Oct 29 | Thu | Deep neural networks                                           | UDL 3, 6, 7                |
-| Nov 3  | Tue | Probability basics: random variables                           | MML 6.1-6.3                |
-| Nov 5  | Thu | Probability basics: distributions                              | MML 6.4-6.5                |
-| Nov 10 | Tue | Principal component analysis                                   | MML 10.1-10.3              |
-| Nov 12 | Thu | Markov models and n-grams                                      | ILA                        |
-| Nov 17 | Tue | Transformers and LLMs                                          | UDL                        |
-| Nov 19 | Thu | Transformers and LLMs                                          | UDL                        |
+| Oct 29 | Thu | Convergence of gradient descent                                | MML 7.1                    |
+| Nov 3  | Tue | Backpropagation on a shallow network                           | UDL 6, 7                   |
+| Nov 5  | Thu | Probability basics: random variables, expectations             | MML 6.1-6.3                |
+| Nov 10 | Tue | Probability basics: expectations                               | MML 6.4-6.5                |
+| Nov 12 | Thu | Probability basics: distributions                              | MML 6.4-6.5                |
+| Nov 17 | Tue | Maximum likelihood, PCA, overfitting                           | MML 8.1, 8.3.1-8.3.2       |
+| Nov 19 | Thu | Maximum likelihood, Overfitting                                | MML 8.1, 8.3.1-8.3.2       |
 | Nov 24 | Tue | *Optional topics, review*                                      |                            |
 | Nov 26 | Thu | *No class, thanksgiving holiday*                               |                            |
-| Dec 1  | Tue | Maximum likelihood, MAP, PCA, overfitting                      | MML 8.1, 8.3.1-8.3.2       |
-| Dec 3  | Thu | Reinforcement learning                                         | UDL 19                     |
+| Dec 1  | Tue | Markov models and n-grams                                      | ILA                        |
+| Dec 3  | Thu | Principal component analysis                                   | MML 10.1-10.3              |
 | Dec 8  | Tue | Reinforcement learning: transformers and LLMs                  | UDL 19                     |
 | Dec 10 | Thu | Review and final exam preparation                              |                            |
-
 
 
 
