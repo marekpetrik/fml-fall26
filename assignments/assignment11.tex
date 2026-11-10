@@ -24,15 +24,105 @@
 \item \textbf{Questions}: See the class website for a link to office hours
 \end{itemize}
 
-% Covers: Probability basics: random variables (MML 6.1--6.3) and distributions / Gaussian (MML 6.4--6.5).
+% Covers: Probability basics (MML 6.1--6.5), expected utility (class notes), and maximum likelihood (MML 8.1, 8.3.1, 9.1--9.2.1).
 
-\textbf{Relevant reading}: MML 6.1--6.5. Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia or Python recommended). The cited exercise numbers are from MML (Deisenroth et al., 2021).
+\textbf{Relevant reading}: MML 6.1--6.5 (probability), 8.1 and 8.3.1 (maximum likelihood), 9.1--9.2.1 (maximum likelihood for linear regression); class notes on probability (expected utility). MML is Deisenroth et al.\ (2021).
+
+\section{Computing Probabilities}
+Consider a family with three children, each of whom is either a boy ($\mathrm{B}$) or a girl ($\mathrm{G}$). The sample space $\Omega := \left\{ 1, \dots, 8 \right\}$ consists of the eight outcomes listed in the table below. The random variables $C_1, C_2, C_3\colon \Omega \to \left\{ \mathrm{B}, \mathrm{G} \right\}$ represent the first, second, and third child, respectively.
+\begin{center}
+\begin{tabular}{c|ccc}
+  $\Omega$ & $C_1$ & $C_2$ & $C_3$ \\
+  \hline
+  $1$ & $\mathrm{B}$ & $\mathrm{B}$ & $\mathrm{B}$ \\
+  $2$ & $\mathrm{B}$ & $\mathrm{B}$ & $\mathrm{G}$ \\
+  $3$ & $\mathrm{B}$ & $\mathrm{G}$ & $\mathrm{B}$ \\
+  $4$ & $\mathrm{B}$ & $\mathrm{G}$ & $\mathrm{G}$ \\
+  $5$ & $\mathrm{G}$ & $\mathrm{B}$ & $\mathrm{B}$ \\
+  $6$ & $\mathrm{G}$ & $\mathrm{B}$ & $\mathrm{G}$ \\
+  $7$ & $\mathrm{G}$ & $\mathrm{G}$ & $\mathrm{B}$ \\
+  $8$ & $\mathrm{G}$ & $\mathrm{G}$ & $\mathrm{G}$ \\
+\end{tabular}
+\end{center}
+Each of the outcomes is equally probable: $P(\omega) = \frac{1}{8}$ for each $\omega\in \Omega$.
+
+Answer the following questions. Restate the question \emph{formally} as a probabilistic statement, if applicable, and then compute its value.
+\begin{enumerate}
+\item What is the probability of the first child being a girl?
+\item What is the probability of the second child being a boy if the first child is a girl?
+\item What is the probability of the second child being a boy if at least one of the children is a boy?
+\item Use \emph{Bayes' theorem} to compute the probability that the first child is a boy if at least one of the children is a boy.
+\item Are the events of the first child being a boy and the second child being a girl independent?
+\item What is the average number of girls in a family?
+\item Construct a probability mass function for the random variable $C_3$.
+\item Let $N\colon \Omega \to \left\{ 0,1,2,3 \right\}$ be the number of girls in the family. Construct a table of the joint probability mass function $\mathbb{P}[C_1 = c, N = n]$ for $c \in \left\{ \mathrm{B}, \mathrm{G} \right\}$ and $n \in \left\{ 0,1,2,3 \right\}$. Then compute the marginal probability mass function $p_N$ by summing the joint probability mass function over the values of $C_1$.
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{12pt}
+\begin{tabular}{c|c|c|c|c}
+  & $n = 0$ & $n = 1$ & $n = 2$ & $n = 3$ \\
+  \hline
+  $\mathbb{P}[C_1 = \mathrm{B}, N = n]$ & & & & \\
+  \hline
+  $\mathbb{P}[C_1 = \mathrm{G}, N = n]$ & & & & \\
+  \hline
+  \hline
+  $\mathbb{P}[N = n]$ & & & & \\
+\end{tabular}
+\end{center}
+\end{enumerate}
+
+
+\section{A Sibling Conundrum}
+
+TBD
+
+\section{Maximizing Expected Utility}
+
+Imagine you are given two identical envelopes, each containing money. One contains twice as much as the other. You may pick one envelope and keep the money it contains. Having chosen an envelope at will, but before inspecting it, you are given the chance to switch envelopes. Should you switch?
 
 \begin{enumerate}
-\item MML, Chapter 6 exercises: any three on random variables, expectation, and Bayes' theorem (e.g.\ Exercises 6.1--6.3).
-\item MML, Chapter 6 exercises: any two on joint/marginal distributions and the Gaussian (e.g.\ Exercises 6.4--6.6).
-\item \textbf{[code]} Draw samples from a two-dimensional Gaussian with a chosen mean and covariance. Estimate the sample mean and covariance from the draws, and produce a scatter plot with the estimated mean marked.
-\item \textbf{Time spent.} Report approximately how many hours you spent completing this problem set (including the reading).
+\item Let $X$ be the random variable that represents the amount of money in the chosen envelope. How much do you expect to gain from switching the envelopes?
+\item Does it mean you are always better off switching the envelopes? Explain.
+\end{enumerate}
+
+
+\section{Maximum Likelihood for a Coin}
+Suppose that you toss a coin $m$ times and want to estimate the probability $\theta \in [0,1]$ that it comes up heads. We model the tosses as independent random variables $Y_1, \dots, Y_m$ such that $\mathbb{P}[Y_i = 1] = \theta$ and $\mathbb{P}[Y_i = 0] = 1 - \theta$, where $Y_i = 1$ when the $i$-th toss is heads. Let $y_1, \dots, y_m \in \left\{ 0,1 \right\}$ be the observed outcomes and let $k := \sum_{i=1}^m y_i$ be the number of heads.
+\begin{enumerate}
+\item Show that the likelihood of the observed outcomes is $L(\theta) = \theta^k (1-\theta)^{m-k}$, and write the log-likelihood $\ell(\theta) := \log L(\theta)$.
+\item Assume that $0 < k < m$. Derive the maximum likelihood estimate $\theta\opt$ by maximizing $\ell(\theta)$, and verify that it is indeed a maximum.
+\item What is $\theta\opt$ when $m = 3$ and all three tosses come up heads? Do you think that this is a reasonable estimate? Explain.
+\end{enumerate}
+
+\section{Maximum Likelihood for Linear Regression} \label{sec:linreg-mle}
+Suppose that you are given $m$ data points with features $\bm{a}_i \in \Real^n$ and responses $y_i \in \Real$ for $i = 1, \dots, m$. We model the responses as independent random variables $Y_1, \dots, Y_m$ such that $Y_i$ is normally distributed with mean $\bm{a}_i\tr \bm{x}$ and variance $\sigma^2$, where $\bm{x} \in \Real^n$ and $\sigma > 0$ are unknown parameters. That is, each $Y_i$ has the probability density function
+\[
+  p_{Y_i}(y) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left( -\frac{(y - \bm{a}_i\tr \bm{x})^2}{2 \sigma^2} \right), \qquad y \in \Real.
+\]
+Let $\bm{A} \in \Real^{m\times n}$ be the matrix with rows $\bm{a}_1\tr, \dots, \bm{a}_m\tr$ and assume that its columns are linearly independent, and let $\bm{b} := (y_1, \dots, y_m) \in \Real^m$.
+\begin{enumerate}
+\item Write the log-likelihood $\ell(\bm{x}, \sigma)$ of the observed responses $y_1, \dots, y_m$ as a function of the parameters $\bm{x}$ and $\sigma$.
+\item Show that the maximum likelihood estimate $\bm{x}\opt$ minimizes $\| \bm{A}\bm{x} - \bm{b} \|^2$; that is, maximum likelihood estimation with normally distributed noise is the same as least squares. Give a closed-form expression for $\bm{x}\opt$.
+\item Derive the maximum likelihood estimate of $\sigma^2$.
+\end{enumerate}
+
+\section{Maximum Likelihood for Log-Normal Regression}
+Many quantities, such as incomes or house prices, are positive and right-skewed, and are therefore commonly modeled using a log-normal distribution. Repeat Problem~\ref{sec:linreg-mle} but assume that $Y_i$ is log-normally distributed with the probability density function
+\[
+  p_{Y_i}(y) = \frac{1}{y \sigma \sqrt{2\pi}} \exp\left( -\frac{(\log y - \bm{a}_i\tr \bm{x})^2}{2 \sigma^2} \right), \qquad y > 0.
+\]
+Let $\bm{A} \in \Real^{m\times n}$ be the matrix with rows $\bm{a}_1\tr, \dots, \bm{a}_m\tr$ and assume that its columns are linearly independent.
+\begin{enumerate}
+\item Write the log-likelihood $\ell(\bm{x}, \sigma)$ of the observed responses $y_1, \dots, y_m$ as a function of the parameters $\bm{x}$ and $\sigma$.
+\item Using your results from Problem~\ref{sec:linreg-mle}, show that the maximum likelihood estimate $\bm{x}\opt$ minimizes $\| \bm{A}\bm{x} - \bm{b} \|^2$ where $\bm{b} \in \Real^m$ is the vector with $b_i = \log y_i$, and give a closed-form expression for $\bm{x}\opt$. Explain why the factor $1/y$ in the density does not affect $\bm{x}\opt$.
+\item Derive the maximum likelihood estimate of $\sigma^2$.
+\item Show that $\mathbb{E}[Y_i] = \exp(\bm{a}_i\tr \bm{x} + \sigma^2/2)$. \emph{Hint}: complete the square in the exponent of the normal density. Then explain why predicting the response of a new data point $\bm{a}$ as $\exp(\bm{a}\tr \bm{x}\opt)$ tends to underestimate its mean.
 \end{enumerate}
 
 \end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:
