@@ -1,0 +1,91 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  file: lectureNotes.sty
+%  author: Kyle Burke <paithanq@gmail.com>
+%  modified: Marek Petrik
+%  description: This provides a set of commands for writing lecture notes to teach from.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\usepackage{textcomp} % we use some special characters from this package.
+\usepackage{amssymb} % we use some special characters from this package.
+%\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{fancyhdr} %used to create the footer
+\usepackage{fancybox} %used for giveaway questions (\doublebox)
+\usepackage{xcolor} %used for the warning
+\usepackage[ruled,algosection]{algorithm2e}
+%\usepackage[amsmath]{ntheorem}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{thmtools}
+\usepackage{booktabs}
+%\pagestyle{fancy}
+%\cfoot{Page\ \thepage\ \copyright\ \the\year\ \Author}
+\usepackage{enumitem}
+\usepackage{bm}
+
+% Must be importer BEFORE exercise
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage[capitalise,noabbrev]{cleveref}
+\usepackage[sort&compress]{natbib}
+
+% used to create exercises (https://www.ctan.org/tex-archive/macros/latex/contrib/exercise)
+% Must be imported AFTER hyperref
+\usepackage[answerdelayed,lastexercise]{exercise}
+
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{2mm plus 0.5mm minus 0.5mm}
+
+% Theorems and such
+\mdfdefinestyle{theoremstyle}{%
+    roundcorner=5pt, % round corners, makes it friendlier
+    leftmargin=1pt, rightmargin=1pt, % this helps with box warnings
+    hidealllines=true, % even friendlier
+    align = center, %
+}
+
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\surroundwithmdframed[style=theoremstyle,backgroundcolor=gray!15]{theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\surroundwithmdframed[style=theoremstyle,backgroundcolor=gray!15]{lemma}
+\newtheorem{prop}[theorem]{Proposition}
+\surroundwithmdframed[style=theoremstyle,backgroundcolor=gray!15]{prop}
+\newtheorem{cor}[theorem]{Corolarry}
+\surroundwithmdframed[style=theoremstyle,backgroundcolor=gray!15]{cor}
+\newtheorem{asm}[theorem]{Assumption}
+\surroundwithmdframed[style=theoremstyle,backgroundcolor=gray!15]{asm}
+
+
+\theoremstyle{definition}
+\newtheorem{defn}[theorem]{Definition}
+\surroundwithmdframed[style=theoremstyle,backgroundcolor=gray!15]{defn}
+
+\def\th@remark{%
+  \thm@notefont{}% same as heading font
+  \normalfont % body font
+}
+\theoremstyle{remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{remark}[theorem]{Remark}
+
+
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+
+% marks a relation with a letter in order to reference it later in the text
+\newcommand{\markrel}[2]{\stackrel{\text{#1}}{#2}}
+
+%Used in place of \title{X} to set the title of the notes.
+%Usage: \lectureNotesTitle{CS 398 - Dogs and Frogs}
+\newcommand{\lectureNotesTitle}[1]{\title{#1 \\ \tiny{CS 751A/851A: Lecture Notes}}}
+
+%Sets the \Author so that it can be used in the copyright notice.
+%Usage: \lectureNotesAuthor{Mojo Jojo}
+\newcommand{\lectureNotesAuthor}[1]{\author{#1}\let\Author\@author}
+
+
+

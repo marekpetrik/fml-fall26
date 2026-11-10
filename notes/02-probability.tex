@@ -1,0 +1,451 @@
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{lectureNotes}
+\usepackage[capitalise,noabbrev]{cleveref}
+\usepackage{notation}
+
+
+\lectureNotesTitle{Lecture 2: Basic Probability Concepts}
+\author{Marek Petrik}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+These notes are very brief and quite informal. Their primary intent is to summarize the probabilistic properties we will use and introduce the notation used in the remainder of the course. For more details, please see \cite[chapter 6]{Deisenroth2021} and \cite[chapters 1 and 2]{Bertsekas2000}.
+
+
+\section{Basic Definitions}
+
+The formal model we use to represent random events and processes is the \emph{probability space}.
+
+\begin{defn}[Probability Space] \label{def:probability-space}
+  A probability space consists of:
+  \begin{enumerate}
+  \item A sample space $\Omega$, which is the set of all possible outcomes. 
+  \item An event space $\mathcal{F} \subseteq 2^{\Omega}$ which is a $\sigma$-algebra. A set $\mathcal{F} \subseteq 2^{\Omega}$ is a $\sigma$-algebra when for each $A_1, A_2, \dots \in \mathcal{F}$ :
+  \begin{enumerate}
+  \item $\Omega\in \mathcal{F}$
+  \item  $\Omega \setminus A_1 \in \mathcal{F}$
+  \item $A_1 \cup A_2 \cup \dots \in  \mathcal{F}$
+  \item $A_1 \cap A_2 \cap \dots \in \mathcal{F}$
+  \end{enumerate}
+  The intuitive meaning of the event space is that it represents the information about the probability space that is knowable.
+\item A probability function $P\colon \mathcal{F} \to [0,1]$ that satisfies that
+  \begin{enumerate}
+  \item $P(\Omega) = 1$
+  \item $P(A_1 \cup A_2 \cup \dots) = P(A_1) + P(A_2) + \dots$ for all $A_1, A_2, \dots \in \mathcal{F}$ such that $A_i \cap A_j = \emptyset$ when $i \neq j$.
+  \end{enumerate}
+  \end{enumerate}
+\end{defn}
+Recall that the notation $2^{\Omega}$ in \cref{def:probability-space} represents the power set of $\Omega$.
+
+The set $\mathcal{F}$ is often, but not always, the power set of $\Omega$. One reason it may not be a power set is that it is necessary when $\Omega$ is uncountable; see Borel sets. Another reason to define $\mathcal{F}$ that is not a power set is to denote the available information. We will see an example of this later. Unless specified otherwise, we assume that the event set for a finite sample space is its power set and the $\sigma$-algebra of $\Real$ is the Borel $\sigma$-algebra.
+
+\begin{example} \label{exm:probability-space}
+ Suppose I want to model the behavior of coin flips. I have a coin that is equally likely to come up heads and tails. I flip the coin twice. One possible probability space would be
+  \begin{enumerate}
+  \item $\Omega := \left\{ \mathrm{HH}, \mathrm{HT}, \mathrm{TH}, \mathrm{TT} \right\}$.
+  \item $\mathcal{F} := 2^{\Omega } = \left\{ \emptyset, \Omega, \left\{ \mathrm{HH} \right\}, \left\{ \mathrm{HH}, \mathrm{HT} \right\}, \dots  \right\}$.
+  \item $P(\left\{ \omega \right\}) := \frac{1}{4}$ for each $\omega \in \Omega$. The probabilities of other sets, such as $P(\left\{ \mathrm{HH}, \mathrm{HT} \right\}) = \frac{1}{2}$, are derived using the properties in \cref{def:probability-space}.
+  \end{enumerate}
+\end{example}
+
+
+\begin{example} \label{exm:probability-space-two}
+Suppose the setting of \cref{exm:probability-space}. One can also define the following probability space:
+  \begin{enumerate}
+  \item $\Omega := \left\{ \mathrm{HH}, \mathrm{HT}, \mathrm{TH}, \mathrm{TT} \right\}$.
+  \item $\mathcal{F} := \left\{ \emptyset, \Omega, \left\{ \mathrm{HH}, \mathrm{HT} \right\}, \left\{ \mathrm{TH}, \mathrm{TT} \right\}  \right\}$.
+  \item $P(\left\{ \mathrm{HH}, \mathrm{HT} \right\}) := P(\left\{ \mathrm{TH}, \mathrm{TT} \right\}) := \frac{1}{2}$. 
+  \end{enumerate}
+\end{example}
+
+\begin{question}
+What is the difference between \cref{exm:probability-space} and \cref{exm:probability-space-two}? What is the interpretation of $\mathcal{F}$ in \cref{exm:probability-space-two}? 
+\end{question}
+
+\begin{question}
+The set $\mathcal{F}$ in \cref{exm:probability-space-two} is not a power set of $\Omega$. Is it a $\sigma$-algebra?
+\end{question}
+
+We will need some very rudimentary notions from measure theory.
+\begin{defn} \label{def:preimage-measurable}
+A function $f\colon \mathcal{X} \to \mathcal{Y}$ with $\sigma$-algebras $\mathcal{D} \subseteq 2^{\mathcal{X}}$ and $\mathcal{E} \subseteq 2^{\mathcal{Y}}$ is \emph{measurable} when the \emph{pre-image} of each $E\in \mathcal{E}$ is in $\mathcal{D}$:
+  \[
+    f^{-1}(E) \in \mathcal{D}.
+  \]
+Here, the application of $f^{-1}$ to a set $E \subseteq \mathcal{Y}$ is defined as:
+\begin{equation} \label{eq:preimage-set}
+f^{-1}(E) := \bigcup_{e \in E} f^{-1}(e) .
+\end{equation}
+\end{defn}
+The measurability in the definition of random variables is required for us to reason about their probability distributions in \cref{sec:prob-distr}.
+
+A random variable is defined as follows.
+\begin{defn}[Random Variable]
+A \emph{random variable} is a measurable function $X\colon \Omega \to \mathcal{Y}$ where $\mathcal{Y}$ is a measurable space.
+\end{defn}
+Throughout these lecture notes, we follow the common practice of denoting random variables with uppercase letters, such as $X, S$, and their values with lowercase letters, such as $x, s$. Because a random variable is a function, we use the same uppercase symbol when treating it as an ordinary function, such as in $X(\omega)$ or $X^{-1}(x)$. 
+
+\begin{example} \label{exm:heads}
+Consider \cref{exm:probability-space} and let $H\colon \Omega \to \left\{ 0,1,2 \right\}$ represent the number of heads. Formally, the random variable $H$ takes the following form:
+\begin{equation*}
+  H(\omega) =
+  \begin{cases}
+    2 &\text{if } \omega = \mathrm{HH} \\
+    1 &\text{if } \omega = \mathrm{HT} \vee \omega = \mathrm{TH} \\
+    0 &\text{otherwise}.
+  \end{cases}
+\end{equation*}
+The function $H$ is not a valid random variable in \cref{exm:probability-space-two} because it is not measurable since $H^{-1}(2) =  \left\{ \mathrm{HH}  \right\}  \notin \mathcal{F}$.
+\end{example}
+
+\begin{question} \label{qn:tails-definition}
+How would one define a random variable $T$ that represents the number of tails seen in the setting of \cref{exm:probability-space}? 
+\end{question}
+
+We can perform arithmetic operations on random variables in order to build new random variables. For example, suppose that you are given random variables $G_1, G_2\colon \Omega \to \Real$ and a function $f\colon \Real \to \Real$. Then, we can define the following random variables:
+\begin{align*}
+  f(G_1) &:=  \omega \mapsto f(G_1(\omega)),\\
+  G_1+ G_2 &:=  \omega \mapsto G_1(\omega) + G_2(\omega).
+\end{align*}
+The left-hand sides in the equations above combine $G_1$ and $G_2$ as random variables, and the right-hand sides define the resulting functions of $\omega$ explicitly. The operator $\mapsto$ gives the definition of a function. 
+
+
+\begin{question}
+What is the random variable $H + T$ for $H$ and $T$ defined in \cref{exm:heads} and \cref{qn:tails-definition}?
+\end{question}
+
+\section{Probabilities and Distributions}
+\label{sec:prob-distr}
+
+
+We use the operator (function) $\mathbb{P}$ to denote the probability of the subset of the sample space that corresponds to a given condition. The operator is defined as follows.
+\begin{defn}
+  For any probability space, $(\Omega, \mathcal{F}, P)$ and a random variable $X\colon \Omega \to \Real$. Assume that $\Real$ is endowed with some $\sigma$-algebra $\mathcal{E}\subseteq 2^{\Real}$. Then, the operator $\P{\cdot }$ is defined as:
+  \[
+   \P{X = x_0} := P(X^{-1}(x_0)), \qquad \forall x_0\in \Real, 
+ \]
+ and, more generally,
+ \[
+   \P{X \in \mathcal{X}} := P(X^{-1}(\mathcal{X})), \qquad \forall \mathcal{X} \in \mathcal{E}. 
+ \]
+ Here, the pre-image applied to a set is defined as in \eqref{eq:preimage-set}.
+\end{defn}
+
+
+Consider a random variable $B\colon \Omega \to \left\{ 0,1 \right\}$ defined on the probability space from \cref{exm:probability-space}. 
+\[
+  \P{B = 1} := P\left(B^{-1}(1)\right) .
+\]
+As before, the set-valued function $B^{-1}\colon \left\{ 0,1 \right\} \to \mathcal{F}$ is the \emph{pre-image} of $B$ as in \cref{def:preimage-measurable}.
+
+\begin{question}
+  What is the probability of seeing exactly one head and one tail in \cref{exm:probability-space}? State the probability formally using a random variable.
+\end{question}
+
+\emph{Probability distributions} are typically defined for random variables. The distribution of a random variable is characterized by the \emph{cumulative distribution function}~(CDF), defined as follows.
+\begin{defn}[CDF]
+  The \emph{cumulative distribution function} $F_{X}\colon \Real \to [0,1]$ of a real-valued random variable $X\colon \Omega \to \Real$ is defined as
+  \[
+   F_{X}(x) := \P{X \le x}, \qquad \forall x\in \Real. 
+  \]
+\end{defn}
+
+The CDF is always non-decreasing and right-continuous.
+
+Some random variables also have a \emph{probability density function}~(PDF), and discrete random variables have a \emph{probability mass function}~(PMF). In this class, we will be primarily dealing with discrete random variables.
+\begin{defn}[PMF]
+The \emph{probability mass function} $p_{X}\colon \mathcal{X} \to [0,1]$ for a discrete random variable $X\colon \Omega  \to  \mathcal{X}$ with a finite $\mathcal{X}$ is defined as
+  \[
+    p_{X}(x) := \P{X = x}, \qquad \forall x\in \mathcal{X} .
+ \]
+\end{defn}
+
+\begin{question}
+  What is the PMF of the random variable $H$ in \cref{exm:heads}?
+\end{question}
+
+
+\begin{defn} \label{def:joint-probability}
+The \emph{joint probability} of two random variables $X\colon \Omega \to \mathcal{X}$ and $Y \colon \Omega \to \mathcal{Y}$ is defined as
+\[
+ \P{X = x, Y = y} := \P{X = x \wedge Y = y} , \forall  x\in \mathcal{X}, y\in \mathcal{Y}.
+\]
+One can also define a joint PMF for two discrete random variables $p_{X, Y}(x,y)$ for $x\in \mathcal{X}$ and $y\in \mathcal{Y}$ as
+\[
+ p_{X, Y}(x,y) = \P{X = x, Y = y}. 
+\]
+\end{defn}
+
+\begin{question}
+What is the joint PMF of $H$ and $T$ defined in \cref{exm:heads} and \cref{qn:tails-definition}?
+\end{question}
+
+
+\begin{defn}[Independent RV]
+  Events $A,B \in \mathcal{F}$ are independent when
+  \[
+   P(A \cap B) = P(A) \cdot P(B).
+  \]
+  Random variables $X\colon \Omega \to \mathcal{X}$ and $Y\colon \Omega \to \mathcal{Y}$ with $\mathcal{X}, \mathcal{Y} \subseteq \Real$ are \emph{independent} when their \emph{joint CDF} $F_{X, Y}(x,y) := \P{X \le x, Y \le y}$ satisfies
+  \[
+    F_{X, Y}(x,y) = F_{X}(x) \cdot F_{Y}(y),
+    \forall x, y\in \Real.
+  \]
+\end{defn}
+Discrete random variables $X$ and $Y$ are independent if and only if
+\[
+  \P{X = x, Y = y} = \P{X = x} \cdot \P{Y = y}, \forall x\in \mathcal{X}, y\in \mathcal{Y}.
+\]
+
+
+\section{Expectation}
+
+The expectation of a random variable is its mean.
+
+\begin{defn}[Expected Value] \label{def:expectation}
+Suppose that $X\colon \Omega \to \Real $ is a random variable and that $X(\Omega) := \left\{ X(\omega) \mid  \omega \in \Omega  \right\}$ is finite. Then
+\[ 
+ \E{X} := \sum_{x\in X(\Omega)}  x\cdot \P{X = x}.
+\]
+\end{defn}
+In general, expectation is defined using the Lebesgue integral:
+\[
+ \E{X} := \int_{\Omega} X \, dP,
+\]
+but that is beyond the formalism that we cover in this class. 
+ 
+
+\begin{theorem}[Law of the unconscious statistician] \label{thm:unconscious}
+  For any discrete $X\colon \Omega \to \Real$ and $g\colon \Real \to \Real$:
+  \[
+    \E{g(X)} = \sum_{x\in X(\Omega)} g(x) \cdot  \P{X = x}.
+  \]
+\end{theorem}
+
+\begin{question}
+How does the representation in \cref{thm:unconscious} differ from the definition in \cref{def:expectation}? Compute the expectations for $H$ defined in \cref{exm:heads} both ways and compare. 
+\end{question}
+
+Some of the most important properties of expectations are as follows.
+\begin{theorem}
+  Assume $X,Y\colon \Omega \to \Real$ and $c\in \Real $. Then:
+  \begin{align*}
+    \E{c\cdot X} &= c \cdot  \E{X}\\
+    \E{X + Y} &= \E{X} + \E{Y}\\
+    \E{X \cdot Y} &= \E{X} \cdot \E{Y} \quad \text{for independent } X, Y.
+  \end{align*}
+\end{theorem}
+
+
+\begin{question}
+Give an example of independent and dependent pairs of random variables in the setting of \cref{exm:probability-space}.
+\end{question}
+
+
+\section{Conditional Probability and Expectation}
+
+
+Conditional expectations and probabilities play an important role in modeling and solving sequential problems. 
+\begin{defn}[Conditional Probability] \label{def:conditional-probability}
+The conditional probability for events $A,B\in \mathcal{F}$ such that $\P{B} > 0$ is defined as
+  \[
+    P(A \mid B) := \frac{P(A \cap B)}{P(B)}.
+  \]
+\end{defn}
+It is essential that the probability of event $B$ in \cref{def:conditional-probability} is positive; otherwise, the conditional probability is undefined.
+
+
+\begin{example} \label{exm:probability-space-cond}
+I have a coin that is equally likely to come up heads and tails. I flip the coin once. If it comes up heads I flip it again. If it comes up tails, I stop. The probability space is defined now as
+  \begin{enumerate}
+  \item $\Omega := \left\{ \mathrm{HH}, \mathrm{HT}, \mathrm{T} \right\}$.
+  \item $\mathcal{F} := 2^{\Omega }$.
+  \item $P(\left\{ \mathrm{HH} \right\}) := P(\left\{ \mathrm{HT} \right\}) := \frac{1}{4},  P(\left\{\mathrm{T} \right\}) := \frac{1}{2}$. 
+  \end{enumerate}
+  The probability of seeing heads conditioned on the first flip coming up heads is
+  \[
+    P(\left\{ \mathrm{HH}  \right\} \mid \left\{ \mathrm{HH}, \mathrm{HT} \right\}) =
+    \frac{ P(\left\{ \mathrm{HH}  \right\} \cap \left\{ \mathrm{HH}, \mathrm{HT} \right\})}{ P(\left\{ \mathrm{HH}, \mathrm{HT} \right\})} =
+    \frac{ P(\left\{ \mathrm{HH}  \right\})}{ P(\left\{ \mathrm{HH}, \mathrm{HT} \right\})} = \frac{1}{2}.
+  \]
+\end{example}
+
+
+Using simple algebraic manipulation from \cref{def:conditional-probability}, we have that
+\[
+  P(A \cap B) = P(A \mid B) \cdot P(B)
+ .
+\]
+
+
+The following theorem is very useful in performing \emph{marginalization}.
+\begin{theorem}[Law of total probability]
+  Suppose that events $(B_i)_{i=1}^{n}, B_i\in \mathcal{F}$ with $P(B_i) > 0$ are mutually exclusive ($B_i \cap B_j = \emptyset$ when $i \neq j$) and collectively exhaustive ($B_1 \cup \dots \cup B_n = \Omega$). Then for $A\in \mathcal{F}$:
+  \[
+    P(A) 
+    = \sum_{i = 1}^n P(A \cap B_i)
+    = \sum_{i = 1}^n P(A \mid  B_i) P(B_i). 
+  \]
+
+\end{theorem}
+
+\begin{example}\label{exm:coin-flip-tails}
+Consider the setting of \cref{exm:probability-space-cond} and suppose that we want to compute the probability of seeing at least one coin flip come up tails. We can use the law of total probability to compute this probability by defining $B_1, B_2$ as
+  \[
+    B_1 = \left\{ \mathrm{HH, HT} \right\},
+    \qquad
+    B_2 = \left\{ \mathrm{T} \right\}.
+  \]
+  That is $B_1$ represents the event of the first flip coming up heads and $B_2$ is the event
+  of it coming up tails. Clearly, $B_1 \cap B_2 = \emptyset$ and $B_1 \cup B_2 = \Omega$ and, therefore,
+  \[
+    P(\left\{ \mathrm{HT}, \mathrm{T} \right\} ) =
+    P(\left\{ \mathrm{HT}, \mathrm{T} \right\} \cap B_1) + P(\left\{ \mathrm{HT}, \mathrm{T} \right\} \cap B_2) =
+    P(\left\{ \mathrm{HT} \right\}) + P(\left\{ \mathrm{T} \right\}) = \frac{1}{4} + \frac{1}{2} = \frac{3}{4}.
+  \]
+  Another way of writing this probability is to use a random variable $T$ that represents the number of tails and $T_1$ that represents the tails in the first flip. Then:
+  \[
+    \P{T \ge 1} =  \P{T \ge 1 \mid T_1 = 0}\P{T_1 = 0} + \P{T \ge 1 \mid T_1 = 1}\P{T_1 = 1} =
+    \frac{1}{2} \cdot \frac{1}{2} + 1 \cdot \frac{1}{2} = \frac{3}{4}.
+  \]
+  
+\end{example}
+
+
+An important topic is conditional expectation.
+\begin{defn}
+For a discrete random variable $X\colon \Omega \to \mathcal{X}$ for a finite $\mathcal{X}$ and an event $A\in \mathcal{F}$ the \emph{conditional expectation} is defined as
+\[
+  \E{X | A} :=
+  \sum_{\xi \in \mathcal{X}} \xi \cdot \P{X = \xi \mid  A} .
+\]
+  
+\end{defn}
+
+\begin{example}
+  Consider the setting of \cref{exm:probability-space-cond} and let $T$ be the total number of tails seen and $T_1$ be the number of tails in the first flip. Then
+  \[
+    \E{T \mid T_1 = 0} = 0.5,
+    \qquad
+    \E{T \mid T_1 = 1} = 1.
+  \]
+\end{example}
+
+We can also define a conditional expectation for a random variable.
+\begin{defn}[Conditional Expectation]
+The conditional expectation $\E{X \mid  Y}\colon \Omega \to \Real$ for a random variable $Y\colon \Omega \to \mathcal{Y}$ and $X \colon \Omega \to \mathcal{X}$ for a finite $\mathcal{X}$ is defined as
+\[
+  \E{X \mid Y}(\omega)
+  =
+  \sum_{{\xi \in \mathcal{X}}}  \xi \cdot  \P{X = \xi  \mid  Y = Y(\omega)},
+  \quad \forall \omega \in \Omega .  
+\]
+\end{defn}
+
+\begin{table}
+  \centering
+  \begin{tabular}{lrrr}
+    \toprule
+    $\omega$ & \multicolumn{1}{c}{$T_1$} & \multicolumn{1}{c}{$T$} & \multicolumn{1}{c}{$\E{T \mid T_1}(\omega)$} \\
+    \midrule
+    $\mathrm{HH}$ & $0$ & $0$ & $0.5$ \\
+    $\mathrm{HT}$ & $0$ & $1$ & $0.5$ \\
+    $\mathrm{T}$  & $1$ & $1$ & $1$ \\
+    \bottomrule
+  \end{tabular}
+  \caption{Example random variables in \cref{exm:expectation-conditional}}
+  \label{tab:expect-cond}
+\end{table}
+
+\begin{example} \label{exm:expectation-conditional}
+  Consider the setting of \cref{exm:probability-space-cond} and let $T$ be the total number of tails seen and $T_1$ be the number of tails in the first flip. Then
+  \[
+    \E{T \mid T_1}(\omega)
+    =
+    \begin{cases}
+    0.5  &\text{if } \omega = \mathrm{HH} \\
+    0.5  &\text{if } \omega = \mathrm{HT} \\
+    1  &\text{if } \omega = \mathrm{T} \\
+    \end{cases}
+  \]
+  A convenient way of visualizing this situation is to use a table, as in \cref{tab:expect-cond}. 
+\end{example}
+
+The following property, also known as the \emph{tower property}, plays a crucial role in deriving the most fundamental results in reinforcement learning.
+\begin{theorem}[Law of total expectation]
+  Random variables $X\colon \Omega \to \Real$ and $Y\colon \Omega \to \mathcal{Y}$ satisfy that
+  \[
+\E{X} = \E{\E{X \mid Y}}.
+  \]
+\end{theorem}
+
+\begin{example}
+  Consider the setting of \cref{exm:probability-space-cond} and let $T$ be the total number of tails seen and $T_1$ be the number of tails in the first flip. Then
+  \[
+    \E{T } =  \E{\E{T \mid  T_1}}
+    = \E{T \mid  T_1 = 0} \P{T_1 = 0} + \E{T \mid  T_1 = 1} \P{T_1 = 1}
+    = \frac{1}{2} \cdot \frac{1}{2} + 1 \cdot \frac{1}{2} = \frac{3}{4}.
+  \]
+\end{example}
+
+\section{Expected Utility Hypothesis}
+
+We now turn to making decisions under uncertainty. Faced with two options that have uncertain outcomes, we need to be able to pick the better one. The most common assumption is known as the \emph{expected utility hypothesis}. This assumption posits that decision makers should choose the alternative with the maximum expected utility. The \emph{von Neumann–Morgenstern theorem} shows that a decision maker whose preferences satisfy a few natural rationality axioms behaves as if maximizing expected utility, and the \emph{Dutch book theorems} show that it is possible to set up a sequence of bets that will force a decision maker whose beliefs violate the laws of probability to incur a sure loss. These results make the hypothesis compelling as a normative standard, even though empirical studies, such as the Allais paradox, show that human decision-makers often deviate from it.  
+
+In decision theory, a lottery refers to a decision that is associated with an uncertain return. 
+\begin{defn}[Lottery]
+A \emph{lottery} $L := (\mathcal{S}, p, r)$ consists of a countable non-empty set $\mathcal{S}$ of states of nature, a probability distribution function $p \in \probs{\mathcal{S}}$, and a reward function $r\colon \mathcal{S} \to \Real$. 
+\end{defn}
+We will consistently assume that the decision maker seeks to maximize the rewards. It is also common to assume that the decision maker seeks to minimize some cost function $c\colon \mathcal{S} \to \Real$. Note that the cost minimization setting can be converted to an equivalent reward maximization setting by defining $r(s) := -c(s), \, \forall s\in \mathcal{S}$.
+
+For the time being, we will focus on the \emph{expected return} objective, which is the most common special case of the expected utility framework.
+\begin{defn}[Expected return]
+  For a lottery $L = (\mathcal{S}, p, r)$, construct a probability space $(\mathcal{S}, 2^{\mathcal{S}}, P)$ where $P(F) = \sum_{s\in F} p(s)$. Then the \emph{expected return} $\rho(L)$ is defined as
+  \[
+    \rho(L) := \E{R},
+  \]
+  where the random variable $R\colon \mathcal{S} \to \Real$ is the reward function $r$ treated as a random variable on this probability space.
+\end{defn}
+
+Lotteries play a crucial role in various applications, spanning economics and finance, healthcare, operations research, and artificial intelligence. One often needs to choose between several lotteries. For example, deciding how to invest retirement savings involves choosing one of several options. Each investment strategy can be viewed as a lottery, and we need to choose the best one without knowing how the market will evolve. Similarly, deciding on a specific course of treatment for a patient who shows up at the ER involves choosing among several lotteries. 
+\begin{example}[Coin flip lottery]
+Suppose that I flip a fair coin. If it comes up heads, I will pay $\$100$ and if it comes up tails I will pay $\$10$. This problem can be formulated as a lottery $L := (\mathcal{S}, p, r)$ with 
+  \[
+    \mathcal{S} := \left\{ \mathrm{H}, \mathrm{T} \right\},
+    \qquad
+    p(\mathrm{H}) := p(\mathrm{T}) = \frac{1}{2},
+    \qquad
+    r(\mathrm{H}) := 100,
+    \quad
+    r(\mathrm{T}) := 10. 
+  \]
+  The expected return is
+  \[
+   \E{R} = \frac{1}{2} \cdot 100 + \frac{1}{2} \cdot 10 = 55.  
+  \]
+\end{example}
+
+Expected return does have some limitations. Humans often prefer lotteries that have less uncertainty, even when their expected return is lower. Consider the following example.
+\begin{example}[St. Petersburg lottery] \label{lbl:st-peter}
+  You have an option to play the following game. I will keep flipping a fair coin until the coin comes up heads. The initial stake begins at $\$2$. When the coin comes up tails, the stake is doubled and the game continues. When the coin comes up heads, the game ends, and you win whatever the current stake is. For example, if the coin flip is $\mathrm{H}$, you will win $\$2$. If the coin flips are $\mathrm{TH}$, you will win $\$4$, and so on. How much would you be willing to pay to play this game? To answer this question, we define the lottery $L = (\mathcal{S}, p,r)$ that corresponds to the game with $r \colon \mathcal{S} \to \Real$ where $\mathcal{S} = \left\{ \mathrm{H}, \mathrm{TH}, \mathrm{TTH}, \dots  \right\}$, $p(\mathrm{H}) = \frac{1}{2}, p(\mathrm{TH}) = \frac{1}{4}, \dots $, and $r(\mathrm{H}) = 2, r(\mathrm{TH}) = 4, r(\mathrm{TTH}) = 8, \dots $. The random variable $R = 2^{N}$ where the number of total coin flips $N$ is distributed according to the geometric distribution. You should be willing to pay any cost $c$ to play the lottery such that $\E{R - c} \ge 0$ since on average you will not lose money by playing this game. It is easy to show that for any $c \in \Real$:
+  \[
+    \E{R - c}  = \E{R} - c = \infty - c > 0.
+  \]
+That means you should be willing to pay \emph{any} amount of money to play this game.
+\end{example}
+\cref{lbl:st-peter} is also referred to as a paradox because it shows counterintuitive behavior. Most people would not be willing to pay an arbitrary amount of money to play the game. We will discuss later how to use utility functions and risk measures to resolve the paradox.
+
+\bibliographystyle{abbrvnat}
+\bibliography{biblio}
+
+
+\end{document}
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:
