@@ -123,9 +123,6 @@ L(μ̂t) = prod(pdf(makedist(μ̂t, σ), h) for h ∈ houses)
 # ╔═╡ 520442ac-515a-4bf8-98cd-af0162fcfbad
 μ̂tlim = max.(1, (μtlim .- mean(μtlim))*2 .+ mean(μtlim))  # avoid negative dollars
 
-# ╔═╡ 1622d74c-2374-4815-862f-b514950e6339
-μ̂t_opt = clamp(mean(houses),0,300)
-
 # ╔═╡ 3624bfba-70f9-4b6f-9dbf-81cbc9b1c0b6
 @bindname show_opt_estimate CheckBox(default=false)
 
@@ -134,7 +131,7 @@ L(μ̂t) = prod(pdf(makedist(μ̂t, σ), h) for h ∈ houses)
 
 # ╔═╡ 52b29bcf-2a99-4a11-ae5e-8cf7ebcf25a0
 begin
-	d = makedist(of_dollars(μ̂t),σ)
+	d = makedist(μ̂t,σ)
 	prob = prod(pdf(d, h) for h ∈ houses)
 	logprob = sum(logpdf(d, h) for h ∈ houses)
 	"P[dataset] = $(prob), log(P[dataset]) = $(logprob)"
@@ -166,7 +163,19 @@ end
 "L(μ̂t) = $(L(μ̂t)), ℓ(μ̂t)=$(ℓ(μ̂t))"
 
 # ╔═╡ 41e0caae-e625-45a3-9d5b-ef925482d60e
+# ╠═╡ disabled = true
+#=╠═╡
 md"""# Profit Maximization"""
+  ╠═╡ =#
+
+# ╔═╡ 1622d74c-2374-4815-862f-b514950e6339
+# ╠═╡ disabled = true
+#=╠═╡
+μ̂t_opt = clamp(mean(houses),0,300)
+  ╠═╡ =#
+
+# ╔═╡ 9cf81d34-1563-4245-8658-700439607669
+μ̂t_opt = family == :normal ? mean(houses) : geomean(houses)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1620,6 +1629,7 @@ uuid = "23338594-aafe-5451-b93e-139f81909106"
 # ╠═45b022e5-4873-41a7-bb73-f226f20b9e0a
 # ╟─520442ac-515a-4bf8-98cd-af0162fcfbad
 # ╠═1622d74c-2374-4815-862f-b514950e6339
+# ╠═9cf81d34-1563-4245-8658-700439607669
 # ╟─3624bfba-70f9-4b6f-9dbf-81cbc9b1c0b6
 # ╟─63935fc1-b6e4-47cf-86a7-f4b8fe5a7e20
 # ╟─85f5dd28-8d20-4a60-bb34-9170943fdefd

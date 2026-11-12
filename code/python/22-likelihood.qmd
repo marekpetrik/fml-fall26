@@ -1,0 +1,122 @@
+---
+title: "House Price Estimator"
+format: html
+jupyter: python3
+---
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats   # probability distributions
+```
+
+## 1. Generate
+
+Generate `n` samples from distribution `family` with parameters `μ` and `σ`. The value `μt` is a true-dollar equivalent of `μ`. When `μ` is in dollars (as for Normal distribution), then `μt = μ`.
+
+Change the parameters below and re-run the notebook.
+
+```{python}
+family = "normal"            # "normal" or "lognormal"
+mu_t = 50.0                  # true value in dollars: 10 to 100
+sigma = 20.0 if family == "normal" else np.log(20)  # normal: 10 to 100; lognormal: log(10) to log(100)
+n = 20                       # number of houses: 2 to 100
+seed = 1                     # change to regenerate the data
+show_true = True             # show the true value in the plots
+```
+
+```{python}
+mu_t_lim = np.array([10.0, 100.0])
+
+def of_dollars(x):
+    if family == "normal":
+        return x
+    elif family == "lognormal":
+        return np.log(x)
+    else:
+        raise ValueError("Unsupported distribution")
+
+def makedist(mu_t, sigma):
+    mu = of_dollars(mu_t)
+    if family == "normal":
+        return stats.norm(mu, sigma)
+    elif family == "lognormal":
+        return stats.lognorm(s=sigma, scale=np.exp(mu))   # scipy's way of writing LogNormal(μ, σ)
+    else:
+        raise ValueError("Unsupported distribution")
+
+rng = np.random.default_rng(seed)
+houses = makedist(mu_t, sigma).rvs(n, random_state=rng)
+houses
+```
+
+```{python}
+plt.scatter(range(1, n + 1), houses)
+if show_true:
+    plt.plot([1, n], [mu_t, mu_t], linestyle="--", linewidth=3, label=r"$\mu_t$")
+    plt.legend(loc="lower right")
+plt.xlabel("House number")
+plt.ylabel("Value")
+plt.ylim(-100, 400)
+plt.show()
+```
+
+## 2. Estimate parameters
+
+Assume we know `σ` and define
+
+- `L(μ)`: likelihood
+- `ℓ(μ)`: loglikelihood
+
+```{python}
+def L(mu_hat_t):
+    return np.prod(makedist(mu_hat_t, sigma).pdf(houses))
+
+def ell(mu_hat_t):
+    return np.sum(makedist(mu_hat_t, sigma).logpdf(houses))
+
+mu_hat_t_lim = np.maximum(1, (mu_t_lim - mu_t_lim.mean()) * 2 + mu_t_lim.mean())  # avoid negative dollars
+
+mu_hat_t_opt = np.mean(houses) if family == "normal" else stats.gmean(houses)
+```
+
+Pick an estimate `μ̂t` and see how likely the dataset is under it.
+
+```{python}
+mu_hat_t = 40.0              # estimate in dollars: 1 to 145
+show_opt_estimate = False    # show the maximum likelihood estimate
+plot_function = "loglik"     # "loglik" or "lik"
+```
+
+```{python}
+print(f"P[dataset] = {L(mu_hat_t)}, log(P[dataset]) = {ell(mu_hat_t)}")
+```
+
+```{python}
+plt.scatter(range(1, n + 1), houses)
+if show_true:
+    plt.plot([1, n], [mu_t, mu_t], linestyle="--", linewidth=3, label=r"$\mu_t$")
+plt.plot([1, n], [mu_hat_t, mu_hat_t], linestyle="--", linewidth=3, color="blue", label=r"$\hat\mu_t$")
+if show_opt_estimate:
+    plt.plot([1, n], [mu_hat_t_opt, mu_hat_t_opt], linestyle="--", linewidth=3, color="orange",
+             label=r"$\hat\mu_t^{opt}$")
+plt.xlabel("House number")
+plt.ylabel("Value")
+plt.ylim(-100, 400)
+plt.legend(loc="lower right")
+plt.show()
+```
+
+```{python}
+f = L if plot_function == "lik" else ell
+
+x = np.linspace(*mu_hat_t_lim, 300)
+plt.plot(x, [f(xi) for xi in x])
+plt.scatter([mu_hat_t], [f(mu_hat_t)], color="blue", label=r"$\hat\mu_t$", zorder=3)
+if show_opt_estimate:
+    plt.scatter([mu_hat_t_opt], [f(mu_hat_t_opt)], color="orange", label=r"$\hat\mu_t^{opt}$", zorder=3)
+plt.xlabel(r"Estimated $\mu_t$")
+plt.ylabel("(log)likelihood")
+plt.legend()
+plt.show()
+```

@@ -1,0 +1,106 @@
+---
+title: "House Price Estimator"
+format: html
+---
+
+## 1. Generate
+
+Generate `n` samples from distribution `family` with parameters `μ` and `σ`. The value `μt` is a true-dollar equivalent of `μ`. When `μ` is in dollars (as for Normal distribution), then `μt = μ`.
+
+Change the parameters below and re-run the notebook.
+
+```{r}
+family <- "normal"           # "normal" or "lognormal"
+mu_t <- 50                   # true value in dollars: 10 to 100
+sigma <- if (family == "normal") 20 else log(20)  # normal: 10 to 100; lognormal: log(10) to log(100)
+n <- 20                      # number of houses: 2 to 100
+seed <- 1                    # change to regenerate the data
+show_true <- TRUE            # show the true value in the plots
+```
+
+```{r}
+mu_t_lim <- c(10, 100)
+
+of_dollars <- function(x) {
+  if (family == "normal") x
+  else if (family == "lognormal") log(x)
+  else stop("Unsupported distribution")
+}
+
+# density of the distribution with true-dollar parameter mu_t
+pdf <- function(x, mu_t, sigma, log = FALSE) {
+  mu <- of_dollars(mu_t)
+  if (family == "normal") dnorm(x, mu, sigma, log = log)
+  else if (family == "lognormal") dlnorm(x, mu, sigma, log = log)
+  else stop("Unsupported distribution")
+}
+
+# n samples from the distribution with true-dollar parameter mu_t
+sample_houses <- function(n, mu_t, sigma) {
+  mu <- of_dollars(mu_t)
+  if (family == "normal") rnorm(n, mu, sigma)
+  else if (family == "lognormal") rlnorm(n, mu, sigma)
+  else stop("Unsupported distribution")
+}
+
+set.seed(seed)
+houses <- sample_houses(n, mu_t, sigma)
+houses
+```
+
+```{r}
+plot(1:n, houses, pch = 19, xlab = "House number", ylab = "Value", ylim = c(-100, 400))
+if (show_true) {
+  lines(c(1, n), c(mu_t, mu_t), lty = 2, lwd = 3, col = "red")
+  legend("bottomright", legend = expression(mu[t]), col = "red", lty = 2, lwd = 3)
+}
+```
+
+## 2. Estimate parameters
+
+Assume we know `σ` and define
+
+- `L(μ)`: likelihood
+- `ℓ(μ)`: loglikelihood
+
+```{r}
+L <- function(mu_hat_t) prod(pdf(houses, mu_hat_t, sigma))
+ell <- function(mu_hat_t) sum(pdf(houses, mu_hat_t, sigma, log = TRUE))
+
+mu_hat_t_lim <- pmax(1, (mu_t_lim - mean(mu_t_lim)) * 2 + mean(mu_t_lim))  # avoid negative dollars
+
+mu_hat_t_opt <- if (family == "normal") mean(houses) else exp(mean(log(houses)))  # geometric mean
+```
+
+Pick an estimate `μ̂t` and see how likely the dataset is under it.
+
+```{r}
+mu_hat_t <- 40               # estimate in dollars: 1 to 145
+show_opt_estimate <- FALSE   # show the maximum likelihood estimate
+plot_function <- "loglik"    # "loglik" or "lik"
+```
+
+```{r}
+cat("P[dataset] =", L(mu_hat_t), ", log(P[dataset]) =", ell(mu_hat_t), "\n")
+```
+
+```{r}
+plot(1:n, houses, pch = 19, xlab = "House number", ylab = "Value", ylim = c(-100, 400))
+if (show_true) lines(c(1, n), c(mu_t, mu_t), lty = 2, lwd = 3, col = "red")
+lines(c(1, n), c(mu_hat_t, mu_hat_t), lty = 2, lwd = 3, col = "blue")
+if (show_opt_estimate) lines(c(1, n), c(mu_hat_t_opt, mu_hat_t_opt), lty = 2, lwd = 3, col = "orange")
+shown <- c(show_true, TRUE, show_opt_estimate)    # legend entries for the lines drawn
+legend("bottomright", legend = expression(mu[t], hat(mu)[t], hat(mu)[t]^opt)[shown],
+       col = c("red", "blue", "orange")[shown], lty = 2, lwd = 3)
+```
+
+```{r}
+f <- if (plot_function == "lik") L else ell
+
+x <- seq(mu_hat_t_lim[1], mu_hat_t_lim[2], length.out = 300)
+plot(x, sapply(x, f), type = "l", xlab = expression("Estimated" ~ mu[t]), ylab = "(log)likelihood")
+points(mu_hat_t, f(mu_hat_t), pch = 19, col = "blue")
+if (show_opt_estimate) points(mu_hat_t_opt, f(mu_hat_t_opt), pch = 19, col = "orange")
+shown <- c(TRUE, show_opt_estimate)
+legend("bottomright", legend = expression(hat(mu)[t], hat(mu)[t]^opt)[shown], col = c("blue", "orange")[shown], pch = 19)
+```
