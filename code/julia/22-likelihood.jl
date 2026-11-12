@@ -28,9 +28,9 @@ end
 md"""
 # House Price Estimator
 
-## Generate
+## 1. Generate
 
-Generate `n` samples from distribution `family` with center `μ` and scale `σ`. 
+Generate `n` samples from distribution `family` with parameters `μ` and `σ`. The value `μt` is a true-dollar equivalent of `μ`. When `μ` is in dollars (as for Normal distribution), then `μt = μ`.
 """
 
 # ╔═╡ 1473879a-13dc-431c-9b2e-2125716117cb
@@ -83,7 +83,8 @@ end
 @bind generate CounterButton("Regenerate")
 
 # ╔═╡ d489e94c-d0d1-479b-8fc7-4a4b1188b2de
-function makedist(μ, σ) 
+function makedist(μt, σ)
+	μ = of_dollars(μt)
 	if family == :normal 
 		Normal(μ, σ)
 	elseif family == :lognormal
@@ -94,7 +95,7 @@ function makedist(μ, σ)
 end
 
 # ╔═╡ 80ef4403-e7c2-4e9e-b41e-935962e16d43
-generate; houses = rand(makedist(of_dollars(μt),σ),n)
+generate; houses = rand(makedist(μt,σ),n)
 
 # ╔═╡ c91a9c7a-17ee-432e-9145-c156e7ad514e
 @bindname show_true CheckBox()
@@ -107,37 +108,37 @@ p
 end
 
 # ╔═╡ bb39e11b-6c5f-4646-af03-77e1f5691ff2
-md"""## Estimate parameters 
-Assume we know `σ`
+md"""## 2. Estimate parameters
+Assume we know `σ` and define
 - `L(μ)`: likelihood
 - `ℓ(μ)`: loglikelihood
 """
 
 # ╔═╡ dc8cecc7-09d6-4ee1-bf45-8a0725e66c2d
-# Likelihood
-function L(μ̂t) 
-	d = makedist(of_dollars(μ̂t),σ)
-	prod(pdf(d, h) for h ∈ houses)
-end
+L(μ̂t) = prod(pdf(makedist(μ̂t, σ), h) for h ∈ houses)
 
 # ╔═╡ 45b022e5-4873-41a7-bb73-f226f20b9e0a
-# Loglikelihood
-function ℓ(μ̂t) 
-	d = makedist(of_dollars(μ̂t),σ)
-	sum(logpdf(d, h) for h ∈ houses)
-end
+ℓ(μ̂t) =	sum(logpdf(makedist(μ̂t, σ), h) for h ∈ houses)
 
 # ╔═╡ 520442ac-515a-4bf8-98cd-af0162fcfbad
 μ̂tlim = max.(1, (μtlim .- mean(μtlim))*2 .+ mean(μtlim))  # avoid negative dollars
 
 # ╔═╡ 1622d74c-2374-4815-862f-b514950e6339
-μ̂t_opt = clamp(mean(houses),0,300)
+μ̂t_opt = clamp(geomean(houses),0,300)
 
 # ╔═╡ 3624bfba-70f9-4b6f-9dbf-81cbc9b1c0b6
-@bindname show_opt_estimate CheckBox()
+@bindname show_opt_estimate CheckBox(default=false)
 
 # ╔═╡ 63935fc1-b6e4-47cf-86a7-f4b8fe5a7e20
 @bindname μ̂t Slider(range(μ̂tlim...,length=100) , show_value=true)
+
+# ╔═╡ 52b29bcf-2a99-4a11-ae5e-8cf7ebcf25a0
+begin
+	d = makedist(of_dollars(μ̂t),σ)
+	prob = prod(pdf(d, h) for h ∈ houses)
+	logprob = sum(logpdf(d, h) for h ∈ houses)
+	"P[dataset] = $(prob), log(P[dataset]) = $(logprob)"
+end
 
 # ╔═╡ 4243935e-f23c-41ff-8741-32e5e589aa8d
 @bindname plotfunction Select([:ℓ=>"Loglikelihood", :L=>"Likelihood"])
@@ -1613,6 +1614,7 @@ uuid = "23338594-aafe-5451-b93e-139f81909106"
 # ╠═80ef4403-e7c2-4e9e-b41e-935962e16d43
 # ╟─c91a9c7a-17ee-432e-9145-c156e7ad514e
 # ╟─32131579-10e2-4c16-98a5-153b51120f3b
+# ╟─52b29bcf-2a99-4a11-ae5e-8cf7ebcf25a0
 # ╟─bb39e11b-6c5f-4646-af03-77e1f5691ff2
 # ╠═dc8cecc7-09d6-4ee1-bf45-8a0725e66c2d
 # ╠═45b022e5-4873-41a7-bb73-f226f20b9e0a
