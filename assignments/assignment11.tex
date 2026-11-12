@@ -80,8 +80,8 @@ Consider the following question:
   Mr. Smith has two children. At least one of them is a boy. What is the probability that both children are boys?
 \end{quote}
 \begin{enumerate}
-\item Formalize the problem posed above to get and answer of $\frac{1}{3}$.
-\item Formalize the problem posed above to get and answer of $\frac{1}{2}$.
+\item Formalize the question posed above to get an answer of $\frac{1}{3}$.
+\item Formalize the question posed above to get an answer of $\frac{1}{2}$.
 \end{enumerate}
 
 \section{Maximizing Expected Utility}
@@ -124,8 +124,8 @@ Let $\bm{A} \in \Real^{m\times n}$ be the matrix with rows $\bm{a}_1\tr, \dots, 
 \item Write the log-likelihood $\ell(\bm{x}, \sigma)$ of the observed responses $y_1, \dots, y_m$ as a function of the parameters $\bm{x}$ and $\sigma$.
 \item Using your results from Problem~\ref{sec:linreg-mle}, show that the maximum likelihood estimate $\bm{x}\opt$ minimizes $\| \bm{A}\bm{x} - \bm{b} \|^2$ where $\bm{b} \in \Real^m$ is the vector with $b_i = \log y_i$, and give a closed-form expression for $\bm{x}\opt$. Explain why the factor $1/y$ in the density does not affect $\bm{x}\opt$.
 \item Derive the maximum likelihood estimate of $\sigma^2$.
-\item Show that $\mathbb{E}[Y_i] = \exp(\bm{a}_i\tr \bm{x} + \sigma^2/2)$.
-\item Then explain why predicting the response of a new data point $\bm{a}$ as $\exp(\bm{a}\tr \bm{x}\opt)$ tends to underestimate its mean. 
+% \item Show that $\mathbb{E}[Y_i] = \exp(\bm{a}_i\tr \bm{x} + \sigma^2/2)$ .
+\item Explain why predicting the response of a new data point $\bm{a}$ as $\exp(\bm{a}\tr \bm{x}\opt)$ tends to underestimate its mean. 
 \end{enumerate}
 
 \end{document}
