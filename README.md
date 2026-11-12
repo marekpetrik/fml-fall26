@@ -90,8 +90,8 @@ Assignments should be turned in as a **PDF**, which can be scanned and hand-writ
 | [9](assignments/assignment9.pdf)   | [9](assignments/assignment9.tex)   | Mon Nov 02 at 11:59PM |
 | [10](assignments/assignment10.pdf) | [10](assignments/assignment10.tex) | Mon Nov 09 at 11:59PM |
 | [11](assignments/assignment11.pdf) | [11](assignments/assignment11.tex) | Mon Nov 16 at 11:59PM |
-| [12](assignments/assignment12.pdf) | [12](assignments/assignment12.tex) | Mon Nov 23 at 11:59PM |
-| [13](assignments/assignment13.pdf) | [13](assignments/assignment13.tex) | Mon Nov 30 at 11:59PM |
+| [12](assignments/assignment12.pdf) | [12](assignments/assignment12.tex) | Mon Nov 30 at 11:59PM |
+| [13](assignments/assignment13.pdf) | [13](assignments/assignment13.tex) | Mon Dec 07 at 11:59PM |
 
 **Note**: Assignments more than a week in advance are provisional and are subject to change. Please consult the instructor before completing assignments due in more than a week.
 
