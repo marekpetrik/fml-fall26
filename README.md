@@ -16,7 +16,7 @@ See [class syllabus](overview/syllabus.pdf) for the information regarding gradin
 *When*:
 
 - Tue: 3:40 - 5pm
-- Thu: 12 - 1pm 
+- Mon: 9 - 10am 
 
 ## Course Schedule and Topics
 

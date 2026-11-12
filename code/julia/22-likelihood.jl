@@ -102,7 +102,7 @@ generate; houses = rand(makedist(μt,σ),n)
 
 # ╔═╡ 32131579-10e2-4c16-98a5-153b51120f3b
 begin
-p = scatter(houses, label=:none, ylabel="Price", xlabel="House number", ylim=[-100,400])
+p = scatter(houses, label=:none, ylabel="Value", xlabel="House number", ylim=[-100,400])
 show_true &&	plot!(p, [1,n], [μt, μt], linestyle=:dash, width=3, label="μt", legend=:bottomright)	
 p
 end
@@ -140,6 +140,15 @@ begin
 	"P[dataset] = $(prob), log(P[dataset]) = $(logprob)"
 end
 
+# ╔═╡ 85f5dd28-8d20-4a60-bb34-9170943fdefd
+begin
+p2 = scatter(houses, label=:none, ylabel="Value", xlabel="House number", ylim=[-100,400])
+show_true &&	plot!(p2, [1,n], [μt, μt], linestyle=:dash, width=3, label="μt",legend=:bottomright)	
+plot!(p2, [1,n], [μ̂t, μ̂t], linestyle=:dash, width=3, label="μ̂t", color=:blue) 
+show_opt_estimate && plot!(p2, [1,n], [μ̂t_opt, μ̂t_opt], linestyle=:dash, width=3, label="μ̂t", color=:orange) 
+p2
+end
+
 # ╔═╡ 4243935e-f23c-41ff-8741-32e5e589aa8d
 @bindname plotfunction Select([:ℓ=>"Loglikelihood", :L=>"Likelihood"])
 
@@ -155,15 +164,6 @@ end
 
 # ╔═╡ f55c48e8-2527-4ae5-a069-5603bf636ca9
 "L(μ̂t) = $(L(μ̂t)), ℓ(μ̂t)=$(ℓ(μ̂t))"
-
-# ╔═╡ 85f5dd28-8d20-4a60-bb34-9170943fdefd
-begin
-p2 = scatter(houses, label=:none, ylabel="Price", xlabel="House number", ylim=[-100,400])
-show_true &&	plot!(p2, [1,n], [μt, μt], linestyle=:dash, width=3, label="μt",legend=:bottomright)	
-plot!(p2, [1,n], [μ̂t, μ̂t], linestyle=:dash, width=3, label="μ̂t", color=:blue) 
-show_opt_estimate && plot!(p2, [1,n], [μ̂t_opt, μ̂t_opt], linestyle=:dash, width=3, label="μ̂t", color=:orange) 
-p2
-end
 
 # ╔═╡ 41e0caae-e625-45a3-9d5b-ef925482d60e
 md"""# Profit Maximization"""
@@ -1622,10 +1622,10 @@ uuid = "23338594-aafe-5451-b93e-139f81909106"
 # ╠═1622d74c-2374-4815-862f-b514950e6339
 # ╟─3624bfba-70f9-4b6f-9dbf-81cbc9b1c0b6
 # ╟─63935fc1-b6e4-47cf-86a7-f4b8fe5a7e20
+# ╟─85f5dd28-8d20-4a60-bb34-9170943fdefd
 # ╟─4243935e-f23c-41ff-8741-32e5e589aa8d
 # ╟─c7c0b2b4-75a5-4106-9ca2-569951478421
 # ╟─f55c48e8-2527-4ae5-a069-5603bf636ca9
-# ╟─85f5dd28-8d20-4a60-bb34-9170943fdefd
 # ╟─41e0caae-e625-45a3-9d5b-ef925482d60e
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
