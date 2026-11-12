@@ -124,7 +124,7 @@ L(μ̂t) = prod(pdf(makedist(μ̂t, σ), h) for h ∈ houses)
 μ̂tlim = max.(1, (μtlim .- mean(μtlim))*2 .+ mean(μtlim))  # avoid negative dollars
 
 # ╔═╡ 1622d74c-2374-4815-862f-b514950e6339
-μ̂t_opt = clamp(geomean(houses),0,300)
+μ̂t_opt = clamp(mean(houses),0,300)
 
 # ╔═╡ 3624bfba-70f9-4b6f-9dbf-81cbc9b1c0b6
 @bindname show_opt_estimate CheckBox(default=false)
