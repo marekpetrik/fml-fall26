@@ -4,6 +4,7 @@
 \usepackage{amsmath,amsfonts}
 \usepackage{url}
 \usepackage{bm}
+\usepackage{enumitem}
 
 \newcommand{\Real}{\mathbb{R}}
 \newcommand{\tr}{^\top}
@@ -24,16 +25,115 @@
 \item \textbf{Questions}: See the class website for a link to office hours
 \end{itemize}
 
-% Covers: Maximum likelihood and MAP (MML 8.1, 8.3) and Principal component analysis (MML 10.1--10.3).
+\textbf{Relevant reading}: MML 8.1, 8.3 (maximum likelihood, MAP); MML 10.1--10.3 (principal component analysis). Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia, Python or R recommended). 
 
-\textbf{Relevant reading}: MML 8.1, 8.3 (maximum likelihood, MAP); MML 10.1--10.3 (principal component analysis). Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia or Python recommended). The cited exercise numbers are from MML (Deisenroth et al., 2021).
+\section{Housing Offers: Take 2}
 
+\textbf{Data}: All data and code for this problem can be found at \url{https://gitlab.cs.unh.edu/marekpetrik/fml-fall26/-/tree/main/assignments/houses} or from the root of the repository by following the directory \texttt{assignments/houses}.
+
+Imagine you are a data scientist working for a real estate company, Nink, LLC. You have a dataset of historical house sales available: \texttt{train.csv}. The dataset has three features for each house and the price at which it was recently sold. You also just read a study showing that house sellers are willing to give up to \textbf{40\%} of the house's market value for a quick sale. Since this is a significant amount, you realize that Nink can simplify house sales and make some profit on the side. You pitch the following plan to the CEO. Nink will use their state-of-the-art statistical models to estimate each house’s true market price and make each seller an offer to buy their house quickly with no inspections, no agents, and no hassle. Because Nink's process is so convenient, you know that you only need to offer \textbf{60\%} of its true market value for the seller to accept. If a seller accepts your offer, you buy the house for the price you offered, and then turn around and sell it for its true market value.
+
+The CEO likes your plan and promises you a promotion if your plan can make Nink rich. To prove the value of your idea, you need to make offers to sellers of houses that are currently on the market: \texttt{test.csv}.
+
+Can you use your machine learning skills to make more money for Nink than last time and earn your promotion?
+
+Turn in your source code and a CSV file named \texttt{test-predictions.csv} with your offers. The file should have the columns \texttt{id} and \texttt{price} and the rows in the same order as in \texttt{test.csv}.
+
+\emph{Hints}
 \begin{enumerate}
-\item MML, Chapter 8 exercises: any two on maximum likelihood and MAP estimation (e.g.\ Exercises 8.1--8.3).
-\item MML, Chapter 10 exercises: any two on principal component analysis (e.g.\ Exercises 10.1--10.3).
-\item \textbf{[code]} Given a sample of data, compute the maximum-likelihood estimates of the mean and variance of a Gaussian and of the parameter of a Bernoulli random variable, and compare each with the MAP estimate under a simple prior.
-\item \textbf{[code]} Run PCA on a small data set: center the data, form the covariance matrix, and compute its principal components. Plot the fraction of variance explained by each component and project the data onto the first two components.
-\item \textbf{Time spent.} Report approximately how many hours you spent completing this problem set (including the reading).
+\item You need not transform any of the \emph{features}
+\item House prices are Log-Normally distributed
+\item To improve your earnings, you need to be careful how to optimize the amount you offer for each house
+\item You can take a look at \texttt{23-profits.qmd} (Python or R) or \texttt{23-profits.jl} (Julia) to get some ideas
 \end{enumerate}
 
+
+% ----------------------------------------------------------
+\section{PCA by Hand} \label{sec:pca-hand}
+
+Consider the $m = 4$ data points
+\[
+  \bm{x}_1 = \begin{bmatrix} 2 \\ 4 \end{bmatrix}, \qquad
+  \bm{x}_2 = \begin{bmatrix} 6 \\ 8 \end{bmatrix}, \qquad
+  \bm{x}_3 = \begin{bmatrix} 4 \\ 2 \end{bmatrix}, \qquad
+  \bm{x}_4 = \begin{bmatrix} 8 \\ 6 \end{bmatrix}.
+\]
+Solve the following problems by hand, except where noted~(see MML 10.2).
+\begin{enumerate}
+\item Compute the mean $\bm{\mu} := \frac{1}{m} \sum_{i=1}^m \bm{x}_i$ and the sample covariance matrix $\bm{S} := \frac{1}{m} \sum_{i=1}^m (\bm{x}_i - \bm{\mu})(\bm{x}_i - \bm{\mu})\tr$.
+% \item Let $\bm{a}, \bm{b} \in \Real^m$ be the vectors of the first and the second coordinates of the data points, respectively, and let $\bm{a}_c := \bm{a} - \mu_1 \bm{1}$ and $\bm{b}_c := \bm{b} - \mu_2 \bm{1}$ be the centered vectors. The sample correlation coefficient of the two coordinates is $\rho := s_{12} / \sqrt{s_{11}\, s_{22}}$, where $s_{jl}$ are the elements of $\bm{S}$. Show that the correlation is the cosine of the angle $\theta$ between the centered vectors:
+%   \[
+%     \rho = \frac{\bm{a}_c\tr \bm{b}_c}{\|\bm{a}_c\| \, \|\bm{b}_c\|} = \cos \theta.
+%   \]
+%   Compute $\rho$ and $\theta$ for the data above. Then use the Cauchy--Schwarz inequality to show that $-1 \le \rho \le 1$ for any data, and explain what the data points look like when $\rho = 1$ or $\rho = -1$.
+\item Use a computer to compute the eigenvalues $\lambda_1 \ge \lambda_2$ of $\bm{S}$ and the corresponding \emph{unit} eigenvectors $\bm{v}_1, \bm{v}_2$ (length 1). 
+\item Compute the score $z_i := \bm{v}_1\tr (\bm{x}_i - \bm{\mu})$ of each data point on the first principal component and its reconstruction $\hat{\bm{x}}_i := \bm{\mu} + z_i \bm{v}_1$.
+\item Sketch the data points, the mean, the directions $\bm{v}_1$ and $\bm{v}_2$, and the reconstructed points in a single plot.
+\item Compute (using a computer) the average squared reconstruction error $\frac{1}{m} \sum_{i=1}^m \| \bm{x}_i - \hat{\bm{x}}_i \|^2$ and compare it with $\lambda_2$. 
+\end{enumerate}
+
+% ----------------------------------------------------------
+\section{Deriving PCA} \label{sec:derive-pca}
+
+Coming soon ....
+% In this problem, we will derive PCA as the problem of finding the best low-dimensional reconstruction of given data points~(see MML 10.3).
+
+% Let $\bm{x}_1, \dots, \bm{x}_m \in \Real^n$ be data points and assume that their mean is $\bm{0}$: $\bm{\mu} := \frac{1}{m}\sum_{i=1}^m \bm{x}_i = \bm{0}$. Recall that the sample covariance matrix is then $\bm{S} := \frac{1}{m}\sum_{i=1}^m \bm{x}_i \bm{x}_i\tr$. Because $\bm{S}$ is symmetric and positive semidefinite, it has orthonormal eigenvectors $\bm{v}_1, \dots, \bm{v}_n$ with eigenvalues $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n \ge 0$.
+
+% We want to reconstruct each data point from only $k < n$ numbers. Let $\bm{b}_1, \dots, \bm{b}_k \in \Real^n$ be orthonormal vectors and let $\bm{B} := [\bm{b}_1, \dots, \bm{b}_k] \in \Real^{n \times k}$, so that $\bm{B}\tr\bm{B} = \bm{I}$. The reconstruction of the data point $\bm{x}_i$ from the coordinates $\bm{z}_i \in \Real^k$ is $\hat{\bm{x}}_i := \bm{B}\bm{z}_i = \sum_{j=1}^k z_{ij} \bm{b}_j$. You can think of each $\bm{b}_i, i = 1, \dots, k$ as a ``feature''.
+ 
+% PCA chooses $\bm{B}$ and the coordinates $\bm{z}_1, \dots, \bm{z}_m$ that minimize the average squared reconstruction error
+% \begin{equation} \label{eq:pca-min}
+%   \min_{\bm{B},\, \bm{z}_1, \dots, \bm{z}_m} \; \frac{1}{m} \sum_{i=1}^m \|\bm{x}_i - \bm{B}\bm{z}_i\|^2
+%   \qquad \text{subject to} \qquad \bm{B}\tr\bm{B} = \bm{I}, ~ \operatorname{rank}(\bm{B}) = k.
+% \end{equation}
+% \begin{enumerate}
+% \item Is $\bm{B}$ as defined above an orthogonal matrix?
+% \item  Fix $\bm{B}$ and a data point $\bm{x}_i$. Show that the coordinates $\bm{z}_i$ that minimize the error $\|\bm{x}_i - \bm{B}\bm{z}_i\|^2$ of this data point are $\bm{z}_i = \bm{B}\tr\bm{x}_i$, that is, $z_{ij} = \bm{b}_j\tr \bm{x}_i$ for $j = 1, \dots, k$. \emph{Hint}: Is this a projection problem?
+% \item Extend $\bm{b}_1, \dots, \bm{b}_k$ to an orthonormal basis $\bm{b}_1, \dots, \bm{b}_n$ of $\Real^n$. Show that $\bm{x}_i = \sum_{j=1}^n (\bm{b}_j\tr\bm{x}_i)\, \bm{b}_j$ and that the error of the best reconstruction is
+%   \[
+%     \bm{x}_i - \hat{\bm{x}}_i = \sum_{j=k+1}^n (\bm{b}_j\tr\bm{x}_i)\, \bm{b}_j,
+%     \qquad
+%     \|\bm{x}_i - \hat{\bm{x}}_i\|^2 = \sum_{j=k+1}^n (\bm{b}_j\tr\bm{x}_i)^2 .
+%   \]
+% \item  Let $J(\bm{B}) := \frac{1}{m}\sum_{i=1}^m \|\bm{x}_i - \hat{\bm{x}}_i\|^2$ be the average squared reconstruction error when each $\bm{z}_i$ is chosen optimally as in part~1. Show that
+%   \[
+%     J(\bm{B}) = \sum_{j=k+1}^n \bm{b}_j\tr \bm{S}\, \bm{b}_j .
+%   \]
+% \item Consider $n = 2$ and $k = 1$, as in Problem~\ref{sec:pca-hand}. Then $J(\bm{B}) = \bm{b}_2\tr\bm{S}\,\bm{b}_2$, where $\bm{b}_2$ is a unit vector orthogonal to $\bm{b}_1$. Use the Lagrangian $L(\bm{b}_2, \lambda) := \bm{b}_2\tr\bm{S}\,\bm{b}_2 - \lambda\,(\bm{b}_2\tr\bm{b}_2 - 1)$ (MML 7.2) to show that every stationary point satisfies $\bm{S}\bm{b}_2 = \lambda\bm{b}_2$ and $J(\bm{B}) = \lambda$. Conclude that the optimal $\bm{b}_2$ is the eigenvector $\bm{v}_2$ with the smallest eigenvalue, that the optimal $\bm{b}_1$ is the eigenvector $\bm{v}_1$ (up to its sign), and that the minimal error is $J(\bm{B}) = \lambda_2$.
+% \item \emph{[Optional]} How would you solve \eqref{eq:pca-min} for general $n$ and $k$?
+% \end{enumerate}
+
+% ----------------------------------------------------------
+\section{Eigen-Climates} \label{sec:eigen-climates}
+
+\textbf{Data}: All data and code for this problem can be found at \url{https://gitlab.cs.unh.edu/marekpetrik/fml-fall26/-/tree/main/assignments/climate} or from the root of the repository by following the directory \texttt{assignments/climate}.
+
+The file \texttt{climate.csv} describes the climate of $m = 100$ cities in the USA and Canada. Each row corresponds to a city and lists its name, state or province, country, latitude, and longitude, followed by $n = 365$ columns \texttt{d001}, \dots, \texttt{d365}. The column for day $t$ is the mean temperature (in $^\circ$C) on day $t$ of the year averaged over the years 1991--2020; day 1 is January 1 and February 29 is omitted during leap years. The temperatures are computed from NOAA's daily weather station records (GHCN-Daily).
+
+We represent the $i$-th city by its temperature curve $\bm{x}_i \in \Real^n$ and stack the curves as the rows of the matrix $\bm{X} \in \Real^{m \times n}$. Let
+\[
+  \bm{\mu} := \frac{1}{m} \sum_{i=1}^m \bm{x}_i,
+  \qquad
+  \bm{S} := \frac{1}{m} \sum_{i=1}^m (\bm{x}_i - \bm{\mu})(\bm{x}_i - \bm{\mu})\tr = \frac{1}{m} \bm{X}_c\tr \bm{X}_c
+\]
+be the mean temperature curve and the sample covariance matrix, where $\bm{X}_c \in \Real^{m\times n}$ is the centered data matrix with rows $(\bm{x}_i - \bm{\mu})\tr$. Let $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n$ be the eigenvalues of $\bm{S}$ and $\bm{v}_1, \dots, \bm{v}_n$ be the corresponding orthonormal eigenvectors (the principal directions).
+
+\begin{enumerate}
+\item \textbf{[code]} Plot the temperature curves of Durham, Boston, San Francisco, Anchorage, and Iqaluit in a single plot. Describe three different ways in which the curves differ from each other.
+\item \textbf{[code]} Compute $\bm{\mu}$, $\bm{S}$, and the eigenvalues and eigenvectors of $\bm{S}$. 
+\item How many eigenvalues of $\bm{S}$ are non-zero? 
+\item \textbf{[code]} Plot the first three eigenvectors $\bm{v}_1, \bm{v}_2, \bm{v}_3$ as functions of the day of the year. To interpret them, also plot the curves $\bm{\mu} + 2 \sqrt{\lambda_k}\, \bm{v}_k$ and $\bm{\mu} - 2 \sqrt{\lambda_k}\, \bm{v}_k$ together with $\bm{\mu}$ for $k = 1,2,3$. Describe in words the kind of climate that each eigenvector represents. 
+\item Why is $\bm{v}_1$ not very close to the constant vector $\frac{1}{\sqrt{n}}\bm{1}$. Why? \emph{Hint}: Compare the standard deviations of the temperatures across the cities in January and in July.
+\item \textbf{[code]} Plot the cities projected onto the first two principal components. 
+\item \textbf{[code]} The temperature curve of the $i$-th city reconstructed from the first $k$ principal components is $\hat{\bm{x}}_i := \bm{\mu} + \bm{V} \bm{V}\tr (\bm{x}_i - \bm{\mu})$, where $\bm{V} := [\bm{v}_1, \bm{v}_2] \in \Real^{n \times 2}$. For each of the five cities in the first part, plot the reconstructed curve. 
+\item \emph{[Optional]} It is common to standardize each feature (column of $\bm{X}$) to have unit variance, by dividing it by its standard deviation, before running PCA. How would standardizing change the first principal component?
+\end{enumerate}
+
+
 \end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:

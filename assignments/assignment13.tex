@@ -8,6 +8,7 @@
 \newcommand{\Real}{\mathbb{R}}
 \newcommand{\tr}{^\top}
 \newcommand{\opt}{^\star}
+\newcommand{\spc}{\text{\textvisiblespace}}
 
 \setlength{\parskip}{3mm plus1mm minus1mm}
 \setlength{\parindent}{0mm}
@@ -24,15 +25,176 @@
 \item \textbf{Questions}: See the class website for a link to office hours
 \end{itemize}
 
-% Covers: Overfitting and cross-validation (MML 8.2). Cross-validation exercises are drawn from ISL ch.~5.
+% Covers: Neural networks trained by gradient descent (housing prices with all features), maximum likelihood for logistic regression, and Markov chains and character n-gram models: maximum likelihood estimation of the transition probabilities, stationary distributions, and simulation.
 
-\textbf{Relevant reading}: MML 8.2 (empirical risk minimization, regularization, cross-validation); ISL 5 (resampling and cross-validation). Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia or Python recommended). The cited exercise numbers are from ISL, 2nd edition (James et al., 2021).
+\textbf{Relevant reading}: UDL 3, 6, 7 (neural networks and their training); ISL 4.3 (logistic regression); ILA 10.3 (Markov matrices); D.~Jurafsky and J.~H.~Martin, \emph{Speech and Language Processing}, 3rd edition draft, Chapter 3 (n-gram language models), \url{https://web.stanford.edu/~jurafsky/slp3/}; optionally Bertsekas and Tsitsiklis (2008), Chapter 7 (Markov chains). Problems marked \textbf{[code]} should be submitted as a program in a language of your choice (Julia or Python recommended).
+
+% ----------------------------------------------------------
+\section{Housing Data: Take 3}
+
+\textbf{Data}: All data and code for this problem can be found at \url{https://gitlab.cs.unh.edu/marekpetrik/fml-fall26/-/tree/main/assignments/houses-full} or in the directory \texttt{assignments/houses-full} of the repository.
+
+Nink, LLC, is back. Your previous models used only three features of each house and prices that were simulated from a statistical model. This time, the CEO gives you the full records of the actual house sales in King County, Washington, between May 2014 and May 2015. The file \texttt{train.csv} lists $17{,}290$ houses with their actual sale prices and all $19$ available features, and the file \texttt{test.csv} lists the same features for the $4{,}323$ houses that are currently on the market. The features are:
+\begin{itemize}
+\item \texttt{date}: the date of the sale (for example, \texttt{20141013T000000} is October 13, 2014);
+\item \texttt{bedrooms}, \texttt{bathrooms}, \texttt{floors}: the numbers of bedrooms, bathrooms, and floors;
+\item \texttt{sqft\_living}, \texttt{sqft\_lot}, \texttt{sqft\_above}, \texttt{sqft\_basement}: the areas of the living space, the lot, the living space above the ground, and the basement in square feet;
+\item \texttt{waterfront} (0 or 1), \texttt{view} (0--4), \texttt{condition} (1--5), and \texttt{grade} (1--13, the quality of the construction and design);
+\item \texttt{yr\_built} and \texttt{yr\_renovated} (0 if the house was never renovated);
+\item \texttt{zipcode}, \texttt{lat}, \texttt{long}: the location of the house;
+\item \texttt{sqft\_living15}, \texttt{sqft\_lot15}: the average living and lot areas of the 15 nearest houses.
+\end{itemize}
+The column \texttt{id} identifies the house; houses that were sold more than once appear more than once.
+
+As in Take 2, Nink offers to buy each house on the market for a price that you choose. A seller accepts the offer $p$ for a house with the market value $y$ when $p \ge 0.6\, y$; Nink then buys the house for $p$, sells it for $y$, and makes the profit $y - p$. Otherwise, the seller rejects the offer and Nink makes no profit. The market value of each test house is its actual sale price, which I know but you do not. Your goal is to maximize the total profit over all test houses.
+
+The parameters:
+\begin{itemize}
+\item You must fit at least one neural network with at least one hidden layer and train it using gradient descent that \emph{you implement yourself}. You may compute the gradients by hand (backpropagation) or with an automatic differentiation package (such as \texttt{ForwardDiff.jl}, \texttt{Zygote.jl}, \texttt{torch.autograd}, or \texttt{jax.grad}), but you may not use a built-in optimizer or training procedure (such as \texttt{torch.optim}, \texttt{Flux.train!}, or \texttt{sklearn.neural\_network}).
+\item You may also fit any other models, such as linear regression, and use the model that works best to make your offers.
+\item Do not use the original public dataset or any other external information about these houses.
+\item Your offers should be output as a CSV file with the columns \texttt{id} and \texttt{price} and with the rows in the same order as in \texttt{test.csv}. You can start with the code in the directory \texttt{starter}.
+\end{itemize}
+
+Turn in:
+\begin{enumerate}
+\item Your source code.
+\item A CSV file named \texttt{test-predictions.csv} with your offers.
+\item A short description of your neural network (the architecture, the features and their transformations, the loss function, the step size, and the number of iterations), a plot of the training and validation losses during gradient descent, and a comparison with a simpler model, such as linear regression, on a validation set that you hold out from \texttt{train.csv}.
+\end{enumerate}
+
+\emph{Hints}
+\begin{enumerate}
+\item Standardize the features before training the network, and consider predicting the logarithm of the price.
+\item Some features, such as \texttt{zipcode} and \texttt{date}, may be more useful after a transformation.
+\item Use the validation set to choose the size of the network, the step size, and the number of iterations, and to estimate the profit of your offers.
+\item Your best offer is not your best estimate of the price; recall Take 2.
+\end{enumerate}
+
+% ----------------------------------------------------------
+\section{Maximum Likelihood for Logistic Regression}
+
+Suppose that you are given $m$ data points with features $\bm{a}_i \in \Real^n$ and binary labels $y_i \in \{0, 1\}$ for $i = 1, \dots, m$. Logistic regression models the labels as independent random variables $Y_1, \dots, Y_m$ such that
+\[
+  \mathbb{P}[Y_i = 1] = \sigma(\bm{a}_i\tr \bm{x}),
+  \qquad
+  \mathbb{P}[Y_i = 0] = 1 - \sigma(\bm{a}_i\tr \bm{x}),
+\]
+where $\bm{x} \in \Real^n$ are the unknown parameters and $\sigma\colon \Real \to (0,1)$ is the logistic function $\sigma(z) := 1 / (1 + e^{-z})$. Let $\bm{A} \in \Real^{m\times n}$ be the matrix with rows $\bm{a}_1\tr, \dots, \bm{a}_m\tr$ and let $\bm{y} := (y_1, \dots, y_m) \in \Real^m$.
+\begin{enumerate}
+\item Show that the log-likelihood of the observed labels is
+  \[
+    \ell(\bm{x}) = \sum_{i=1}^m \Bigl( y_i \log \sigma(\bm{a}_i\tr \bm{x}) + (1 - y_i) \log \bigl(1 - \sigma(\bm{a}_i\tr \bm{x})\bigr) \Bigr).
+  \]
+\item Show that $\sigma'(z) = \sigma(z)\,(1 - \sigma(z))$ and use it to derive the gradient $\nabla \ell(\bm{x}) = \bm{A}\tr \bigl(\bm{y} - \sigma(\bm{A}\bm{x})\bigr)$, where $\sigma$ is applied to each element of $\bm{A}\bm{x}$. Can you solve the optimality condition $\nabla \ell(\bm{x}) = \bm{0}$ in closed form as for linear regression?
+\item Derive the Hessian of $\ell$ and show that $\ell$ is concave. Why does it mean that gradient ascent cannot get stuck in a local maximum that is not a global maximum?
+\end{enumerate}
+
+% ----------------------------------------------------------
+\section{Total Least Squares}
+
+Least squares assumes that only the responses are measured with noise: it minimizes the \emph{vertical} distances between the data points and the fitted line. When the features are also measured with noise, it is more natural to treat all coordinates in the same way and minimize the \emph{orthogonal} distances between the data points and the fitted line or hyperplane. This method is called \emph{total least squares}. In this problem, you show that total least squares is the maximum likelihood estimate in a natural model and that it can be computed using PCA.
+
+Let $\bm{z}_1, \dots, \bm{z}_m \in \Real^d$ be data points; for example, $\bm{z}_i = (\bm{a}_i, y_i)$ with $d = n + 1$ combines the features and the response of the $i$-th data point. A hyperplane is a set $H := \{\bm{z} \in \Real^d \mid \bm{w}\tr\bm{z} = c\}$, where $\bm{w} \in \Real^d$ with $\|\bm{w}\| = 1$ is its normal vector and $c \in \Real$. We assume an \emph{errors-in-variables} model in which the observed points are independent random vectors $\bm{Z}_i = \bar{\bm{z}}_i + \bm{E}_i$, $i = 1, \dots, m$, where the unknown true points $\bar{\bm{z}}_i$ lie in an unknown hyperplane $H$ and the noise $\bm{E}_i$ has the multivariate normal distribution $\mathcal{N}(\bm{0}, \sigma^2\bm{I})$ with the density
+\[
+  p(\bm{e}) = (2\pi\sigma^2)^{-d/2} \exp\left(-\frac{\|\bm{e}\|^2}{2\sigma^2}\right), \qquad \bm{e} \in \Real^d.
+\]
+The parameters of the model are $\bm{w}$, $c$, $\sigma$, and the true points $\bar{\bm{z}}_1, \dots, \bar{\bm{z}}_m \in H$. Let $\bm{\mu}$ and $\bm{S}$ be the mean and the sample covariance matrix of $\bm{z}_1, \dots, \bm{z}_m$ (as defined in Problem Set 12), and let $\lambda_1 \ge \dots \ge \lambda_d$ be the eigenvalues of $\bm{S}$ with the orthonormal eigenvectors $\bm{v}_1, \dots, \bm{v}_d$.
+\begin{enumerate}
+\item Write the log-likelihood of the observed points $\bm{z}_1, \dots, \bm{z}_m$ and show that the maximum likelihood estimates of $\bm{w}$, $c$, and $\bar{\bm{z}}_1, \dots, \bar{\bm{z}}_m$ minimize $\sum_{i=1}^m \|\bm{z}_i - \bar{\bm{z}}_i\|^2$ subject to $\bar{\bm{z}}_i \in H$ for each $i$.
+\item Show that the point in $H$ closest to $\bm{z}_i$ is $\bar{\bm{z}}_i = \bm{z}_i - (\bm{w}\tr\bm{z}_i - c)\,\bm{w}$ and that the squared distance between $\bm{z}_i$ and $H$ is $(\bm{w}\tr\bm{z}_i - c)^2$. Conclude that the maximum likelihood estimates of $\bm{w}$ and $c$ minimize the total squared orthogonal distance
+  \[
+    f(\bm{w}, c) := \sum_{i=1}^m (\bm{w}\tr\bm{z}_i - c)^2 \qquad \text{subject to} \qquad \|\bm{w}\| = 1.
+  \]
+\item Show that for any fixed $\bm{w}$, the function $f(\bm{w}, \cdot)$ is minimized by $c = \bm{w}\tr\bm{\mu}$; that is, the optimal hyperplane passes through the mean $\bm{\mu}$.
+\item Show that $f(\bm{w}, \bm{w}\tr\bm{\mu}) = m\,\bm{w}\tr\bm{S}\bm{w}$ and conclude that the optimal normal vector is $\bm{w} = \bm{v}_d$, the eigenvector of $\bm{S}$ with the \emph{smallest} eigenvalue. Therefore, the total least squares hyperplane passes through $\bm{\mu}$ and is spanned by the first $d - 1$ principal directions $\bm{v}_1, \dots, \bm{v}_{d-1}$. \emph{Hint}: Adapt your derivation of PCA from Problem Set 12.
+\item Derive the maximum likelihood estimate of $\sigma^2$ and express it in terms of $\lambda_d$. Suppose that the number of data points $m$ is large and that the true points are spread out in $H$. Explain why the estimate is then close to $\sigma^2 / d$ rather than $\sigma^2$. \emph{Hint}: How does the number of parameters grow with $m$, and what happens to the noise in the directions parallel to $H$?
+\item \textbf{[code]} Generate $m = 1000$ data points as follows: draw $t_i$ from $\mathcal{N}(0, 1)$, let $\bar{\bm{z}}_i := (t_i, 1 + 2 t_i)$ be the true point on the line $y = 1 + 2a$, and add independent $\mathcal{N}(0, 0.5^2)$ noise to both coordinates to get $\bm{z}_i = (a_i, y_i)$. Fit the line $y = \beta_0 + \beta_1 a$ using least squares and using total least squares (compute $\beta_0$ and $\beta_1$ from $\bm{w}$ and $c$), and plot the data and both lines. Which method recovers the true slope $2$? Explain why least squares underestimates the slope.
+\end{enumerate}
+
+% ----------------------------------------------------------
+\section{A Markov Chain on Characters}
+
+\textbf{Data}: All data and code for this problem can be found at \url{https://gitlab.cs.unh.edu/marekpetrik/fml-fall26/-/tree/main/assignments/markov} or from the root of the repository by following the directory \texttt{assignments/markov}.
+
+The file \texttt{corpus.txt} contains the text of six classic novels from Project Gutenberg: \emph{Pride and Prejudice}, \emph{Moby-Dick}, \emph{The Adventures of Sherlock Holmes}, \emph{Frankenstein}, \emph{A Tale of Two Cities}, and \emph{Dracula}. The text was converted to lowercase, possessive and similar endings were removed (darcy's $\to$ darcy, you'll $\to$ you), other apostrophes were deleted (don't $\to$ dont), every run of punctuation, digits, and other separators was replaced by a single space, and all single-letter words were removed. The file is a single line with $4{,}257{,}463$ characters, each of which is a lowercase letter \texttt{a}--\texttt{z} or a space. The file \texttt{dictionary.txt} lists all $25{,}953$ distinct words in the corpus, one per line.
+
+Let $\mathcal{S} := \{\spc, \mathrm{a}, \mathrm{b}, \dots, \mathrm{z}\}$ be the set of $27$ characters, where $\spc$ denotes the space. We model the text as a sequence of random variables $C_1, C_2, \dots, C_T$ with values in $\mathcal{S}$ that form a \emph{Markov chain}: the next character depends only on the current character, that is,
+\[
+  \mathbb{P}[C_{t+1} = j \mid C_t = i, C_{t-1} = c_{t-1}, \dots, C_1 = c_1] = \mathbb{P}[C_{t+1} = j \mid C_t = i] = p_{ij}
+\]
+for each $t$ and all characters $i, j, c_1, \dots, c_{t-1} \in \mathcal{S}$. In natural language processing, this model is called a character \emph{bigram} model. The transition matrix $\bm{P} \in \Real^{27 \times 27}$ has the entries $p_{ij}$; we index its rows and columns by the characters in $\mathcal{S}$.
+
+Let $c_1, \dots, c_T \in \mathcal{S}$ be the characters in the corpus, let $n_{ij}$ be the number of times that character $j$ immediately follows character $i$, that is, the number of $t \in \{1, \dots, T-1\}$ such that $c_t = i$ and $c_{t+1} = j$, and let $n_i := \sum_{j \in \mathcal{S}} n_{ij}$.
 
 \begin{enumerate}
-\item ISL, Chapter 5, Conceptual exercises: problems 1, 2, 3.
-\item Explain, in a short paragraph, the bias--variance trade-off and how it relates to overfitting. Give one concrete example of an under-fit model and one of an over-fit model for the same data.
-\item \textbf{[code]} Fit polynomials of increasing degree to a small data set. Use $k$-fold cross-validation to select the degree, and plot training error versus validation error as a function of degree.
-\item \textbf{Time spent.} Report approximately how many hours you spent completing this problem set (including the reading).
+\item Show that the likelihood of the observed characters is
+  \[
+    \mathbb{P}[C_1 = c_1, \dots, C_T = c_T] = \mathbb{P}[C_1 = c_1] \prod_{i \in \mathcal{S}} \prod_{j \in \mathcal{S}} p_{ij}^{n_{ij}}.
+  \]
+\item Treating $\mathbb{P}[C_1 = c_1]$ as a constant, show that the maximum likelihood estimate of the transition probabilities is $\hat{p}_{ij} = n_{ij} / n_i$, assuming that $n_i > 0$ for each $i$. \emph{Hint}: The log-likelihood is a sum of separate terms for each row $i$ of $\bm{P}$. Maximize each term subject to the constraint $\sum_{j \in \mathcal{S}} p_{ij} = 1$ using a Lagrange multiplier (MML 7.2), and compare with the coin problem in Problem Set 11.
+\item Show that the estimated matrix $\hat{\bm{P}}$ is a Markov matrix: its entries are nonnegative and $\hat{\bm{P}} \bm{1} = \bm{1}$. Conclude that $1$ is an eigenvalue of both $\hat{\bm{P}}$ and $\hat{\bm{P}}\tr$.
+\item \textbf{[code]} Compute $\hat{\bm{P}}$ from \texttt{corpus.txt} and plot it as a heat map. Report the four most likely characters that follow a space, \texttt{q}, \texttt{t}, and \texttt{h}, together with their probabilities.
+\item \textbf{[code]} How many of the $27^2 = 729$ entries of $\hat{\bm{P}}$ are zero? Do you think that all of these transitions are impossible in English? What would be the likelihood of a new text that contains one of these transitions?
 \end{enumerate}
+
+% ----------------------------------------------------------
+\section{The Limiting Distribution}
+
+Let $\bm{q}_t \in \Real^{27}$ be the distribution of the $t$-th character, that is, $(\bm{q}_t)_i := \mathbb{P}[C_t = i]$ for $i \in \mathcal{S}$. A \emph{stationary distribution} of the Markov chain is a vector $\bm{\pi} \in \Real^{27}$ such that $\bm{\pi} \ge \bm{0}$, $\bm{1}\tr \bm{\pi} = 1$, and $\bm{\pi}\tr \bm{P} = \bm{\pi}\tr$.
+
+\begin{enumerate}
+\item Use the law of total probability to show that $\bm{q}_{t+1}\tr = \bm{q}_t\tr \bm{P}$ and, therefore, $\bm{q}_t\tr = \bm{q}_1\tr \bm{P}^{t-1}$.
+\item \textbf{[code]} Compute the stationary distribution $\bm{\pi}$ of $\hat{\bm{P}}$ from an eigenvector of $\hat{\bm{P}}\tr$. Report the six most likely characters under $\bm{\pi}$ and their probabilities.
+\item \textbf{[code]} Starting with a space, $\bm{q}_1 = \bm{e}_{\spc}$, compute $\bm{q}_2, \dots, \bm{q}_{31}$ using $\hat{\bm{P}}$ and plot $\| \bm{q}_t - \bm{\pi} \|_1$ as a function of $t$ on a logarithmic scale. Compare the rate at which the distance decreases with the second largest absolute value of the eigenvalues of $\hat{\bm{P}}$.
+\item \textbf{[code]} Compute the frequency of each character in the corpus and compare it with $\bm{\pi}$.
+\item Explain your observation in the previous part. First, show that for each $j \in \mathcal{S}$,
+  \[
+    \sum_{i \in \mathcal{S}} n_i\, \hat{p}_{ij} = n_j + \delta_{c_T j} - \delta_{c_1 j},
+  \]
+  where $\delta_{ij} = 1$ if $i = j$ and $\delta_{ij} = 0$ otherwise. Then conclude that if $c_1 = c_T$, the vector with the elements $n_i / \sum_{l \in \mathcal{S}} n_l$, $i \in \mathcal{S}$, is a stationary distribution of $\hat{\bm{P}}$. Why is this vector close to the character frequencies?
+\end{enumerate}
+
+% ----------------------------------------------------------
+\section{Generating Text}
+
+\begin{enumerate}
+\item \textbf{[code]} Simulate $1000$ characters from the Markov chain with the transition matrix $\hat{\bm{P}}$, starting after a space: set $C_1 = \spc$ and generate $C_2, \dots, C_{1001}$. Include the generated text in your report. \emph{Hint}: To sample the character that follows character $i$, draw $U$ uniformly from $[0,1]$ and choose the first character $j$ (in the order $\spc, \mathrm{a}, \dots, \mathrm{z}$) such that $\sum_{l \le j} \hat{p}_{il} \ge U$, or use a library function such as \texttt{numpy.random.choice} in Python or \texttt{sample} from \texttt{StatsBase.jl} in Julia.
+\item \textbf{[code]} Split the generated text into words and drop the last word if it may be incomplete. What fraction of the generated words appear in \texttt{dictionary.txt}? Report this fraction separately for the words with 1, 2, 3, 4, and at least 5 letters, and list the generated words with at least 3 letters that appear in the dictionary.
+\item \textbf{[code]} Repeat the previous two parts with a model that generates each character independently from the stationary distribution $\bm{\pi}$ (a character \emph{unigram} model). How does it compare with the Markov chain?
+\item The corpus contains no single-letter words, but the Markov chain generates them. Explain why. Compute the probability that a word generated by the Markov chain has exactly one letter, and compare it with the fraction of single-letter words in your simulation. Use a longer simulation, such as $100{,}000$ characters, for a more accurate comparison.
+\item Why are almost none of the generated words with at least 5 letters real words? A natural improvement is a model in which the next character depends on the previous $m$ characters instead of just one. How many free parameters (transition probabilities) does such a model have as a function of $m$? Compare this number with the number of characters in the corpus for $m = 1, 2, 3, 4$. What problem do you expect when $m$ is large?
+\end{enumerate}
+
+% ----------------------------------------------------------
+\section{Bonus: Fine-Tuning with Reinforcement Learning}
+
+This problem is optional and worth extra credit. Instead of fitting the transition probabilities to the corpus, we now \emph{train} them to generate as many real words as possible, which is similar to how large language models are fine-tuned with reinforcement learning. See UDL 19.5--19.6 for policy gradient and actor-critic methods.
+
+We treat the transition matrix as a \emph{policy} that chooses the next character $j$ in the state $i$ (the current character) with the probability
+\[
+  \rho_{\bm{\theta}}(j \mid i) := \frac{\exp(\theta_{ij})}{\sum_{l \in \mathcal{S}} \exp(\theta_{il})},
+\]
+where $\bm{\theta} \in (\Real \cup \{-\infty\})^{27\times 27}$ are the parameters. We start from the fitted Markov chain by setting $\theta_{ij} = \log \hat{p}_{ij}$, where $\theta_{ij} = -\infty$ when $\hat{p}_{ij} = 0$, so that the transitions that never occur in the corpus remain impossible. An episode starts with $C_1 = \spc$ and generates $C_2, \dots, C_{T+1}$ with $T = 1000$ using the policy. The reward $R_t$ for generating $C_{t+1}$ is $1$ if $C_{t+1} = \spc$ completes a word that is in \texttt{dictionary.txt}, and $0$ otherwise. The goal is to find parameters $\bm{\theta}$ that maximize the expected number of real words $J(\bm{\theta}) := \mathbb{E}\left[\sum_{t=1}^T R_t\right]$.
+
+\begin{enumerate}
+\item Show that for all characters $i, j, l \in \mathcal{S}$ with finite $\theta_{ij}$ and $\theta_{il}$,
+  \[
+    \frac{\partial \log \rho_{\bm{\theta}}(j \mid i)}{\partial \theta_{il}} = \delta_{jl} - \rho_{\bm{\theta}}(l \mid i),
+  \]
+  and that $\log \rho_{\bm{\theta}}(j \mid i)$ does not depend on the parameters $\theta_{i'l}$ in the other rows $i' \neq i$.
+\item \textbf{[code]} Train the policy to maximize $J$ using either REINFORCE with a baseline or a one-step actor-critic method. Plot the number of real words generated in each episode during training. Then report the number of real words per $1000$ characters, the number of distinct real words, and an example of the generated text. What policy does the training converge to? Explain why this policy is optimal: at most how many real words can $1000$ characters contain when the dictionary has no single-letter words? \emph{Hint}: A discount factor such as $\gamma = 0.9$ reduces the variance of the gradient estimates. For the one-step actor-critic method, step sizes of $0.1$ for the actor and $0.05$ for the critic and $1000$ episodes work well.
+\item \textbf{[code]} To keep the generated text similar to English, subtract the penalty $\beta \left(\log \rho_{\bm{\theta}}(C_{t+1} \mid C_t) - \log \hat{p}_{C_t C_{t+1}}\right)$ with $\beta > 0$ from each reward $R_t$. Show that, given $C_t = i$, the expected penalty is $\beta$ times the Kullback--Leibler divergence
+  \[
+    \mathrm{KL}\left(\rho_{\bm{\theta}}(\cdot \mid i) \,\|\, \hat{p}_{i \cdot}\right) := \sum_{j \in \mathcal{S}} \rho_{\bm{\theta}}(j \mid i) \log \frac{\rho_{\bm{\theta}}(j \mid i)}{\hat{p}_{ij}}.
+  \]
+  Train the policy with $\beta = 0.2$ and compare the number of real words, the number of distinct real words, and the generated text with your results in the previous part and with the fitted Markov chain. Large language models are fine-tuned with a similar penalty; why do you think it is necessary?
+\item The policy observes only the current character, but the reward depends on the whole word. Why does this limit how many real words the policy can generate when $\beta > 0$? How would you change the state to fix this problem, and what would be the cost?
+\end{enumerate}
+
+% ----------------------------------------------------------
+\section{Time Spent}
+
+Report approximately how many hours you spent completing this problem set (including the reading).
 
 \end{document}
