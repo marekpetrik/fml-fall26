@@ -95,7 +95,7 @@ function makedist(μt, σ)
 end
 
 # ╔═╡ 80ef4403-e7c2-4e9e-b41e-935962e16d43
-generate; houses = rand(makedist(μt,σ),n)
+generate; houses = rand(makedist(μt,σ),n) 
 
 # ╔═╡ c91a9c7a-17ee-432e-9145-c156e7ad514e
 @bindname show_true CheckBox()
@@ -152,7 +152,7 @@ end
 # ╔═╡ c7c0b2b4-75a5-4106-9ca2-569951478421
 begin
 	x = range(μ̂tlim...,length=300)
-	pl = plot(x, plotfunction==:L ? L.(x) : ℓ.(x), xlabel="Estimated μt", ylabel="(log)likelihood", label=:none)
+	pl = plot(x, plotfunction==:L ? L.(x) : ℓ.(x), xlabel="Estimated μ̂t", ylabel="(log)likelihood", label=:none)
 	scatter!(pl, [μ̂t], plotfunction==:L ? L.([μ̂t]) : ℓ.([μ̂t]), label="μ̂t", color=:blue)
 	show_opt_estimate &&
 		scatter!(pl, [μ̂t_opt], plotfunction==:L ? L.([μ̂t_opt]) : ℓ.([μ̂t_opt]), label="μ̂t_opt", color=:orange)
@@ -162,16 +162,10 @@ end
 # ╔═╡ f55c48e8-2527-4ae5-a069-5603bf636ca9
 "L(μ̂t) = $(L(μ̂t)), ℓ(μ̂t)=$(ℓ(μ̂t))"
 
-# ╔═╡ 41e0caae-e625-45a3-9d5b-ef925482d60e
-# ╠═╡ disabled = true
-#=╠═╡
-md"""# Profit Maximization"""
-  ╠═╡ =#
-
 # ╔═╡ 1622d74c-2374-4815-862f-b514950e6339
 # ╠═╡ disabled = true
 #=╠═╡
-μ̂t_opt = clamp(mean(houses),0,300)
+μ̂t_opt = clamp(geomean(houses),0,300)
   ╠═╡ =#
 
 # ╔═╡ 9cf81d34-1563-4245-8658-700439607669
@@ -196,7 +190,7 @@ StatsBase = "~0.34.13"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.13.3"
+julia_version = "1.13.4"
 manifest_format = "2.1"
 project_hash = "5cc8cf97e29c1a0c36475fcf40d1fa76af151031"
 
@@ -818,7 +812,7 @@ version = "1.11.0"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2026.10.20"
+version = "2026.11.5"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
@@ -841,7 +835,7 @@ version = "1.3.6+0"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.30+0"
+version = "0.3.30+1"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
@@ -1579,7 +1573,7 @@ version = "1.70.0+0"
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
-version = "17.8.3+0"
+version = "17.8.5+0"
 
 [[deps.x264_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1608,7 +1602,7 @@ uuid = "23338594-aafe-5451-b93e-139f81909106"
 """
 
 # ╔═╡ Cell order:
-# ╠═620f9e52-de26-11f1-88c8-4b1dfc78ca86
+# ╟─620f9e52-de26-11f1-88c8-4b1dfc78ca86
 # ╟─c9607a76-d8ae-468c-9df8-f89b8a084903
 # ╟─1473879a-13dc-431c-9b2e-2125716117cb
 # ╟─9eee14dc-1537-4f04-a882-6199420ff729
@@ -1628,7 +1622,7 @@ uuid = "23338594-aafe-5451-b93e-139f81909106"
 # ╠═dc8cecc7-09d6-4ee1-bf45-8a0725e66c2d
 # ╠═45b022e5-4873-41a7-bb73-f226f20b9e0a
 # ╟─520442ac-515a-4bf8-98cd-af0162fcfbad
-# ╠═1622d74c-2374-4815-862f-b514950e6339
+# ╟─1622d74c-2374-4815-862f-b514950e6339
 # ╠═9cf81d34-1563-4245-8658-700439607669
 # ╟─3624bfba-70f9-4b6f-9dbf-81cbc9b1c0b6
 # ╟─63935fc1-b6e4-47cf-86a7-f4b8fe5a7e20
@@ -1636,6 +1630,5 @@ uuid = "23338594-aafe-5451-b93e-139f81909106"
 # ╟─4243935e-f23c-41ff-8741-32e5e589aa8d
 # ╟─c7c0b2b4-75a5-4106-9ca2-569951478421
 # ╟─f55c48e8-2527-4ae5-a069-5603bf636ca9
-# ╟─41e0caae-e625-45a3-9d5b-ef925482d60e
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

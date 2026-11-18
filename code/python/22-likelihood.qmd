@@ -115,7 +115,7 @@ plt.plot(x, [f(xi) for xi in x])
 plt.scatter([mu_hat_t], [f(mu_hat_t)], color="blue", label=r"$\hat\mu_t$", zorder=3)
 if show_opt_estimate:
     plt.scatter([mu_hat_t_opt], [f(mu_hat_t_opt)], color="orange", label=r"$\hat\mu_t^{opt}$", zorder=3)
-plt.xlabel(r"Estimated $\mu_t$")
+plt.xlabel(r"Estimated $\hat\mu_t$")
 plt.ylabel("(log)likelihood")
 plt.legend()
 plt.show()

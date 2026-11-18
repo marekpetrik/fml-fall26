@@ -1,0 +1,91 @@
+---
+title: "Bayesian Estimation"
+format: html
+---
+
+Change the parameters below and re-run the notebook.
+
+```{r}
+p <- 0.3                     # probability of outcome 1: 0 to 1
+n <- 20                      # number of trials: 1 to 100
+```
+
+```{r}
+makedata <- function() {
+  set.seed(1)
+  rbinom(n, 1, p)            # n Bernoulli(p) samples
+}
+
+data <- makedata()
+data
+```
+
+```{r}
+plot(1:n, data, pch = 19, xlab = "Trial", ylab = "Outcome")
+```
+
+# Maximum Likelihood
+
+Compute the maximum log-likelihood for the estimate $\theta$ of $p$ for data $y_i \in \{0,1\}$.
+
+$$
+\ell(\theta) := \sum_{i=1}^n \left( y_i \cdot \log \theta + (1-y_i) \log(1-\theta) \right)
+$$
+
+```{r}
+ell <- function(theta) sum(data * log(theta) + (1 - data) * log(1 - theta))
+```
+
+**Maximum likelihood:** Compute $\theta^\star \in \arg\max_{\theta \in [0,1]} \ell(\theta)$
+
+```{r}
+theta_opt <- sum(data) / n
+theta_opt
+```
+
+```{r}
+theta <- seq(0.001, 0.999, length.out = 300)
+plot(theta, sapply(theta, ell), type = "l",
+     xlab = expression("Parameter" ~ theta), ylab = expression("log-likelihood" ~ ell))
+points(theta_opt, ell(theta_opt), pch = 19, col = "blue")
+```
+
+# Posterior Distribution
+
+Suppose that $\Theta$ is the random variable that represents the distribution of the estimate $\theta$. We use $Y = (Y_1, \ldots, Y_n)$ to represent the random dataset with a specific value denoted as $y = (y_1, \ldots, y_n)$.
+
+**Prior**. Assume that
+$$
+\Theta \sim \operatorname{Beta}(\alpha, \beta)
+$$
+Where [Beta](https://en.wikipedia.org/wiki/Beta_distribution) is the [conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior) for Bernoulli. See the wikipedia page for more examples of priors that work with other random variables.
+
+**Posterior**: use Bayes theorem
+
+$$
+\mathbb{P}[\Theta = \theta \mid Y = y]
+= \frac{\mathbb{P}[Y = y \mid \Theta = \theta ] \cdot \mathbb{P}[\Theta = \theta]}{\mathbb{P}[Y = y]}
+$$
+
+For the conjugate prior distribution:
+$$
+\Theta \mid Y = y \quad \sim \quad
+\operatorname{Beta}\left(\alpha + \sum_{i=1}^n y_i, \beta + \sum_{i=1}^n (1-y_i) \right)
+$$
+
+For more advanced use, see [Bayesian linear regression](https://en.wikipedia.org/wiki/Bayesian_linear_regression) and [Stan](https://mc-stan.org/).
+
+```{r}
+alpha <- 1                   # prior parameter: 1 to 10
+beta <- 1                    # prior parameter: 1 to 10
+```
+
+```{r}
+theta <- seq(0, 1, length.out = 300)
+plot(theta, dbeta(theta, alpha, beta), type = "l", xlab = expression(theta), ylab = "")
+```
+
+```{r}
+plot(theta, dbeta(theta, alpha + sum(data), beta + (n - sum(data))), type = "l",
+     xlab = expression(theta), ylab = "")
+```

@@ -1,0 +1,112 @@
+---
+title: "Bayesian Estimation"
+format: html
+jupyter: python3
+---
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats   # probability distributions
+```
+
+Change the parameters below and re-run the notebook.
+
+```{python}
+p = 0.3                      # probability of outcome 1: 0 to 1
+n = 20                       # number of trials: 1 to 100
+```
+
+```{python}
+dist = stats.bernoulli(p)
+
+def makedata():
+    rng = np.random.default_rng(1)
+    return dist.rvs(n, random_state=rng)
+
+data = makedata()
+data
+```
+
+```{python}
+plt.scatter(range(1, n + 1), data)
+plt.xlabel("Trial")
+plt.ylabel("Outcome")
+plt.show()
+```
+
+# Maximum Likelihood
+
+Compute the maximum log-likelihood for the estimate $\theta$ of $p$ for data $y_i \in \{0,1\}$.
+
+$$
+\ell(\theta) := \sum_{i=1}^n \left( y_i \cdot \log \theta + (1-y_i) \log(1-\theta) \right)
+$$
+
+```{python}
+def ell(theta):
+    return np.sum(data * np.log(theta) + (1 - data) * np.log(1 - theta))
+```
+
+**Maximum likelihood:** Compute $\theta^\star \in \arg\max_{\theta \in [0,1]} \ell(\theta)$
+
+```{python}
+theta_opt = np.sum(data) / n
+theta_opt
+```
+
+```{python}
+theta = np.linspace(0.001, 0.999, 300)
+plt.plot(theta, [ell(t) for t in theta])
+plt.scatter([theta_opt], [ell(theta_opt)], color="blue", zorder=3)
+plt.xlabel(r"Parameter $\theta$")
+plt.ylabel(r"log-likelihood $\ell$")
+plt.show()
+```
+
+# Posterior Distribution
+
+Suppose that $\Theta$ is the random variable that represents the distribution of the estimate $\theta$. We use $Y = (Y_1, \ldots, Y_n)$ to represent the random dataset with a specific value denoted as $y = (y_1, \ldots, y_n)$.
+
+**Prior**. Assume that
+$$
+\Theta \sim \operatorname{Beta}(\alpha, \beta)
+$$
+Where [Beta](https://en.wikipedia.org/wiki/Beta_distribution) is the [conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior) for Bernoulli. See the wikipedia page for more examples of priors that work with other random variables.
+
+**Posterior**: use Bayes theorem
+
+$$
+\mathbb{P}[\Theta = \theta \mid Y = y]
+= \frac{\mathbb{P}[Y = y \mid \Theta = \theta ] \cdot \mathbb{P}[\Theta = \theta]}{\mathbb{P}[Y = y]}
+$$
+
+For the conjugate prior distribution:
+$$
+\Theta \mid Y = y \quad \sim \quad
+\operatorname{Beta}\left(\alpha + \sum_{i=1}^n y_i, \beta + \sum_{i=1}^n (1-y_i) \right)
+$$
+
+For more advanced use, see [Bayesian linear regression](https://en.wikipedia.org/wiki/Bayesian_linear_regression) and [Stan](https://mc-stan.org/).
+
+```{python}
+alpha = 1                    # prior parameter: 1 to 10
+beta = 1                     # prior parameter: 1 to 10
+```
+
+```{python}
+distpre = stats.beta(alpha, beta)
+
+theta = np.linspace(0, 1, 300)
+plt.plot(theta, distpre.pdf(theta))
+plt.xlabel(r"$\theta$")
+plt.show()
+```
+
+```{python}
+distpost = stats.beta(alpha + np.sum(data), beta + (n - np.sum(data)))
+
+plt.plot(theta, distpost.pdf(theta))
+plt.xlabel(r"$\theta$")
+plt.show()
+```

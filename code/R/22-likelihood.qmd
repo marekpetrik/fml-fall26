@@ -98,7 +98,7 @@ legend("bottomright", legend = expression(mu[t], hat(mu)[t], hat(mu)[t]^opt)[sho
 f <- if (plot_function == "lik") L else ell
 
 x <- seq(mu_hat_t_lim[1], mu_hat_t_lim[2], length.out = 300)
-plot(x, sapply(x, f), type = "l", xlab = expression("Estimated" ~ mu[t]), ylab = "(log)likelihood")
+plot(x, sapply(x, f), type = "l", xlab = expression("Estimated" ~ hat(mu)[t]), ylab = "(log)likelihood")
 points(mu_hat_t, f(mu_hat_t), pch = 19, col = "blue")
 if (show_opt_estimate) points(mu_hat_t_opt, f(mu_hat_t_opt), pch = 19, col = "orange")
 shown <- c(TRUE, show_opt_estimate)
