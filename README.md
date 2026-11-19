@@ -46,13 +46,13 @@ One lecture on each of the following topics. Please see the class website and my
 | Nov 5  | Thu | Probability basics: random variables, expectations             | MML 6.1-6.3                |
 | Nov 10 | Tue | Probability basics: expectations                               | MML 6.4-6.5                |
 | Nov 12 | Thu | Probability basics: distributions                              | MML 6.4-6.5                |
-| Nov 17 | Tue | Maximum likelihood, PCA, overfitting                           | MML 8.1, 8.3.1-8.3.2       |
-| Nov 19 | Thu | Maximum likelihood, Overfitting                                | MML 8.1, 8.3.1-8.3.2       |
+| Nov 17 | Tue | Maximum likelihood,                                            | MML 8.1, 8.3.1-8.3.2       |
+| Nov 19 | Thu | PCA                                                            | MML 10.1-10.3              |
 | Nov 24 | Tue | *Optional topics, review*                                      |                            |
 | Nov 26 | Thu | *No class, thanksgiving holiday*                               |                            |
-| Dec 1  | Tue | Markov models and n-grams                                      | ILA                        |
-| Dec 3  | Thu | Principal component analysis                                   | MML 10.1-10.3              |
-| Dec 8  | Tue | Reinforcement learning: transformers and LLMs                  | UDL 19                     |
+| Dec 1  | Tue | PCA                                                            | MML 10.1-10.3              |
+| Dec 3  | Thu | Markov models, transformers, and reinforcement learning        |                            |
+| Dec 8  | Tue | Gradient descent and a neural network                          |                            |
 | Dec 10 | Thu | Review and final exam preparation                              |                            |
 
 

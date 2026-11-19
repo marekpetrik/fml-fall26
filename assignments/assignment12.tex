@@ -75,34 +75,33 @@ Solve the following problems by hand, except where noted~(see MML 10.2).
 % ----------------------------------------------------------
 \section{Deriving PCA} \label{sec:derive-pca}
 
-Coming soon ....
-% In this problem, we will derive PCA as the problem of finding the best low-dimensional reconstruction of given data points~(see MML 10.3).
+In this problem, we will derive PCA as the problem of finding the best low-dimensional reconstruction of given data points~(see MML 10.3).
 
-% Let $\bm{x}_1, \dots, \bm{x}_m \in \Real^n$ be data points and assume that their mean is $\bm{0}$: $\bm{\mu} := \frac{1}{m}\sum_{i=1}^m \bm{x}_i = \bm{0}$. Recall that the sample covariance matrix is then $\bm{S} := \frac{1}{m}\sum_{i=1}^m \bm{x}_i \bm{x}_i\tr$. Because $\bm{S}$ is symmetric and positive semidefinite, it has orthonormal eigenvectors $\bm{v}_1, \dots, \bm{v}_n$ with eigenvalues $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n \ge 0$.
+Let $\bm{x}_1, \dots, \bm{x}_m \in \Real^n$ be data points and assume that their mean is $\bm{0}$: $\bm{\mu} := \frac{1}{m}\sum_{i=1}^m \bm{x}_i = \bm{0}$. Recall that the sample covariance matrix is then $\bm{S} := \frac{1}{m}\sum_{i=1}^m \bm{x}_i \bm{x}_i\tr$. Because $\bm{S}$ is symmetric and positive semidefinite, it has orthonormal eigenvectors $\bm{v}_1, \dots, \bm{v}_n$ with eigenvalues $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n \ge 0$.
 
-% We want to reconstruct each data point from only $k < n$ numbers. Let $\bm{b}_1, \dots, \bm{b}_k \in \Real^n$ be orthonormal vectors and let $\bm{B} := [\bm{b}_1, \dots, \bm{b}_k] \in \Real^{n \times k}$, so that $\bm{B}\tr\bm{B} = \bm{I}$. The reconstruction of the data point $\bm{x}_i$ from the coordinates $\bm{z}_i \in \Real^k$ is $\hat{\bm{x}}_i := \bm{B}\bm{z}_i = \sum_{j=1}^k z_{ij} \bm{b}_j$. You can think of each $\bm{b}_i, i = 1, \dots, k$ as a ``feature''.
+We want to reconstruct each data point from only $k < n$ numbers. Let $\bm{b}_1, \dots, \bm{b}_k \in \Real^n$ be orthonormal vectors and let $\bm{B} := [\bm{b}_1, \dots, \bm{b}_k] \in \Real^{n \times k}$, so that $\bm{B}\tr\bm{B} = \bm{I}$. The reconstruction of the data point $\bm{x}_i$ from the coordinates $\bm{z}_i \in \Real^k$ is $\hat{\bm{x}}_i := \bm{B}\bm{z}_i = \sum_{j=1}^k z_{ij} \bm{b}_j$. You can think of each $\bm{b}_i, i = 1, \dots, k$ as a ``feature''.
  
-% PCA chooses $\bm{B}$ and the coordinates $\bm{z}_1, \dots, \bm{z}_m$ that minimize the average squared reconstruction error
-% \begin{equation} \label{eq:pca-min}
-%   \min_{\bm{B},\, \bm{z}_1, \dots, \bm{z}_m} \; \frac{1}{m} \sum_{i=1}^m \|\bm{x}_i - \bm{B}\bm{z}_i\|^2
-%   \qquad \text{subject to} \qquad \bm{B}\tr\bm{B} = \bm{I}, ~ \operatorname{rank}(\bm{B}) = k.
-% \end{equation}
-% \begin{enumerate}
-% \item Is $\bm{B}$ as defined above an orthogonal matrix?
-% \item  Fix $\bm{B}$ and a data point $\bm{x}_i$. Show that the coordinates $\bm{z}_i$ that minimize the error $\|\bm{x}_i - \bm{B}\bm{z}_i\|^2$ of this data point are $\bm{z}_i = \bm{B}\tr\bm{x}_i$, that is, $z_{ij} = \bm{b}_j\tr \bm{x}_i$ for $j = 1, \dots, k$. \emph{Hint}: Is this a projection problem?
-% \item Extend $\bm{b}_1, \dots, \bm{b}_k$ to an orthonormal basis $\bm{b}_1, \dots, \bm{b}_n$ of $\Real^n$. Show that $\bm{x}_i = \sum_{j=1}^n (\bm{b}_j\tr\bm{x}_i)\, \bm{b}_j$ and that the error of the best reconstruction is
-%   \[
-%     \bm{x}_i - \hat{\bm{x}}_i = \sum_{j=k+1}^n (\bm{b}_j\tr\bm{x}_i)\, \bm{b}_j,
-%     \qquad
-%     \|\bm{x}_i - \hat{\bm{x}}_i\|^2 = \sum_{j=k+1}^n (\bm{b}_j\tr\bm{x}_i)^2 .
-%   \]
-% \item  Let $J(\bm{B}) := \frac{1}{m}\sum_{i=1}^m \|\bm{x}_i - \hat{\bm{x}}_i\|^2$ be the average squared reconstruction error when each $\bm{z}_i$ is chosen optimally as in part~1. Show that
-%   \[
-%     J(\bm{B}) = \sum_{j=k+1}^n \bm{b}_j\tr \bm{S}\, \bm{b}_j .
-%   \]
-% \item Consider $n = 2$ and $k = 1$, as in Problem~\ref{sec:pca-hand}. Then $J(\bm{B}) = \bm{b}_2\tr\bm{S}\,\bm{b}_2$, where $\bm{b}_2$ is a unit vector orthogonal to $\bm{b}_1$. Use the Lagrangian $L(\bm{b}_2, \lambda) := \bm{b}_2\tr\bm{S}\,\bm{b}_2 - \lambda\,(\bm{b}_2\tr\bm{b}_2 - 1)$ (MML 7.2) to show that every stationary point satisfies $\bm{S}\bm{b}_2 = \lambda\bm{b}_2$ and $J(\bm{B}) = \lambda$. Conclude that the optimal $\bm{b}_2$ is the eigenvector $\bm{v}_2$ with the smallest eigenvalue, that the optimal $\bm{b}_1$ is the eigenvector $\bm{v}_1$ (up to its sign), and that the minimal error is $J(\bm{B}) = \lambda_2$.
-% \item \emph{[Optional]} How would you solve \eqref{eq:pca-min} for general $n$ and $k$?
-% \end{enumerate}
+PCA chooses $\bm{B}$ and the coordinates $\bm{z}_1, \dots, \bm{z}_m$ that minimize the average squared reconstruction error
+\begin{equation} \label{eq:pca-min}
+  \min_{\bm{B},\, \bm{z}_1, \dots, \bm{z}_m} \; \frac{1}{m} \sum_{i=1}^m \|\bm{x}_i - \bm{B}\bm{z}_i\|^2
+  \qquad \text{subject to} \qquad \bm{B}\tr\bm{B} = \bm{I}, ~ \operatorname{rank}(\bm{B}) = k.
+\end{equation}
+\begin{enumerate}
+\item Is $\bm{B}$ as defined above an orthogonal matrix?
+\item  Fix $\bm{B}$ and a data point $\bm{x}_i$. Show that the coordinates $\bm{z}_i$ that minimize the error $\|\bm{x}_i - \bm{B}\bm{z}_i\|^2$ of this data point are $\bm{z}_i = \bm{B}\tr\bm{x}_i$, that is, $z_{ij} = \bm{b}_j\tr \bm{x}_i$ for $j = 1, \dots, k$. \emph{Hint}: Is this a projection problem?
+\item Extend $\bm{b}_1, \dots, \bm{b}_k$ to an orthonormal basis $\bm{b}_1, \dots, \bm{b}_n$ of $\Real^n$. Show that $\bm{x}_i = \sum_{j=1}^n (\bm{b}_j\tr\bm{x}_i)\, \bm{b}_j$ and that the error of the best reconstruction is
+  \[
+    \bm{x}_i - \hat{\bm{x}}_i = \sum_{j=k+1}^n (\bm{b}_j\tr\bm{x}_i)\, \bm{b}_j,
+    \qquad
+    \|\bm{x}_i - \hat{\bm{x}}_i\|^2 = \sum_{j=k+1}^n (\bm{b}_j\tr\bm{x}_i)^2 .
+  \]
+\item  Let $J(\bm{B}) := \frac{1}{m}\sum_{i=1}^m \|\bm{x}_i - \hat{\bm{x}}_i\|^2$ be the average squared reconstruction error when each $\bm{z}_i$ is chosen optimally as in part~1. Show that
+  \[
+    J(\bm{B}) = \sum_{j=k+1}^n \bm{b}_j\tr \bm{S}\, \bm{b}_j .
+  \]
+\item Consider $n = 2$ and $k = 1$, as in Problem~\ref{sec:pca-hand}. Then $J(\bm{B}) = \bm{b}_2\tr\bm{S}\,\bm{b}_2$, where $\bm{b}_2$ is a unit vector orthogonal to $\bm{b}_1$. Use the Lagrangian $L(\bm{b}_2, \lambda) := \bm{b}_2\tr\bm{S}\,\bm{b}_2 - \lambda\,(\bm{b}_2\tr\bm{b}_2 - 1)$ (MML 7.2) to show that every stationary point satisfies $\bm{S}\bm{b}_2 = \lambda\bm{b}_2$ and $J(\bm{B}) = \lambda$. Conclude that the optimal $\bm{b}_2$ is the eigenvector $\bm{v}_2$ with the smallest eigenvalue, that the optimal $\bm{b}_1$ is the eigenvector $\bm{v}_1$ (up to its sign), and that the minimal error is $J(\bm{B}) = \lambda_2$.
+\item \emph{[Optional]} How would you solve \eqref{eq:pca-min} for general $n$ and $k$?
+\end{enumerate}
 
 % ----------------------------------------------------------
 \section{Eigen-Climates} \label{sec:eigen-climates}
