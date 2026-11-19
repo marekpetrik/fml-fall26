@@ -119,7 +119,7 @@ We represent the $i$-th city by its temperature curve $\bm{x}_i \in \Real^n$ and
 be the mean temperature curve and the sample covariance matrix, where $\bm{X}_c \in \Real^{m\times n}$ is the centered data matrix with rows $(\bm{x}_i - \bm{\mu})\tr$. Let $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n$ be the eigenvalues of $\bm{S}$ and $\bm{v}_1, \dots, \bm{v}_n$ be the corresponding orthonormal eigenvectors (the principal directions).
 
 \begin{enumerate}
-\item \textbf{[code]} Plot the temperature curves of Durham, Boston, San Francisco, Anchorage, and Iqaluit in a single plot. Describe three different ways in which the curves differ from each other.
+\item \textbf{[code]} Plot the temperature curves of Durham, Boston, San Francisco, Anchorage, and any other cities of your choice in a single plot. Describe three different ways in which the curves differ from each other.
 \item \textbf{[code]} Compute $\bm{\mu}$, $\bm{S}$, and the eigenvalues and eigenvectors of $\bm{S}$. 
 \item How many eigenvalues of $\bm{S}$ are non-zero? 
 \item \textbf{[code]} Plot the first three eigenvectors $\bm{v}_1, \bm{v}_2, \bm{v}_3$ as functions of the day of the year. To interpret them, also plot the curves $\bm{\mu} + 2 \sqrt{\lambda_k}\, \bm{v}_k$ and $\bm{\mu} - 2 \sqrt{\lambda_k}\, \bm{v}_k$ together with $\bm{\mu}$ for $k = 1,2,3$. Describe in words the kind of climate that each eigenvector represents. 
@@ -127,6 +127,7 @@ be the mean temperature curve and the sample covariance matrix, where $\bm{X}_c 
 \item \textbf{[code]} Plot the cities projected onto the first two principal components. 
 \item \textbf{[code]} The temperature curve of the $i$-th city reconstructed from the first $k$ principal components is $\hat{\bm{x}}_i := \bm{\mu} + \bm{V} \bm{V}\tr (\bm{x}_i - \bm{\mu})$, where $\bm{V} := [\bm{v}_1, \bm{v}_2] \in \Real^{n \times 2}$. For each of the five cities in the first part, plot the reconstructed curve. 
 \item \emph{[Optional]} It is common to standardize each feature (column of $\bm{X}$) to have unit variance, by dividing it by its standard deviation, before running PCA. How would standardizing change the first principal component?
+\item Please feel free to explore the data further using PCA (or any other technique) to see if you can gain additional insights from it. 
 \end{enumerate}
 
 

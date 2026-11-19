@@ -132,3 +132,14 @@ v₁ *= sign(sum(v₁))
 plot(days, [V[:, 1] v₁], label = ["centered" "standardized"], xticks = months,
      ylabel = "PC1 loading", lw = 2)
 savefig("figures/standardized.pdf")
+
+
+### --- Plot the map position with the principal component
+
+maps = map(1:3) do k
+    scatter(df.longitude, df.latitude, zcolor = Z[:, k], color = :balance, label = "",
+            title = "PC$k score", xlabel = "longitude", ylabel = "latitude",
+            clims = (-1, 1) .* maximum(abs, Z[:, k]), markersize = 5)
+end
+plot(maps..., layout = (1, 3), size = (2000, 600), margin = 4Plots.mm)
+savefig("figures/map.pdf")
